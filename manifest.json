@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,  // 解析插件的内核模块版本号
   "version": "1.0.0",  // 版本号
-  "name": "自动登录拓展插件",  // 插件名
-  "description": "自动登录拓展插件",
+  "name": "密云自动登录",  // 插件名
+  "description": "密云自动登录",
 
   //要加载的资源,如果你的html里需要引入js的话,请务必写上
   "browser_action": {
-    "default_title": "这是一个示例Chrome插件",
+    "default_title": "密云自动登录",
     "default_popup": "index.html"
   },
   // 功能，访问权限
@@ -27,7 +27,7 @@
       // 匹配对应的域名
       "matches": ["<all_urls>"],
       // 使用的js
-      "js": ["jquery.js" , "yjLogin.js"]
+      "js": ["jquery.js" , "myLogin.js"]
     }
   ]
 }

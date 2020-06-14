@@ -1,66 +1,23 @@
-/*模板的样式*/
-.inline-flex-row{
+.selection-panel{
+    width: 318px;
+}
+.selection-row{
+    padding: 17px 18px;
     display: flex;
-    align-items:center;
-    margin-top: 10px;
+    cursor: pointer;
 }
-
-.inline-flex-col-left{
-    width: 60px;
+.selection-row-actived{
+    background-color: #EDF7FF;
 }
-
-.login-page{
-    padding: 5px;
+.selection-col{
+    display: flex;
 }
-
-.save-button-row{
-    margin-top: 10px;
+.line {
     width: 100%;
-    text-align: center;
+    height: 1px;
+    background-color: #DDDDDD;
 }
-
-.save-button{
-    border-radius: 8px;
-    width: 80px;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    border: 0;
-    padding: 5px 0;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-.account-page{
-    padding: 5px;
-    margin-top: 10px;
-    width: 300px;
-}
-
-.account-row{
-    display: flex;
-    align-items: center;
-    margin-left: -10px;
-    flex-wrap: wrap;
-}
-.input-col{
-    padding: 5px;
-    border: 1px solid lightgray;
-    border-radius: 6px;
-}
-.account-col{
-    width: 180px;
-    padding: 5px;
-    display: flex;
-    justify-content:center;
-    align-items: center;
+.info-words{
+    color: #222;
     font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    margin-left: 10px;
-    cursor: pointer;
-    margin-top: 5px;
-}
-.account-col-active{
-    border: 1px solid #409EFF;
 }
