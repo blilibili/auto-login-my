@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./poppup.css" >
+</head>
+<body>
+    <div class="login-page">
+        <div class="inline-flex-row">
+            <div class="inline-flex-col-left">网址:</div>
+            <input type="text" class="input-col" id="website" style="margin-left: 15px;">
+        </div>
+        <div class="inline-flex-row">
+            <div class="inline-flex-col-left">用户名:</div>
+            <input type="text" class="input-col" id="username" style="margin-left: 15px;">
+        </div>
+        <div class="inline-flex-row">
+            <div class="inline-flex-col-left">密码:</div>
+            <input type="text" class="input-col" id="password" style="margin-left: 15px;">
+        </div>
+
+        <div class="save-button-row">
+            <button class="save-button save-account-btn">保存</button>
+        </div>
+    </div>
+
+    <div class="account-page" id="account-page" style="display: none;">
+        <div class="account-row">
+
+        </div>
+
+        <a href="http://www.baidu.com" target="_blank">跳转</a>
+
+        <button class="save-button change-to-save" style="margin-top: 10px;">去添加账号</button>
+    </div>
+
+    <script src="./jquery.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
