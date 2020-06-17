@@ -1,0 +1,35 @@
+/*注入样式*/
+.auto-login-line{
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}
+
+.auto-login-flex-row{
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.auto-login-flex-col{
+    width: 80px;
+    text-align: right;
+}
+
+.auto-login-input{
+    width: 498px;
+    padding: 10px;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.auto-login-string-config{
+    margin-left: -10px;
+}
+
+.auto-login-string-config-label{
+    margin-left: 10px;
+    background-color: #009DD9;
+    color: white;
+    font-size: 14px;
+}

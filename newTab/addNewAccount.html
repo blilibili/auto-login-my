@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>添加账号</title>
+  <link rel="stylesheet" href="./css/layui.css" media="all">
+  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" href="./css/addNewAccount.css">
+  <style>
+    .layui-form-onswitch{
+      border-color: #1791FF;
+      background-color: #1791FF;
+    }
+  </style>
+</head>
+<body>
+  <div class="add-new-account-page">
+    <div class="add-new-account-title">
+      <div>添加账号</div>
+    </div>
+    <div class="using-table-line"></div>
+
+    <form class="layui-form" action="">
+      <div class="add-account-form">
+        <div class="add-account-flex-row">
+          <div class="add-account-flex-col"><span style="color: #FF2727;">*</span>&nbsp;&nbsp;网址</div>
+          <input class="add-account-input" type="text" placeholder="">
+        </div>
+        <div class="using-table-line"></div>
+
+        <div class="add-account-flex-row">
+          <div class="add-account-flex-col"><span style="color: #FF2727;">*</span>&nbsp;&nbsp;名称</div>
+          <input class="add-account-input" type="text" placeholder="">
+        </div>
+        <div class="using-table-line"></div>
+
+        <div class="add-account-flex-row">
+          <div class="add-account-flex-col">账号</div>
+          <input class="add-account-input" type="text" placeholder="">
+        </div>
+        <div class="using-table-line"></div>
+
+        <div class="add-account-flex-row">
+          <div class="add-account-flex-col">密码</div>
+          <input class="add-account-input" type="text" placeholder="">
+        </div>
+        <div class="using-table-line"></div>
+
+        <div class="add-account-flex-row">
+          <div class="add-account-flex-col">使用需二维码验证</div>
+          <input type="checkbox" name="zzz" lay-skin="switch">
+        </div>
+        <div class="using-table-line"></div>
+      </div>
+    </form>
+
+  </div>
+
+<div class="float-bottom-button">
+  <div class="layui-btn layui-btn-primary">清除</div>
+  <div class="layui-btn layui-btn-normal">保存</div>
+</div>
+
+  <script src="./layer/layui.js"></script>
+  <script src="./js/addNewAccount.js"></script>
+</body>
+</html>

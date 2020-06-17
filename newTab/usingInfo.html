@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>使用详情</title>
+  <link rel="stylesheet" href="./css/layui.css" media="all">
+  <link rel="stylesheet" href="./css/common.css" media="all">
+  <style>
+    #using-info-table{
+      position: fixed;
+      bottom: 20px;
+      right: 50px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div style="padding: 20px;">
+      <span style="font-size: 16px;color: #304554;">密云使用记录</span>
+      <span style="color: #747C83;font-size: 12px;margin-left: 10px;">以下是您最近3个月使用密云的记录，如有异常登录记录，请尽快修改密码。</span>
+    </div>
+    <div class="using-table-line"></div>
+    <div style="padding: 20px;display: flex;align-items: center;">
+      <div>
+        名称:
+        <span class="card-info" style="width: 68px;">广州</span>
+        <span class="card-info" style="width: 68px;">深圳</span>
+      </div>
+
+      <div style="margin-left: 100px;">
+        常用终端:
+        <span class="card-info" style="width: 189px;">手机华为: 123123131</span>
+        <span class="card-info" style="width: 189px;">电脑: 2342342342</span>
+      </div>
+    </div>
+
+    <table class="layui-table" lay-skin="nob">
+      <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+      </colgroup>
+      <thead>
+      <tr>
+        <th>网址/应用</th>
+        <th>名称</th>
+        <th>账号</th>
+        <th>地址</th>
+        <th>终端</th>
+        <th>IP</th>
+        <th>登录时间</th>
+        <th>状态</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="website-info">http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
+        <td>站酷</td>
+        <td>zhanghao</td>
+        <td>广州</td>
+        <td>LATASDDASDAS</td>
+        <td>122.23232.434.53</td>
+        <td>#222222</td>
+        <td class="problem-info">地区异常</td>
+      </tr>
+      </tbody>
+    </table>
+
+
+    <div id="using-info-table" style="margin-top: 20px;"></div>
+  </div>
+
+  <script src="./layer/layui.js"></script>
+  <script src="./js/using-info.js"></script>
+</body>
+</html>

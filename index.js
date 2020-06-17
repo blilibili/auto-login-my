@@ -1,12 +1,21 @@
-$('.selection-row').on('mouseover', () => {
-    // $('.selection-row').map(dom => {
-    //     $(dom).removeClass('selection-row-actived')
-    // })
 
-    $(this).addClass('selection-row-actived')
+$('.selection-row').map(function(key, val) {
+    $(this).on('mouseover', function(){
+        $(this).addClass('selection-row-actived').siblings().removeClass('selection-row-actived')
+    })
 })
 
-console.log($('.selection-row'))
+$('.sync-record').on('click' , function() {
+    window.open('./newTab/usingInfo.html')
+})
+
+$('.miyun-row').on('click', function() {
+    window.open('./newTab/addNewAccount.html')
+})
+
+$('.download-record').on('click', function() {
+    window.open('./newTab/accountList.html')
+})
 // function find(dom) {
 //     return document.querySelector(dom)
 // }

@@ -1,0 +1,39 @@
+.add-new-account-title{
+    padding: 20px;
+}
+.add-new-account-page{
+    font-size: 16px;
+    color: #304554;
+}
+.add-account-form{
+    width: 96%;
+    margin: 0 auto;
+}
+.add-account-flex-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+
+.add-account-flex-col{
+    width: 128px;
+    text-align: left;
+}
+
+.add-account-input{
+    border: 0;
+    width: 60%;
+    padding: 10px;
+    text-align: right;
+}
+
+.float-bottom-button{
+    border-top: 1px solid #DDDDDD;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px 0;
+    text-align: center;
+}

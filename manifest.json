@@ -16,7 +16,7 @@
     "storage"
   ],
   // 使用的外部插件资源
-  "web_accessible_resources": ["jquery.js" , "index.js"],
+  "web_accessible_resources": ["jquery.js" , "index.js", "./newTab/js/layui.js"],
   "background": {
     // 后台运行的js  不在同一个运行栈里
     "scripts": ["background.js"],
@@ -26,8 +26,9 @@
     {
       // 匹配对应的域名
       "matches": ["<all_urls>"],
-      // 使用的js
-      "js": ["jquery.js" , "myLogin.js"]
+      "css": ["contentScriptCss.css"],
+      // 使用的jsnoMatchingAccount
+      "js": ["jquery.js" , "myLogin.js", "./utils/webtemplate.js", "./page/noMatchingAccount.js"]
     }
   ]
 }

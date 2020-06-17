@@ -1,0 +1,29 @@
+.search-input{
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #EAEAEA;
+    margin-left: 15px;
+}
+.inline-form{
+    display: flex;
+    align-items: center;
+    margin-left: -30px;
+    position: relative;
+}
+.form-inline-row{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.search-button{
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.button-controler-list{
+    position: absolute;
+    right: 20px;
+    top: 0;
+}
