@@ -2,25 +2,28 @@
 .auto-login-line{
     width: 100%;
     height: 1px;
-    background-color: black;
+    background-color: #DDDDDD;
 }
 
 .auto-login-flex-row{
     display: flex;
     align-items: center;
     margin-top: 15px;
+    position: relative;
 }
 
 .auto-login-flex-col{
-    width: 80px;
+    width: 95px;
     text-align: right;
+    font-size: 14px;
 }
 
 .auto-login-input{
-    width: 498px;
-    padding: 10px;
-    font-size: 16px;
-    margin-left: 20px;
+    width: 330px;
+    padding: 7px;
+    font-size: 14px;
+    color: #222222;
+    margin-left: 22px;
 }
 
 .auto-login-string-config{
@@ -32,4 +35,77 @@
     background-color: #009DD9;
     color: white;
     font-size: 14px;
+}
+#slide-pass-set{
+    width: 70%;
+    margin-left: 22px;
+}
+.my-login-checkbox{
+    height: auto!important;
+    line-height: normal!important;
+    min-width: 18px;
+    min-height: 18px;
+    border: none!important;
+    margin-right: 0;
+    padding-left: 28px;
+    padding-right: 0;
+    background: 0 0;
+}
+
+.my-login-checkbox-words{
+    padding-left: 0;
+    padding-right: 15px;
+    line-height: 18px;
+    background: 0 0;
+    color: #666;
+}
+.layui-icon-ok:before{
+    content: '\2714' !important;
+}
+
+.auto-login-safe-block{
+    margin-left: 20px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+.auto-login-safe-col{
+    width: 99px;
+    height: 10px;
+    background-color: #F4F5F6;
+    margin-left: 2px;
+}
+.auto-login-safe-col-checked{
+    background-color: #90D5FE;
+}
+.button-controller-auto-login{
+    text-align: right;
+    padding: 15px;
+}
+.add-new-account-modal{
+    box-sizing: border-box;
+}
+.alert-auto-login-modal{
+    background: rgba(255,255,255,0.3)!important;
+}
+.auto-login-start-click-account{
+    font-size: 14px;
+}
+.auto-login-selected-account{
+    width: 280px;
+    margin: 0 auto;
+    height: 40px;
+    position: relative;
+    background-color: white;
+}
+.auto-login-click-account-small-image{
+    width: 20px;
+    height: 20px;
+}
+.auto-login-account-textarea{
+    background-color: white;
+    padding: 10px 15px;
+    width: 280px;
+    margin: 10px auto 0 auto;
+    box-sizing: border-box;
 }

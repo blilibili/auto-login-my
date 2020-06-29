@@ -1,5 +1,4 @@
 
-
 // chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 //     console.log(request, sender, sendResponse)
 //     if(request.type === 'REQUEST_USERS_ALL'){
@@ -32,7 +31,7 @@ function createModal(width=500, height=500, modalClassName) {
 }
 
 function keyUsernameClick() {
-    const modalDom = createModal(500, 182)
+    const modalDom = createModal(400, 500)
     const render = template.compile(noMatchingAccount)
     const html = render({value: ''})
 
@@ -41,10 +40,36 @@ function keyUsernameClick() {
         $(modalDom).remove()
     })
     $('.no-matching-add-new-account').on('click', function() {
-        const renderAccountNewModalDom = createModal(760, 468, 'add-new-account-modal')
+        const renderAccountNewModalDom = createModal(480, 420, 'add-new-account-modal')
         const renderAccountNewForm = template.compile(addNewAccountConfig)
         const renderAccountNewFormHtml = renderAccountNewForm({value: ''})
         $(renderAccountNewModalDom).append(renderAccountNewFormHtml)
+
+        layui.use(['form', 'slider'], function(){
+            var form = layui.form;
+
+            //监听提交
+            form.render();
+
+            var slider = layui.slider
+            //渲染
+            slider.render({
+                elem: '#slide-pass-set'  //绑定元素
+            });
+        });
+
+
+        $('.close-set-pass-config').on('click', function() {
+            $('.add-new-account-modal').remove()
+        })
+
+        $('.auto-login-pass-set-cancel').on('click', function() {
+            $('.add-new-account-modal').remove()
+        })
+
+        $('.auto-login-pass-set-use').on('click', function() {
+            console.log('提交')
+        })
     })
 }
 
@@ -53,28 +78,25 @@ function loginCommonMethods() {
     if(pathname.indexOf('login') === -1) {
         return
     }
+
     const inputArr = $('input')
     var username = inputArr[0]
-
     keyDom(username, keyUsernameClick)
-    var evt = new InputEvent('input', {
-        inputType: 'insertText',
-        data: '',
-        dataTransfer: null,
-        isComposing: false
-    })
-
 
     var password = inputArr[1]
     keyDom(password, keyUsernameClick)
-    var evt2 = new InputEvent('input', {
-        inputType: 'insertText',
-        data: '',
-        dataTransfer: null,
-        isComposing: false
-    });
+
+    console.log(username, password)
 }
 
-$(function() {
-    loginCommonMethods()
-})
+// 递归判断是否加载完成
+testIsComplete()
+function testIsComplete() {
+    if(window.document.readyState === 'complete'){
+        loginCommonMethods()
+    }else{
+        setTimeout(() => {
+            testIsComplete()
+        }, 200)
+    }
+}
