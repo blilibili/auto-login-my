@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
   <title>账号列表</title>
   <link rel="stylesheet" href="./css/layui.css" media="all">
   <link rel="stylesheet" href="./css/common.css">
@@ -15,39 +16,76 @@
   .layui-tab-brief>.layui-tab-title .layui-this::after{
     border-bottom: 2px solid #1791FF;
   }
+
+  .my-create-account{
+    cursor: pointer;
+  }
+  .account-verify-close-image{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
 </style>
 <body>
   <div class="account-list">
+    <!--幕布-->
+    <div class="auto-login-back-wall"></div>
+    <!--验证弹框-->
+    <div class="account-verify-modal">
+      <div class="account-verify-title">
+        <div style="color: #222222;font-size: 16px;">验证</div>
+        <img src="http://122.51.89.68:81/close.png" class="account-verify-close-image" alt="" style="width: 19px;height: 19px;">
+      </div>
+
+      <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title" style="text-align: center;border-bottom: 0;">
+          <li class="layui-this" style="font-size: 18px;padding: 0 24px;line-height: 28px;">小慧扫码</li>
+          <li style="font-size: 18px;padding: 0 24px;line-height: 28px;">小慧密码</li>
+        </ul>
+
+        <div class="layui-tab-content">
+          <div class="layui-tab-item layui-show">
+            1
+          </div>
+          <div class="layui-tab-item">
+            2
+          </div>
+        </div>
+      </div>
+
+    </div>
+
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
       <ul class="layui-tab-title">
         <li class="layui-this">我创建的</li>
         <li>分享给我的</li>
       </ul>
+
+      <div style="margin-top: 15px;">
+        如查看应用账号，请打开 [ 小慧APP-云块-密云 ]
+      </div>
+      <div class="inline-form">
+        <div class="form-inline-row">
+          <div class="form-inline-col">名称: </div>
+          <input type="text" class="search-input">
+        </div>
+
+        <div class="form-inline-row">
+          <div class="form-inline-col">账号: </div>
+          <input type="text" class="search-input">
+        </div>
+
+        <div class="layui-btn layui-btn-normal search-button">查询</div>
+
+        <div class="button-controler-list">
+          <div class="layui-btn layui-btn-normal search-button">使用详情</div>
+          <div class="layui-btn layui-btn-normal search-button">添加</div>
+          <div class="layui-btn layui-btn-normal search-button">删除</div>
+        </div>
+      </div>
+
       <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-          <div>
-            如查看应用账号，请打开 [ 小慧APP-云块-密云 ]
-          </div>
-          <div class="inline-form">
-            <div class="form-inline-row">
-              <div class="form-inline-col">名称: </div>
-              <input type="text" class="search-input">
-            </div>
-
-            <div class="form-inline-row">
-              <div class="form-inline-col">账号: </div>
-              <input type="text" class="search-input">
-            </div>
-
-            <div class="layui-btn layui-btn-normal search-button">查询</div>
-
-            <div class="button-controler-list">
-              <div class="layui-btn layui-btn-normal search-button">使用详情</div>
-              <div class="layui-btn layui-btn-normal search-button">添加</div>
-              <div class="layui-btn layui-btn-normal search-button">删除</div>
-            </div>
-          </div>
-
           <table class="layui-table" lay-skin="nob" style="margin-top: 15px;">
             <colgroup>
               <col width="150">
@@ -62,21 +100,67 @@
               <th class="table-header-title">使用需二次验证</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-              <td class="website-info">http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
-              <td>站酷</td>
-              <td>zhanghao</td>
-              <td>广州</td>
-            </tr>
+            <tbody id="createDataListResult">
+
             </tbody>
           </table>
         </div>
-        <div class="layui-tab-item">内容2</div>
+        <div class="layui-tab-item">
+          <table class="layui-table" lay-skin="nob" style="margin-top: 15px;">
+            <colgroup>
+              <col width="150">
+              <col width="200">
+              <col>
+            </colgroup>
+            <thead>
+            <tr>
+              <th class="table-header-title">来源</th>
+              <th class="table-header-title">网址</th>
+              <th class="table-header-title">名称</th>
+              <th class="table-header-title">账号</th>
+              <th class="table-header-title">到期时间</th>
+              <th class="table-header-title">允许再次分享</th>
+              <th class="table-header-title">使用需二次验证</th>
+              <th class="table-header-title">备注</th>
+            </tr>
+            </thead>
+            <tbody id="share-data-list-result">
+
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
+  <!--我创建的 数据列表-->
+  <script id="myCreateAccountList" type="text/html">
+    {{#  layui.each(d.list, function(index, item){ }}
+    <tr>
+      <td class="website-info">http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
+      <td>站酷</td>
+      <td class="my-create-account">zhanghao</td>
+      <td>广州</td>
+    </tr>
+    {{#  }) }}
+  </script>
+
+  <script id="accountListData" type="text/html">
+    {{#  layui.each(d.list, function(index, item){ }}
+    <tr class="share-result-td">
+      <td class="website-info">http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
+      <td>站酷</td>
+      <td>zhanghao</td>
+      <td>广州</td>
+      <td>http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
+      <td>站酷</td>
+      <td>zhanghao</td>
+      <td>广州</td>
+    </tr>
+    {{#  }) }}
+  </script>
+  <script src="utils/jquery.js"></script>
   <script src="./layer/layui.js"></script>
+  <script src="utils/myTabHttp.js"></script>
   <script src="./js/accountList.js"></script>
 </body>
 </html>

@@ -31,7 +31,7 @@ function createModal(width=500, height=500, modalClassName) {
 }
 
 function keyUsernameClick() {
-    const modalDom = createModal(400, 500)
+    const modalDom = createModal(280, 208)
     const render = template.compile(noMatchingAccount)
     const html = render({value: ''})
 
@@ -48,7 +48,7 @@ function keyUsernameClick() {
         layui.use(['form', 'slider'], function(){
             var form = layui.form;
 
-            //监听提交
+            //重新渲染
             form.render();
 
             var slider = layui.slider

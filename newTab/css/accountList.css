@@ -27,3 +27,31 @@
     right: 20px;
     top: 0;
 }
+.account-verify-title{
+    padding: 20px;
+}
+.ddd-line{
+    width: 100%;
+    height: 1px;
+    background-color: #DDDDDD;
+}
+.account-verify-modal{
+    position: absolute;
+    top: 160px;
+    width: 600px;
+    height: 400px;
+    box-sizing: border-box;
+    z-index: 1001;
+    background-color: white;
+    left: 50%;
+    margin-left: -300px;
+}
+.auto-login-back-wall{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}

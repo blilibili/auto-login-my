@@ -104,8 +104,8 @@
 }
 .auto-login-account-textarea{
     background-color: white;
-    padding: 10px 15px;
+    padding: 0px 15px;
     width: 280px;
-    margin: 10px auto 0 auto;
+    margin: 0px auto;
     box-sizing: border-box;
 }
