@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline';img-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
   <title>账号列表</title>
   <link rel="stylesheet" href="./css/layui.css" media="all">
   <link rel="stylesheet" href="./css/common.css">
@@ -37,18 +37,28 @@
         <img src="http://122.51.89.68:81/close.png" class="account-verify-close-image" alt="" style="width: 19px;height: 19px;">
       </div>
 
+      <div class="ddd-line">
+
+      </div>
       <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title" style="text-align: center;border-bottom: 0;">
-          <li class="layui-this" style="font-size: 18px;padding: 0 24px;line-height: 28px;">小慧扫码</li>
+          <li class="layui-this" style="font-size: 18px;padding: 0 24px;line-height: 28px;margin-right: 60px;">小慧扫码</li>
           <li style="font-size: 18px;padding: 0 24px;line-height: 28px;">小慧密码</li>
         </ul>
 
         <div class="layui-tab-content">
           <div class="layui-tab-item layui-show">
-            1
+            <div class="xh-login-scan-row">
+              <img src="#" class="xh-login-scan-image" alt="">
+            </div>
           </div>
-          <div class="layui-tab-item">
-            2
+          <div class="layui-tab-item" style="text-align: center;">
+            <div class="xh-pass-input">
+              <img src="http://122.51.89.68:81/close.png" style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;" alt="">
+              <input type="text" style="width: 100%;">
+            </div>
+
+            <div class="layui-btn layui-btn-normal auto-login-submit-xh-pass">提交</div>
           </div>
         </div>
       </div>

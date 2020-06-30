@@ -1,4 +1,10 @@
 layui.use(['layer', 'form', 'element', 'laytpl'], function(){
+	// 获取小慧二维码
+	myTabAjax('/miyun/sys/UserLoginApiController/getQRCode?width=140&height=140', 'post', {width: 140, height: 140}).then((res) => {
+		$('.xh-login-scan-image')[0].src = 'data:image/png;base64,' + res.data.QRCode
+
+		console.log($('.xh-login-scan-image')[0].src)
+	})
 	var laytpl = layui.laytpl;
 
 	let searchObj = {

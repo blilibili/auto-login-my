@@ -55,3 +55,22 @@
     background: rgba(0,0,0,0.5);
     z-index: 1000;
 }
+.xh-pass-input{
+    width: 320px;
+    margin: 60px auto 0 auto;
+    position: relative;
+}
+.xh-pass-input input {
+    border: 1px solid #DDDDDD;
+    padding: 8px 30px;
+    box-sizing: border-box;
+}
+.auto-login-submit-xh-pass{
+    width: 320px;
+    margin: 50px auto 0 auto;
+}
+
+.xh-login-scan-image{
+    width: 140px;
+    height: 140px;
+}
