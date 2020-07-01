@@ -28,7 +28,7 @@
       "matches": ["<all_urls>"],
       "css": ["newTab/layer/css/layui.css" , "contentScriptCss.css"],
       // 使用的jsnoMatchingAccount
-      "js": ["newTab/layer/layui.all.js", "jquery.js" , "myLogin.js", "utils/webtemplate.js", "page/noMatchingAccount.js"]
+      "js": ["newTab/layer/layui.all.js", "jquery.js", "newTab/utils/myTabHttp.js" , "myLogin.js", "utils/webtemplate.js", "page/noMatchingAccount.js"]
     }
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"

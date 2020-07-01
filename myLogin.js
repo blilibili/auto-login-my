@@ -7,7 +7,7 @@
 //     }
 // });
 // 创建账号密码钥匙
-function keyDom(insertDom, callback=() => {}) {
+function keyDomFunc(insertDom, callback=() => {}) {
     const keyDom = document.createElement('img')
     keyDom.src = 'http://122.51.89.68:81/key.png'
     keyDom.width = 30
@@ -32,20 +32,56 @@ function createModal(width=500, height=500, modalClassName) {
 
 function keyUsernameClick() {
     const modalDom = createModal(280, 208)
-    const render = template.compile(noMatchingAccount)
-    const html = render({value: ''})
 
-    $(modalDom).append(html)
-    $('.no-matching-close-button').on('click', function() {
-        $(modalDom).remove()
+    let searchObj = {
+        myuserId: 2,
+        currentPage: 1,
+        pageSize: 100,
+        selectType: 2
+    }
+    myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
+        layui.use(['laytpl'], function() {
+            var data = { //数据
+                list: res.data.records
+            }
+
+            // $('.share-result-td').append(shareListHtml)
+            var laytpl = layui.laytpl;
+            var getTpl = noMatchingAccount
+
+            laytpl(getTpl).render(data, function(html){
+                $(modalDom).append(html)
+
+                createAddAccountDom()
+                $('.no-matching-close-button').on('click', function() {
+                    $(modalDom).remove()
+                })
+            });
+        })
     })
-    $('.no-matching-add-new-account').on('click', function() {
-        const renderAccountNewModalDom = createModal(480, 420, 'add-new-account-modal')
-        const renderAccountNewForm = template.compile(addNewAccountConfig)
-        const renderAccountNewFormHtml = renderAccountNewForm({value: ''})
-        $(renderAccountNewModalDom).append(renderAccountNewFormHtml)
 
-        layui.use(['form', 'slider'], function(){
+}
+
+function createAddAccountDom() {
+    $('.no-matching-add-new-account').on('click', function() {
+        console.log('开启创建Modal')
+        const renderAccountNewModalDom = createModal(480, 420, 'add-new-account-modal')
+        layui.use(['form', 'slider', 'laytpl'], function(){
+
+            // 渲染新增新账号
+            var data = { //数据
+                list: []
+            }
+
+            // $('.share-result-td').append(shareListHtml)
+            var laytpl = layui.laytpl;
+            var getTpl = addNewAccountConfig
+
+            laytpl(getTpl).render(data, function(html){
+                console.log(html)
+                $(renderAccountNewModalDom).append(html)
+            });
+
             var form = layui.form;
 
             //重新渲染
@@ -81,10 +117,10 @@ function loginCommonMethods() {
 
     const inputArr = $('input')
     var username = inputArr[0]
-    keyDom(username, keyUsernameClick)
+    keyDomFunc(username, keyUsernameClick)
 
     var password = inputArr[1]
-    keyDom(password, keyUsernameClick)
+    keyDomFunc(password, keyUsernameClick)
 
     console.log(username, password)
 }

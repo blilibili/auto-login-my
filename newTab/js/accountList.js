@@ -3,7 +3,16 @@ layui.use(['layer', 'form', 'element', 'laytpl'], function(){
 	myTabAjax('/miyun/sys/UserLoginApiController/getQRCode?width=140&height=140', 'post', {width: 140, height: 140}).then((res) => {
 		$('.xh-login-scan-image')[0].src = 'data:image/png;base64,' + res.data.QRCode
 
-		console.log($('.xh-login-scan-image')[0].src)
+		// 生成扫码登录socket
+		let socket = new WebSocket("wss://appcc.pispower.com/connection/wait?key=8" + res.data.k)
+		socket.onmessage = (msg) => {
+			let scanReturn = JSON.parse(msg.data)
+			console.log(scanReturn)
+			if(scanReturn.action === 'login'){
+				let auth = scanReturn.data.auth
+			}
+		}
+
 	})
 	var laytpl = layui.laytpl;
 

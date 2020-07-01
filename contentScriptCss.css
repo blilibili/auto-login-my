@@ -8,7 +8,6 @@
 .auto-login-flex-row{
     display: flex;
     align-items: center;
-    margin-top: 15px;
     position: relative;
 }
 
@@ -104,7 +103,7 @@
 }
 .auto-login-account-textarea{
     background-color: white;
-    padding: 0px 15px;
+    padding: 15px;
     width: 280px;
     margin: 0px auto;
     box-sizing: border-box;
