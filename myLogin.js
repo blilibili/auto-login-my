@@ -37,7 +37,8 @@ function keyUsernameClick() {
         myuserId: 2,
         currentPage: 1,
         pageSize: 100,
-        selectType: 2
+        selectType: 2,
+        // webStatus: 1
     }
     myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
         layui.use(['laytpl'], function() {
@@ -53,6 +54,19 @@ function keyUsernameClick() {
                 $(modalDom).append(html)
 
                 createAddAccountDom()
+
+                $('.auto-login-flex-row').on('click', function() {
+                    // 主键id 用于找账号密码
+                    let keyId = this.getAttribute('data-typeId')
+                    let accountObj = res.data.records.filter((result) => {
+                        return parseInt(result.typeid, 10) === parseInt(keyId, 10)
+                    })[0]
+
+                    // 设置账号密码
+                    setUserName(accountObj.useraccount)
+                    setPassword(accountObj.userpassword)
+                    $(modalDom).remove()
+                })
                 $('.no-matching-close-button').on('click', function() {
                     $(modalDom).remove()
                 })
@@ -109,6 +123,32 @@ function createAddAccountDom() {
     })
 }
 
+function setUserName(username='') {
+    var inputArr = $('input')
+    var usernameDom = inputArr[0]
+    var evt = new InputEvent('input', {
+        inputType: 'insertText',
+        data: username,
+        dataTransfer: null,
+        isComposing: false
+    });
+    usernameDom.value = username
+    usernameDom.dispatchEvent(evt);
+}
+
+function setPassword(password='') {
+    var inputArr = $('input')
+    var usernameDom = inputArr[1]
+    var evt = new InputEvent('input', {
+        inputType: 'insertText',
+        data: password,
+        dataTransfer: null,
+        isComposing: false
+    });
+    usernameDom.value = password
+    usernameDom.dispatchEvent(evt);
+}
+
 function loginCommonMethods() {
     const pathname = window.location.pathname
     if(pathname.indexOf('login') === -1) {
@@ -121,8 +161,6 @@ function loginCommonMethods() {
 
     var password = inputArr[1]
     keyDomFunc(password, keyUsernameClick)
-
-    console.log(username, password)
 }
 
 // 递归判断是否加载完成
