@@ -6,6 +6,12 @@
 //
 //     }
 // });
+var globalData = {
+    myName: '',
+    myUrl: '',
+    myuserName: ''
+}
+
 // 创建账号密码钥匙
 function keyDomFunc(insertDom, callback=() => {}) {
     const keyDom = document.createElement('img')
@@ -25,7 +31,35 @@ function keyDomFunc(insertDom, callback=() => {}) {
 function createModal(width=500, height=500, modalClassName) {
     const modalDom = document.createElement('div')
     modalDom.className = modalClassName || 'alert-auto-login-modal'
-    $(modalDom).css({width: width, height: height, backgroundColor: 'white', position: 'absolute', top: '50%', left: '50%', zIndex: 10000, marginLeft: -(width/2) + 'px', marginTop: -(height/2) + 'px'})
+    $(modalDom).css({width: width, height: height, backgroundColor: 'white', position: 'absolute', top: '50%', left: '50%', zIndex: 10001, marginLeft: -(width/2) + 'px', marginTop: -(height/2) + 'px'})
+    document.body.appendChild(modalDom)
+    return modalDom
+}
+
+// 查找页面中 登录的按钮
+function findLoginButton() {
+    const eles = document.getElementsByTagName("*")
+    // 切割掉前八个头部
+    let sliceEles = []
+    let simLoginButton = []
+    for(let i = 0;i < eles.length;i++){
+        if(i > 7){
+            sliceEles.push(eles[i])
+        }
+    }
+
+    for(let i = 0;i < sliceEles.length;i++){
+        if(sliceEles[i].innerText === '登录' || sliceEles[i].innerText === '登 录' || sliceEles[i].value === '登录'){
+            simLoginButton.push(sliceEles[i])
+        }
+    }
+
+    return simLoginButton
+}
+
+function createBackWall() {
+    const modalDom = document.createElement('div')
+    modalDom.className = 'auto-login-back-wall'
     document.body.appendChild(modalDom)
     return modalDom
 }
@@ -42,6 +76,7 @@ function keyUsernameClick() {
     }
     myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
         layui.use(['laytpl'], function() {
+            createBackWall()
             var data = { //数据
                 list: res.data.records
             }
@@ -65,10 +100,17 @@ function keyUsernameClick() {
                     // 设置账号密码
                     setUserName(accountObj.useraccount)
                     setPassword(accountObj.userpassword)
+
+                    // 设置记录的数据
+                    globalData.myName = accountObj.name
+                    globalData.myUrl = accountObj.url
+                    globalData.myuserName = accountObj.useraccount
+
                     $(modalDom).remove()
                 })
                 $('.no-matching-close-button').on('click', function() {
                     $(modalDom).remove()
+                    $('.auto-login-back-wall').remove()
                 })
             });
         })
@@ -76,12 +118,12 @@ function keyUsernameClick() {
 
 }
 
+// 添加新账号
 function createAddAccountDom() {
     $('.no-matching-add-new-account').on('click', function() {
-        console.log('开启创建Modal')
-        const renderAccountNewModalDom = createModal(480, 420, 'add-new-account-modal')
+        $('.auto-login-start-click-account').remove()
+        const renderAccountNewModalDom = createModal(480, 435, 'add-new-account-modal')
         layui.use(['form', 'slider', 'laytpl'], function(){
-
             // 渲染新增新账号
             var data = { //数据
                 list: []
@@ -92,7 +134,6 @@ function createAddAccountDom() {
             var getTpl = addNewAccountConfig
 
             laytpl(getTpl).render(data, function(html){
-                console.log(html)
                 $(renderAccountNewModalDom).append(html)
             });
 
@@ -115,6 +156,8 @@ function createAddAccountDom() {
 
         $('.auto-login-pass-set-cancel').on('click', function() {
             $('.add-new-account-modal').remove()
+            $('.alert-auto-login-modal').remove()
+            $('.auto-login-back-wall').remove()
         })
 
         $('.auto-login-pass-set-use').on('click', function() {
@@ -161,6 +204,26 @@ function loginCommonMethods() {
 
     var password = inputArr[1]
     keyDomFunc(password, keyUsernameClick)
+
+    // 点击登录按钮 插入记录
+    const loginButton = findLoginButton()
+    loginButton[0].addEventListener('click' , function() {
+        let insertModel = {
+            myuserId: '2',
+            accountId: 1,
+            myAddress: globalData.myUrl,
+            myName: globalData.myName,
+            myUrl: globalData.myUrl,
+            myUserIp: '',
+            terminalName: '',
+            terminalType: 3,
+            myuserName: globalData.myName,
+            status: 4
+        }
+        myTabAjax('/miyun/sys/UserLoginController/getLoginMyuser', 'post', insertModel).then((res) => {
+            console.log('记录插入成功')
+        })
+    })
 }
 
 // 递归判断是否加载完成

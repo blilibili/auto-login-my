@@ -14,7 +14,7 @@ function findLoginButton() {
             sliceEles.push(eles[i])
         }
     }
-    console.log(sliceEles)
+
     for(let i = 0;i < sliceEles.length;i++){
         if(sliceEles[i].innerText === '登录' || sliceEles[i].innerText === '登 录' || sliceEles[i].value === '登录'){
             simLoginButton.push(sliceEles[i])
