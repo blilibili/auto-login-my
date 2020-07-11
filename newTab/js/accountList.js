@@ -1,5 +1,19 @@
-layui.use(['layer', 'form', 'element', 'laytpl'], function(){
+// 我创建的搜索条件
+let myuserId = '1'
+let searchMyCreateObj = {
+	myuserId: myuserId,
+	selectType: '2',
+	webStatus: 1,
+	currentPage: 1,
+	pageSize: 10,
+	name: '',
+	userAccount: ''
+}
+var layuiForm
+
+layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	// 获取小慧二维码
+	layuiForm = layui.form;
 	myTabAjax('/miyun/sys/UserLoginApiController/getQRCode?width=140&height=140', 'post', {width: 140, height: 140}).then((res) => {
 		$('.xh-login-scan-image')[0].src = 'data:image/png;base64,' + res.data.QRCode
 
@@ -14,18 +28,64 @@ layui.use(['layer', 'form', 'element', 'laytpl'], function(){
 		}
 
 	})
-	var laytpl = layui.laytpl;
 
+	var laytpl = layui.laytpl;
+	var laypage = layui.laypage;
+	getMyCreateData(searchMyCreateObj, laytpl, laypage)
+
+
+	// 获取分享给我的数据
 	let searchObj = {
-		page: 1,
+		myuserId: '1',
+		selectType: '2',
+		webStatus: 2,
+		currentPage: 1,
 		pageSize: 10
 	}
-
-	renderMyCrateData(laytpl, [{name: ''}, {name: ''}])
-	// 获取数据
-	myTabAjax('/miyun/sys/ShareinfoWebController/page', 'get', searchObj).then((res) => {
+	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
 		console.log(res.data)
 		renderTrData(laytpl, res.data)
+	})
+
+	$('.search-button-click').on('click', function() {
+		$('.search-input-account').map(function(key, v) {
+			const keyMap = v.getAttribute('data-fields')
+			searchMyCreateObj[keyMap] = v.value
+		})
+		getMyCreateData(searchMyCreateObj, laytpl, laypage)
+	})
+
+	// 点击跳转
+	$('.using-info').on('click', function() {
+		window.open('/newTab/usingInfo.html')
+	})
+
+	// 新增账号
+	$('.add-new-account').on('click', function() {
+		window.open('/newTab/addNewAccount.html')
+	})
+
+	// 删除账号
+	$('.del-account-record').on('click', function() {
+		let delParams = {
+			typeId: []
+		}
+		$('.my-create-checkbox').map(function(index, value) {
+			// 表示选中
+			if(value.checked) {
+				delParams.typeId.push(parseInt(value.getAttribute('data-id'), 10))
+			}
+		})
+
+		delParams.typeId = delParams.typeId.join(',')
+
+		myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd?typeId=' + delParams.typeId, 'post', delParams).then((res) => {
+			if(res.code === -1) {
+				layer.msg(res.message);
+			}else{
+				getMyCreateData(searchMyCreateObj, laytpl, laypage)
+			}
+		})
 	})
 });
 
@@ -36,10 +96,7 @@ function renderMyCrateData(laytpl, result) {
 	let getTpl = document.getElementById('myCreateAccountList').innerHTML
 	laytpl(getTpl).render(data, function(html){
 		document.getElementById('createDataListResult').innerHTML = html;
-
-		$('.my-create-account').on('click', function() {
-
-		})
+		layuiForm.render();
 	});
 }
 
@@ -55,4 +112,25 @@ function renderTrData(laytpl, result) {
 	laytpl(getTpl).render(data, function(html){
 		document.getElementById('share-data-list-result').innerHTML = html;
 	});
+}
+
+function getMyCreateData(searchObj, laytpl, layPage) {
+	// 获取我创建的数据
+	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
+		renderMyCrateData(laytpl, res.data.records)
+
+		//执行一个laypage实例
+		layPage.render({
+			elem: 'my-create-page' //注意，这里的 test1 是 ID，不用加 # 号
+			,count: res.data.total //数据总数，从服务端得到
+			,theme: '#1791FF'
+			,jump: function(obj, first){
+				//首次不执行
+				if(!first){
+					searchMyCreateObj.currentPage = obj.curr
+					getMyCreateData(searchMyCreateObj, laytpl)
+				}
+			}
+		});
+	})
 }
