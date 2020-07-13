@@ -29,8 +29,8 @@ async function myTabAjax(url, methods, data, headers={'Content-Type':'applicatio
 				}
 				resolve(result)
 			},
-			error: () => {
-				console.log('接口异常')
+			error: (e) => {
+				console.log('接口异常', e)
 			}
 		})
 	})
@@ -47,8 +47,8 @@ function getLoginToken(loginData) {
 			success: (result) => {
 				reslove(result.data.token)
 			},
-			error: () => {
-				console.log('接口异常')
+			error: (e) => {
+				console.log('接口异常', e)
 			}
 		})
 	})

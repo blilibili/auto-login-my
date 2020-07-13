@@ -9,7 +9,8 @@
 var globalData = {
     myName: '',
     myUrl: '',
-    myuserName: ''
+    myuserName: '',
+    userName: 'daniel'
 }
 
 // 创建账号密码钥匙
@@ -94,12 +95,12 @@ function keyUsernameClick() {
                     // 主键id 用于找账号密码
                     let keyId = this.getAttribute('data-typeId')
                     let accountObj = res.data.records.filter((result) => {
-                        return parseInt(result.typeid, 10) === parseInt(keyId, 10)
+                        return parseInt(result.typeId, 10) === parseInt(keyId, 10)
                     })[0]
 
                     // 设置账号密码
-                    setUserName(accountObj.useraccount)
-                    setPassword(accountObj.userpassword)
+                    setUserName(accountObj.userAccount)
+                    setPassword(accountObj.userPassword)
 
                     // 设置记录的数据
                     globalData.myName = accountObj.name
@@ -107,6 +108,7 @@ function keyUsernameClick() {
                     globalData.myuserName = accountObj.useraccount
 
                     $(modalDom).remove()
+                    $('.auto-login-back-wall').remove()
                 })
                 $('.no-matching-close-button').on('click', function() {
                     $(modalDom).remove()
@@ -198,6 +200,15 @@ function loginCommonMethods() {
         return
     }
 
+    chrome.tabs.query({
+        "currentWindow": true, //Filters tabs in current window
+        "status": "complete", //The Page is completely loaded
+        "active": true, // The tab or web page is browsed at this state,
+        "windowType": "normal" // Filters normal web pages, eliminates g-talk notifications etc
+    }, function (tabs) { //It returns an array
+       console.log(tabs)
+    });
+
     const inputArr = $('input')
     var username = inputArr[0]
     keyDomFunc(username, keyUsernameClick)
@@ -207,9 +218,10 @@ function loginCommonMethods() {
 
     // 点击登录按钮 插入记录
     const loginButton = findLoginButton()
+
+
     loginButton[0].addEventListener('click' , function() {
         let insertModel = {
-            myuserId: '2',
             accountId: 1,
             myAddress: globalData.myUrl,
             myName: globalData.myName,
@@ -217,11 +229,10 @@ function loginCommonMethods() {
             myUserIp: '',
             terminalName: '',
             terminalType: 3,
-            myuserName: globalData.myName,
-            status: 4
+            userName: globalData.userName
         }
-        myTabAjax('/miyun/sys/UserLoginController/getLoginMyuser', 'post', insertModel).then((res) => {
-            console.log('记录插入成功')
+        myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuser', 'post', insertModel).then((res) => {
+            console.log(res.data)
         })
     })
 }

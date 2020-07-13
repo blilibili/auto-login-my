@@ -1,6 +1,7 @@
 /**
  * Created by liyigang on 1/5/2020.
  */
+console.log(chrome, '123')
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log(request, sender, sendResponse)
     if(request.type === 'REQUEST_USERS_ALL'){
