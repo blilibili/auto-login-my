@@ -200,14 +200,14 @@ function loginCommonMethods() {
         return
     }
 
-    chrome.tabs.query({
-        "currentWindow": true, //Filters tabs in current window
-        "status": "complete", //The Page is completely loaded
-        "active": true, // The tab or web page is browsed at this state,
-        "windowType": "normal" // Filters normal web pages, eliminates g-talk notifications etc
-    }, function (tabs) { //It returns an array
-       console.log(tabs)
-    });
+    // chrome.tabs.query({
+    //     "currentWindow": true, //Filters tabs in current window
+    //     "status": "complete", //The Page is completely loaded
+    //     "active": true, // The tab or web page is browsed at this state,
+    //     "windowType": "normal" // Filters normal web pages, eliminates g-talk notifications etc
+    // }, function (tabs) { //It returns an array
+    //    console.log(tabs)
+    // });
 
     const inputArr = $('input')
     var username = inputArr[0]
