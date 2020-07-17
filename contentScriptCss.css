@@ -23,6 +23,11 @@
     position: relative;
     cursor: pointer;
 }
+.layui-form-checked[lay-skin=primary] i{
+    border-color:#1791FF!important;
+    background-color:#1791FF;
+    color:#fff
+}
 
 .auto-login-flex-col{
     width: 95px;
@@ -36,6 +41,10 @@
     font-size: 14px;
     color: #222222;
     margin-left: 22px;
+    background:rgba(244,245,246,1);
+    border-radius:4px;
+    border:1px solid rgba(234,234,234,1);
+    cursor:pointer;
 }
 
 .auto-login-string-config{
@@ -49,7 +58,11 @@
     font-size: 14px;
 }
 #slide-pass-set{
-    width: 70%;
+    /* width: 70%; */
+    width: 64%;
+    margin-left: 22px;
+}
+#slidePassSetVal{
     margin-left: 22px;
 }
 .my-login-checkbox{

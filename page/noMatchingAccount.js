@@ -41,13 +41,13 @@ const addNewAccountConfig = `<div>
 	<div class="auto-login-form">
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col"><span style="color: #FF2727;">*</span>账号</div>
-			<input class="auto-login-input" type="text" placeholder="请输入账号">
+			<input class="auto-login-input" id="account" type="text" value="" placeholder="请输入账号">
 		</div>
 		
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col"><span style="color: #FF2727;">*</span>生成密码</div>
-			<input class="auto-login-input" type="text" placeholder="" value="风格描述" disabled>
-			<div style="position: absolute;top: 7px;right: 30px;color: #1791FF;font-size: 14px;cursor:pointer;">复制</div>
+			<input class="auto-login-input" type="text" placeholder="" id="accountPwd" value="" readonly>
+			<div id="copybtn" style="position: absolute;top: 7px;right: 30px;color: #1791FF;font-size: 14px;cursor:pointer;">复制</div>
 		</div>
 		
 		<div class="auto-login-flex-row">
@@ -57,18 +57,19 @@ const addNewAccountConfig = `<div>
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col">密码设置</div>
 			<div id="slide-pass-set"></div>
+			<div id="slidePassSetVal">20</div>
 		</div>
 		
 		<div class="auto-login-flex-row">
-			<div class="auto-login-flex-col">密码设置</div>
+			<div class="auto-login-flex-col">字符设置</div>
 			
 			<form class="layui-form" action="">
 			  <div class="layui-form-item">
 			     <div style="margin-left: 20px;">
-			      <input type="checkbox" name="type1" title="大写" lay-skin="primary">
-			      <input type="checkbox" name="type2" title="小写" checked lay-skin="primary">
-			      <input type="checkbox" name="type3" title="数字" lay-skin="primary">
-			      <input type="checkbox" name="type4" title="字符" lay-skin="primary">
+			      <input type="checkbox" name="chrtype" lay-filter="chrtype" value="1" title="大写" checked lay-skin="primary">
+			      <input type="checkbox" name="chrtype" lay-filter="chrtype" value="2" title="小写" checked lay-skin="primary">
+			      <input type="checkbox" name="chrtype" lay-filter="chrtype" value="3" title="数字" checked lay-skin="primary">
+			      <input type="checkbox" name="chrtype" lay-filter="chrtype" value="0" title="字符" checked lay-skin="primary">
 			    </div>
 			  </div>
 		  </form>
@@ -77,10 +78,10 @@ const addNewAccountConfig = `<div>
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col">安全级别</div>
 			<div class="auto-login-safe-block">
-				<div class="auto-login-safe-col auto-login-safe-col-checked"></div>
-				<div class="auto-login-safe-col auto-login-safe-col-checked"></div>
-				<div class="auto-login-safe-col"></div>
-				<span style="margin-left: 3px;">中</span>
+				<div class="auto-login-safe-col auto-login-safe-col-checked" id="1"></div>
+				<div class="auto-login-safe-col auto-login-safe-col-checked" id="2"></div>
+				<div class="auto-login-safe-col auto-login-safe-col-checked" id="3"></div>
+				<span style="margin-left: 3px;" id="auto-login-safe-txt">低</span>
 			</div>
 		</div>
 	</div>
