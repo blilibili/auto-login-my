@@ -47,15 +47,19 @@ function getUsingInfoList(laytpl, laypage) {
 		pageSize: 10
 	}
 	myTabAjax('/miyun/sys/UserLoginController/getUserDetailList', 'get', searchObj).then((res) => {
-		console.log(res.data.common.commonAddress)
+		console.log(res.data)
 		// 拼接终端
 		let terminalName = []
-		res.data.common.commonTerminal.computerTerminal.forEach((v, k) => {
-			terminalName.push('电脑:' + v)
-		})
-		res.data.common.commonTerminal.phoneTerminal.forEach((v, k) => {
-			terminalName.push('手机:' + v)
-		})
+		if(res.data.common.commonTerminal.computerTerminal) {
+			res.data.common.commonTerminal.computerTerminal.forEach((v, k) => {
+				terminalName.push('电脑:' + v)
+			})
+		}
+		if(res.data.common.commonTerminal.phoneTerminal) {
+			res.data.common.commonTerminal.phoneTerminal.forEach((v, k) => {
+				terminalName.push('手机:' + v)
+			})
+		}
 		renderOftenIp(laytpl, terminalName)
 		renderOftenAddress(laytpl, res.data.common.commonAddress)
 		renderUsingInfoData(laytpl, res.data.records)

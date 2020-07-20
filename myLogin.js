@@ -160,7 +160,7 @@ function createAddAccountDom() {
                 setTimeout(()=>{
                     $("#accountPwd").val(autoCreatePwd())
                 },500)
-            });  
+            });
 
             var slider = layui.slider
             let sliderTimer = false
@@ -179,7 +179,7 @@ function createAddAccountDom() {
                         if(sliderTimer)$("#accountPwd").val(autoCreatePwd())
                         sliderTimer = false
                     },500)
-                    
+
                 }
             });
 
@@ -193,11 +193,11 @@ function createAddAccountDom() {
 
             $("#copybtn").on('click',function(){
                 console.log("点击复制")
-                var aux = document.createElement("input"); 
-                aux.setAttribute("value", $("#accountPwd").val()); 
-                document.body.appendChild(aux); 
+                var aux = document.createElement("input");
+                aux.setAttribute("value", $("#accountPwd").val());
+                document.body.appendChild(aux);
                 aux.select();
-                document.execCommand("copy"); 
+                document.execCommand("copy");
                 document.body.removeChild(aux);
             });
         });
@@ -216,9 +216,9 @@ function createAddAccountDom() {
         $('.auto-login-pass-set-use').on('click', function() {
             console.log('提交')
         })
-        
+
         $("#accountPwd").val(autoCreatePwd())
-        
+
     })
 }
 
@@ -305,7 +305,7 @@ function randomFrom(lowerValue,upperValue)
 {
     return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
 }
- 
+
 function getRandomArrayElements(arr, count) {
     let i = arr.length-1
     let temp = []
