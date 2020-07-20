@@ -39,7 +39,7 @@ async function myTabAjax(url, methods, data, headers={'Content-Type':'applicatio
 function getLoginToken(loginData) {
 	return new Promise((reslove, reject) => {
 		$.ajax({
-			url: hostname + '/miyun/sys/UserLoginController/getLoginMyUserIdExist',
+			url: hostname + '/miyun/sys/UserLoginController/getMyuserToken',
 			type: 'get',
 			headers: {'Content-Type':'application/json;charset=utf8;'},
 			data: loginData,
