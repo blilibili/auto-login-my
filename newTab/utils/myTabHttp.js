@@ -49,6 +49,8 @@ function getLoginToken(loginData) {
 			},
 			error: (e) => {
 				console.log('接口异常', e)
+			},
+			complete: (e) => {
 			}
 		})
 	})

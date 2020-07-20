@@ -89,6 +89,6 @@ const addNewAccountConfig = `<div>
 	<div class="auto-login-line" style="margin: 15px 0;"></div>
 	<div class="button-controller-auto-login">
 		<button type="button" class="layui-btn layui-btn-primary auto-login-pass-set-cancel">取消</button>
-		<button type="button" class="layui-btn layui-btn-normal auto-login-pass-set-use">使用</button>
+		<button type="button" class="layui-btn  auto-login-pass-set-use">使用</button>
 	</div>
 </div>`

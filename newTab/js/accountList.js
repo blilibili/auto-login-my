@@ -11,9 +11,11 @@ let searchMyCreateObj = {
 }
 var layuiForm
 
+
 layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	// 获取小慧二维码
 	layuiForm = layui.form;
+	/*
 	myTabAjax('/miyun/sys/UserLoginApiController/getQRCode?width=140&height=140', 'post', {width: 140, height: 140}).then((res) => {
 		$('.xh-login-scan-image')[0].src = 'data:image/png;base64,' + res.data.QRCode
 
@@ -27,7 +29,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 			}
 		}
 
-	})
+	})*/
 
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
@@ -88,6 +90,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 		})
 	})
 });
+
 
 function renderMyCrateData(laytpl, result) {
 	var data = { //数据

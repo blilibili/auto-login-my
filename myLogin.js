@@ -185,6 +185,20 @@ function createAddAccountDom() {
 
             //先把元素append进去以后才能操作dom
             $("#account").val(account)
+            if(!account){
+                $(".auto-login-pass-set-use").removeClass('layui-btn-normal').addClass('layui-btn-disabled')
+            }else{
+                $(".auto-login-pass-set-use").removeClass('layui-btn-disabled').addClass('layui-btn-normal')
+            }
+
+            $("#account").on('input',function(){
+                account = $(this).val()
+                if(!account){
+                    $(".auto-login-pass-set-use").removeClass('layui-btn-normal').addClass('layui-btn-disabled')
+                }else{
+                    $(".auto-login-pass-set-use").removeClass('layui-btn-disabled').addClass('layui-btn-normal')
+                }
+            })
 
             $("#accountPwd").on('click',function(){
                 console.log("重新生成密码")
@@ -204,22 +218,33 @@ function createAddAccountDom() {
 
 
         $('.close-set-pass-config').on('click', function() {
-            $('.add-new-account-modal').remove()
+            closeModal()
         })
 
         $('.auto-login-pass-set-cancel').on('click', function() {
-            $('.add-new-account-modal').remove()
-            $('.alert-auto-login-modal').remove()
-            $('.auto-login-back-wall').remove()
+            closeModal()
         })
 
         $('.auto-login-pass-set-use').on('click', function() {
+            if(!account)return
             console.log('提交')
+            $($("input[type='text']")[0]).val(account)
+            let pass = $("input[type='password']")
+            for (let i = 0; i < pass.length; i++) {
+                $(pass[i]).val($("#accountPwd").val())
+            }
+            closeModal()
         })
 
         $("#accountPwd").val(autoCreatePwd())
 
     })
+}
+
+function closeModal() {
+    $('.add-new-account-modal').remove()
+    $('.alert-auto-login-modal').remove()
+    $('.auto-login-back-wall').remove()
 }
 
 //设置密码等级
@@ -382,12 +407,12 @@ function loginCommonMethods() {
             myAddress: globalData.myUrl,
             myName: globalData.myName,
             myUrl: globalData.myUrl,
-            myUserIp: '',
+            myUserIp: '192.168.1.43',
             terminalName: '',
             terminalType: 3,
             userName: globalData.userName
         }
-        myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuser', 'post', insertModel).then((res) => {
+        myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel).then((res) => {
             console.log(res.data)
         })
     })

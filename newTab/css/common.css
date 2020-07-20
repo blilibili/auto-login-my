@@ -1,10 +1,19 @@
-.using-table-line{
+.using-table-line {
     width: 100%;
     height: 1px;
     background-color: #EBEBEB;
 }
 
-.card-info{
+.using-often {
+    padding: 20px;
+    display: flex;
+    /* -webkit-justify-content: space-around; */
+    /* justify-content: space-around; */
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.card-info {
     background-color: #E3F5FD;
     padding: 5px 3px;
     text-align: center;
@@ -13,16 +22,19 @@
     border-radius: 2px;
 }
 
-.website-info{
+.website-info {
     color: #1791FF;
 }
-.problem-info{
+
+.problem-info {
     color: #FC4D4F;
 }
-.layui-btn-normal{
+
+.layui-btn-normal {
     border-radius: 4px;
 }
-.table-header-title{
+
+.table-header-title {
     color: #222222;
     font-size: 14px;
 }
