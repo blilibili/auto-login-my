@@ -59,7 +59,8 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 
 	// 点击跳转
 	$('.using-info').on('click', function() {
-		window.open('/newTab/usingInfo.html')
+		window.location.href = '/newTab/usingInfo.html'
+		// window.open('/newTab/usingInfo.html')
 	})
 
 	// 新增账号

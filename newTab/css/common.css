@@ -7,8 +7,8 @@
 .using-often {
     padding: 20px;
     display: flex;
-    /* -webkit-justify-content: space-around; */
-    /* justify-content: space-around; */
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
     -webkit-align-items: center;
     align-items: center;
 }

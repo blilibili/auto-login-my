@@ -23,12 +23,15 @@
     </div>
     <div class="using-table-line"></div>
     <div class="using-often">
-      <div id="often-address">
+      <div id="often-address" title="">
 
       </div>
 
-      <div id="using-often-ip" style="margin-left: 100px;">
+      <div id="using-often-ip" title="" style="margin-left: 100px;">
 
+      </div>
+      <div >
+        <button id="backBtn" class="layui-btn layui-btn-normal">返回</button>
       </div>
     </div>
 
@@ -70,7 +73,7 @@
 
   <!--常用地区-->
   <script id="myUsingOftenAddress" type="text/html">
-    <span>名称:</span>
+    <span>常用地址:</span>
     {{#  layui.each(d.oftenAddress, function(index, item){ }}
       <span class="card-info" style="width: 68px;">{{item}}</span>
     {{#  }) }}

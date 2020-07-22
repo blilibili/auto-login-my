@@ -4,6 +4,11 @@ layui.use(['laypage', 'laytpl'], function(){
 	getUsingInfoList(laytpl, laypage)
 });
 
+// 点击跳转
+$('#backBtn').on('click', function() {
+	history.back(-1)
+})
+
 function renderUsingInfoData(laytpl, result) {
 	var oftenData = { //数据
 		list:result
@@ -20,8 +25,18 @@ function renderUsingInfoData(laytpl, result) {
 }
 
 function renderOftenAddress(laytpl, result) {
+	let commonAddressList = []
+	for (let i = 0; i < result.length; i++) {
+		if(i === 2){
+			commonAddressList.push('...')
+			break;
+		}
+		commonAddressList.push(result[i])
+	}
+	$("#often-address").attr('title',"常用地址："+result.toString())
+
 	var data = { //数据
-		oftenAddress:result
+		oftenAddress:commonAddressList
 	}
 	let getTpl = document.getElementById('myUsingOftenAddress').innerHTML
 	laytpl(getTpl).render(data, function(html){
@@ -30,9 +45,24 @@ function renderOftenAddress(laytpl, result) {
 }
 
 function renderOftenIp(laytpl, result) {
-	var data = { //数据
-		oftenIp:result
+	let commonTerminalList = []
+	let titleList = []
+	for (let i = 0; i < result.length; i++) {
+		if(result[i].type === 1){
+			titleList.push("电脑："+result[i].name)
+			commonTerminalList[0] = commonTerminalList[0] ? commonTerminalList[0] : ("电脑："+result[i].name)
+		}
+		if(result[i].type === 2){
+			titleList.push("手机："+result[i].name)
+			commonTerminalList[1] = commonTerminalList[1] ? commonTerminalList[1] : ("手机："+result[i].name)
+		}
+		
 	}
+	commonTerminalList.push("...")
+	var data = { //数据
+		oftenIp:commonTerminalList
+	}
+	$("#using-often-ip").attr('title',"常用终端："+titleList.toString())
 	let getTpl = document.getElementById('myUsingOftenIp').innerHTML
 	laytpl(getTpl).render(data, function(html){
 		document.getElementById('using-often-ip').innerHTML = html;
@@ -52,16 +82,16 @@ function getUsingInfoList(laytpl, laypage) {
 		let terminalName = []
 		if(res.data.common.commonTerminal.computerTerminal) {
 			res.data.common.commonTerminal.computerTerminal.forEach((v, k) => {
-				terminalName.push('电脑:' + v)
+				terminalName.push({type:1,name:v}) //type:1 电脑
 			})
 		}
 		if(res.data.common.commonTerminal.phoneTerminal) {
 			res.data.common.commonTerminal.phoneTerminal.forEach((v, k) => {
-				terminalName.push('手机:' + v)
+				terminalName.push({type:2,name:v}) //type:2 手机
 			})
 		}
 		renderOftenIp(laytpl, terminalName)
-		renderOftenAddress(laytpl, res.data.common.commonAddress)
+		renderOftenAddress(laytpl,res.data.common.commonAddress)
 		renderUsingInfoData(laytpl, res.data.records)
 
 		//执行一个laypage实例
