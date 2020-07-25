@@ -102,7 +102,7 @@ function getUsingInfoList(searchObj,laytpl, laypage) {
 			elem: 'using-info-table' //注意，这里的 test1 是 ID，不用加 # 号
 			,count: res.data.total //数据总数，从服务端得到
 			,theme: '#1791FF'
-			,limits: [1,10,20,30,40]
+			,limits: [10,20,30,40]
 			,curr: 1
 			,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
 			,jump: function(obj, first){
