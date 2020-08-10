@@ -16,6 +16,11 @@ $('.miyun-row').on('click', function() {
 $('.download-record').on('click', function() {
     window.open('./newTab/accountList.html')
 })
+
+$('.bookmarks').on('click', function() {
+    console.log("我的书签")
+    window.open('chrome://bookmarks')
+})
 // function find(dom) {
 //     return document.querySelector(dom)
 // }

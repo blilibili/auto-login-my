@@ -1,4 +1,4 @@
-const hostname = 'http://120.78.84.243:9021'
+const hostname = 'http://116.85.11.146:9021'
 
 async function myTabAjax(url, methods, data, headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
@@ -7,7 +7,7 @@ async function myTabAjax(url, methods, data, headers={'Content-Type':'applicatio
 	}else{
 		const loginData = {
 			userId: '1',
-			userName: 'daniel'
+			// userName: 'daniel'
 		}
 		let token = await getLoginToken(loginData)
 		headers.token = token

@@ -46,7 +46,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	}
 	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
 		console.log(res.data)
-		renderTrData(laytpl, res.data)
+		renderTrData(laytpl, res.data.records)
 	})
 
 	$('.search-button-click').on('click', function() {
@@ -70,19 +70,16 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 
 	// 删除账号
 	$('.del-account-record').on('click', function() {
-		let delParams = {
-			typeId: []
-		}
+		let delParams = []
 		$('.my-create-checkbox').map(function(index, value) {
 			// 表示选中
 			if(value.checked) {
-				delParams.typeId.push(parseInt(value.getAttribute('data-id'), 10))
+				delParams.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
 			}
 		})
 
-		delParams.typeId = delParams.typeId.join(',')
 
-		myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd?typeId=' + delParams.typeId, 'post', delParams).then((res) => {
+		myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams).then((res) => {
 			if(res.code === -1) {
 				layer.msg(res.message);
 			}else{

@@ -31,7 +31,7 @@ layui.use(['layer', 'form'], function(){
 		formObj.isAgainCheck = $('.add-account-checkbox')[0].checked?1:2
 
 		// 先写死userid
-		formObj.myuserId = '1'
+		// formObj.myuserId = '1'
 		formObj.accountType = 1
 		formObj.typeData = [{
 			name: formObj.name,
@@ -56,7 +56,7 @@ layui.use(['layer', 'form'], function(){
 				}
 			})
 		}else{
-			let requestUrl = '/miyun/sys/UserController/saveMyUserPwd'
+			let requestUrl = '/miyun/sys/UserPwdController/saveMyUserPwd'
 			myTabAjax(requestUrl, 'post', formObj).then((res) => {
 				if(res.code === 10000) {
 					layer.msg('新增成功')

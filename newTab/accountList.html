@@ -182,14 +182,14 @@
   <script id="accountListData" type="text/html">
     {{#  layui.each(d.list, function(index, item){ }}
     <tr class="share-result-td">
-      <td class="website-info">http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
-      <td>站酷</td>
-      <td>zhanghao</td>
-      <td>广州</td>
-      <td>http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
-      <td>站酷</td>
-      <td>zhanghao</td>
-      <td>广州</td>
+      <td class="website-info">{{ ['','网址','小慧应用','本地应用'][item.accountType] }}</td>
+      <td>{{item.url}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.userAccount}}</td>
+      <td>{{item.shareEndDate}}</td>
+      <td>{{ ['','是','否'][item.isShareNormal] }}</td>
+      <td>无值</td>
+      <td></td>
     </tr>
     {{#  }) }}
   </script>
