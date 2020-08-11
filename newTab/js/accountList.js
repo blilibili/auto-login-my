@@ -87,8 +87,13 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 			}
 		})
 	})
-});
 
+	$(".account-verify-close-image").on('click', function() {
+		$(".auto-login-back-wall").attr('style','display:none;')
+		$(".account-verify-modal").attr('style','display:none;')
+	})
+
+});
 
 function renderMyCrateData(laytpl, result) {
 	var data = { //数据
@@ -99,10 +104,19 @@ function renderMyCrateData(laytpl, result) {
 		document.getElementById('createDataListResult').innerHTML = html;
 		layuiForm.render();
 	});
+
+	$(".my-create-account").map(function(element, index, array) {
+		$(index).on('click',function(item){
+			console.log('点击',item.target.innerHTML)
+			//二次验证
+			// $(".auto-login-back-wall").attr('style','')
+			// $(".account-verify-modal").attr('style','')
+		})
+	});
 }
 
 function renderTrData(laytpl, result) {
-	var data = { //数据
+	var data = { //分享给我的数据
 		list:result
 	}
 

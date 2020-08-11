@@ -27,6 +27,7 @@
     position: absolute;
     top: 16px;
     right: 16px;
+    cursor: pointer;
   }
 </style>
 <body>
@@ -37,7 +38,8 @@
     <div class="account-verify-modal" style="display: none;">
       <div class="account-verify-title">
         <div style="color: #222222;font-size: 16px;">验证</div>
-        <img src="http://122.51.89.68:81/close.png" class="account-verify-close-image" alt="" style="width: 19px;height: 19px;">
+        <span class="account-verify-close-image" style="width: 19px;height: 19px;">X</span>
+        <!-- <img src="http://122.51.89.68:81/close.png" class="account-verify-close-image" alt="" style="width: 19px;height: 19px;"> -->
       </div>
 
       <div class="ddd-line">
@@ -140,6 +142,13 @@
             </colgroup>
             <thead>
             <tr>
+              <th class="website-info">
+                <form class="layui-form" action="">
+                  <div class="layui-form-item">
+                    <input type="checkbox" name="" title="" lay-skin="primary">
+                  </div>
+                </form>
+              </th>
               <th class="table-header-title">来源</th>
               <th class="table-header-title">网址</th>
               <th class="table-header-title">名称</th>
@@ -170,7 +179,7 @@
           </div>
         </form>
       </td>
-      <td class="website-info">{{item.url}}</td>
+    <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
       <td>{{item.name}}</td>
       <td class="my-create-account">{{item.userAccount}}</td>
       <td>{{ ['', '需要', '不需要'][item.isAgainCheck]}}</td>
@@ -182,6 +191,13 @@
   <script id="accountListData" type="text/html">
     {{#  layui.each(d.list, function(index, item){ }}
     <tr class="share-result-td">
+      <td class="website-info">
+        <form class="layui-form" action="">
+          <div class="layui-form-item">
+            <input data-id="{{item.typeId}}" type="checkbox" class="my-create-checkbox" name="" title="" lay-skin="primary">
+          </div>
+        </form>
+      </td>
       <td class="website-info">{{ ['','网址','小慧应用','本地应用'][item.accountType] }}</td>
       <td>{{item.url}}</td>
       <td>{{item.name}}</td>
