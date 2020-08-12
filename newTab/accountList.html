@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:;default-src 'self' *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
   <title>账号列表</title>
-  <link rel="stylesheet" href="./css/layui.css" media="all">
+  <link rel="stylesheet" href="./layer/css/layui.css" media="all">
   <link rel="stylesheet" href="./css/common.css">
   <link rel="stylesheet" href="./css/accountList.css">
 </head>
@@ -62,7 +62,8 @@
           </div>
           <div class="layui-tab-item" style="text-align: center;">
             <div class="xh-pass-input">
-              <img src="http://122.51.89.68:81/close.png" style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;" alt="">
+              <span style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;">X</span>
+              <!-- <img src="http://122.51.89.68:81/close.png" style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;" alt=""> -->
               <input type="text" style="width: 100%;">
             </div>
 
@@ -73,10 +74,10 @@
 
     </div>
 
-    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief1">
       <ul class="layui-tab-title">
-        <li class="layui-this">我创建的</li>
-        <li>分享给我的</li>
+        <li class="layui-this" lay-id="1" >我创建的</li>
+        <li lay-id="2">分享给我的</li>
       </ul>
 
       <div style="margin-top: 15px;">
@@ -93,7 +94,7 @@
           <input type="text" data-fields="userAccount" class="search-input search-input-account">
         </div>
 
-        <div class="layui-btn layui-btn-normal search-button search-button-click">查询</div>
+        <div data-id="1" class="layui-btn layui-btn-normal search-button search-button-click">查询</div>
 
         <div class="button-controler-list">
           <div class="layui-btn layui-btn-normal search-button using-info">使用详情</div>
@@ -142,13 +143,6 @@
             </colgroup>
             <thead>
             <tr>
-              <th class="website-info">
-                <form class="layui-form" action="">
-                  <div class="layui-form-item">
-                    <input type="checkbox" name="" title="" lay-skin="primary">
-                  </div>
-                </form>
-              </th>
               <th class="table-header-title">来源</th>
               <th class="table-header-title">网址</th>
               <th class="table-header-title">名称</th>
@@ -163,6 +157,8 @@
 
             </tbody>
           </table>
+
+          <div id="my-share-page" style="text-align: right;"></div>
         </div>
       </div>
 
@@ -191,15 +187,8 @@
   <script id="accountListData" type="text/html">
     {{#  layui.each(d.list, function(index, item){ }}
     <tr class="share-result-td">
-      <td class="website-info">
-        <form class="layui-form" action="">
-          <div class="layui-form-item">
-            <input data-id="{{item.typeId}}" type="checkbox" class="my-create-checkbox" name="" title="" lay-skin="primary">
-          </div>
-        </form>
-      </td>
-      <td class="website-info">{{ ['','网址','小慧应用','本地应用'][item.accountType] }}</td>
-      <td>{{item.url}}</td>
+      <td >{{ ['','网址','小慧应用','本地应用'][item.accountType] }}</td>
+      <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
       <td>{{item.name}}</td>
       <td>{{item.userAccount}}</td>
       <td>{{item.shareEndDate}}</td>

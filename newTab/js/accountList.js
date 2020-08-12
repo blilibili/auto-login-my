@@ -30,31 +30,49 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 		}
 
 	})*/
+	var element = layui.element;
+	//监听Tab切换，以改变地址hash值
+	element.on('tab(docDemoTabBrief1)', function(data){
+		console.log(this); //当前Tab标题所在的原始DOM元素
+		console.log(data.index); //得到当前Tab的所在下标
+		console.log(data.elem); //得到当前的Tab大容器
+		if(data.index){
+			//分享给我的查询
+			$(".button-controler-list").attr("style","display:none;")
+			$("#search1").attr("style","display:none;")
+			$("#search2").attr("style","")
+			$(".search-button-click").attr("data-id","2")
+		}else{
+			//我创建的
+			$(".button-controler-list").attr("style","")
+			$("#search1").attr("style","")
+			$("#search2").attr("style","display:none;")
+			$(".search-button-click").attr("data-id","1")
+		}
+	});
 
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
-	getMyCreateData(searchMyCreateObj, laytpl, laypage)
+	getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
+	getAccountPwdList(searchMyCreateObj, laytpl, laypage , 2)
 
 
-	// 获取分享给我的数据
-	let searchObj = {
-		myuserId: '1',
-		selectType: '2',
-		webStatus: 2,
-		currentPage: 1,
-		pageSize: 10
-	}
-	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
-		console.log(res.data)
-		renderTrData(laytpl, res.data.records)
-	})
-
-	$('.search-button-click').on('click', function() {
+	$('.search-button-click').on('click', function(item) {
 		$('.search-input-account').map(function(key, v) {
 			const keyMap = v.getAttribute('data-fields')
 			searchMyCreateObj[keyMap] = v.value
 		})
-		getMyCreateData(searchMyCreateObj, laytpl, laypage)
+		console.log(item.target.dataset.id)
+		if(item.target.dataset.id === '1'){
+			//我创建的
+			console.log("查询我创建的")
+			getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
+		}else {
+			//分享给我的
+			console.log("查询分享给我的")
+			getAccountPwdList(searchMyCreateObj, laytpl, laypage, 2)
+		}
+		
 	})
 
 	// 点击跳转
@@ -83,7 +101,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 			if(res.code === -1) {
 				layer.msg(res.message);
 			}else{
-				getMyCreateData(searchMyCreateObj, laytpl, laypage)
+				getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
 			}
 		})
 	})
@@ -129,23 +147,45 @@ function renderTrData(laytpl, result) {
 	});
 }
 
-function getMyCreateData(searchObj, laytpl, layPage) {
-	// 获取我创建的数据
+// 获取分享给我的数据
+function getAccountPwdList (searchObj, laytpl, layPage ,type = 1) {
+	type === 1 ? searchObj.webStatus = 1 : searchObj.webStatus = 2
 	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
-		renderMyCrateData(laytpl, res.data.records)
-
-		//执行一个laypage实例
-		layPage.render({
-			elem: 'my-create-page' //注意，这里的 test1 是 ID，不用加 # 号
-			,count: res.data.total //数据总数，从服务端得到
-			,theme: '#1791FF'
-			,jump: function(obj, first){
-				//首次不执行
-				if(!first){
-					searchMyCreateObj.currentPage = obj.curr
-					getMyCreateData(searchMyCreateObj, laytpl)
+		if(res.code === 10000){
+			if(type === 1){
+				renderMyCrateData(laytpl, res.data.records)
+			}else{
+				renderTrData(laytpl, res.data.records)
+			}	
+			//执行一个laypage实例
+			layPage.render({
+				elem: type === 1 ? 'my-create-page' : 'my-share-page' //注意，这里的 test1 是 ID，不用加 # 号
+				,count: res.data.total //数据总数，从服务端得到
+				,theme: '#1791FF'
+				,jump: function(obj, first){
+					//首次不执行
+					if(!first){
+						searchMyCreateObj.currentPage = obj.curr
+						getAccountPwdList(searchMyCreateObj, laytpl, laypage , type)
+					}
 				}
+			});
+		}else{
+			if(type === 1){
+				renderMyCrateData(laytpl, [])
+			}else{
+				renderTrData(laytpl, [])
 			}
-		});
+			layPage.render({
+				elem: type === 1 ? 'my-create-page' : 'my-share-page' //注意，这里的 test1 是 ID，不用加 # 号
+				,count: 0 //数据总数，从服务端得到
+				,theme: '#1791FF'
+				,jump: function(obj, first){
+					
+				}
+			});
+		}
+		
 	})
 }
+
