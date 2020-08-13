@@ -82,7 +82,7 @@
   <script id="myUsingInfoList" type="text/html">
     {{#  layui.each(d.list, function(index, item){ }}
     <tr>
-      <td class="website-info">http://XXXXXXXXXXXXX.XXXXXXX.XXX/XXX</td>
+      <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
       <td>{{item.name}}</td>
       <td>{{item.userAccount}}</td>
       <td>{{item.myAddress}}</td>

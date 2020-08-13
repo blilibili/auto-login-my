@@ -30,6 +30,24 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 		}
 
 	})*/
+
+	layuiForm.on("checkbox(allCheck)", function(data){
+        console.log(data);
+        console.log(data.elem.checked);
+        if (data.elem.checked) {
+            //动态设置全选按钮颜色，不可以这里设置，这里设置后，前端选然后不会有效果的，
+            //猜测原因是，form.render("checkbox"); 导致的，设置后layui又渲染了，把我自己设置的颜色覆盖了。所以设置需要在渲染后再设置，就等于是用我的css覆盖了layui的css
+            $(".my-create-checkbox").each(function(){
+                $(this).prop('checked', true);
+            });
+        } else {
+            $(".my-create-checkbox").each(function(){
+                $(this).prop('checked',  false);
+            });
+        }
+        layuiForm.render("checkbox");
+	});
+	
 	var element = layui.element;
 	//监听Tab切换，以改变地址hash值
 	element.on('tab(docDemoTabBrief1)', function(data){
@@ -88,22 +106,26 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 
 	// 删除账号
 	$('.del-account-record').on('click', function() {
-		let delParams = []
-		$('.my-create-checkbox').map(function(index, value) {
-			// 表示选中
-			if(value.checked) {
-				delParams.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
-			}
-		})
-
-
-		myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams).then((res) => {
-			if(res.code === -1) {
-				layer.msg(res.message);
-			}else{
-				getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
-			}
-		})
+		layer.confirm('是否删除?', function(index){
+			let delParams = []
+			$('.my-create-checkbox').map(function(index, value) {
+				// 表示选中
+				if(value.checked) {
+					delParams.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
+				}
+			})
+			console.log("delParams>>>>",delParams)
+			myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams).then((res) => {
+				if(res.code === 10000) {
+					layer.close(index);
+					getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
+				}else{
+					layer.msg(res.message);
+				}
+			})
+			
+		}); 
+		
 	})
 
 	$(".account-verify-close-image").on('click', function() {
@@ -157,19 +179,22 @@ function getAccountPwdList (searchObj, laytpl, layPage ,type = 1) {
 			}else{
 				renderTrData(laytpl, res.data.records)
 			}	
-			//执行一个laypage实例
-			layPage.render({
-				elem: type === 1 ? 'my-create-page' : 'my-share-page' //注意，这里的 test1 是 ID，不用加 # 号
-				,count: res.data.total //数据总数，从服务端得到
-				,theme: '#1791FF'
-				,jump: function(obj, first){
-					//首次不执行
-					if(!first){
-						searchMyCreateObj.currentPage = obj.curr
-						getAccountPwdList(searchMyCreateObj, laytpl, laypage , type)
+			if(searchMyCreateObj.currentPage === 1){
+				//执行一个laypage实例
+				layPage.render({
+					elem: type === 1 ? 'my-create-page' : 'my-share-page' //注意，这里的 test1 是 ID，不用加 # 号
+					,count: res.data.total //数据总数，从服务端得到
+					,theme: '#1791FF'
+					,jump: function(obj, first){
+						//首次不执行
+						if(!first){
+							searchMyCreateObj.currentPage = obj.curr
+							getAccountPwdList(searchMyCreateObj, laytpl, layPage , type)
+						}
 					}
-				}
-			});
+				});
+			}
+			
 		}else{
 			if(type === 1){
 				renderMyCrateData(laytpl, [])

@@ -1,34 +1,46 @@
-.add-new-account-title{
+.add-new-account-title {
     padding: 20px;
 }
-.add-new-account-page{
+
+.add-new-account-page {
     font-size: 16px;
     color: #304554;
 }
-.add-account-form{
+
+.add-account-form {
     width: 96%;
     margin: 0 auto;
 }
-.add-account-flex-row{
+
+.add-account-flex-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 15px;
 }
 
-.add-account-flex-col{
-    width: 128px;
+.add-account-flex-col {
+    width: 200px;
     text-align: left;
 }
 
-.add-account-input{
+.add-account-tip {
+    background-color: #00CC99;
+    border-radius: 50%;
+    padding: 3px 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-account-input {
     border: 0;
     width: 60%;
     padding: 10px;
     text-align: right;
 }
 
-.float-bottom-button{
+.float-bottom-button {
     border-top: 1px solid #DDDDDD;
     position: absolute;
     bottom: 0;
@@ -36,4 +48,150 @@
     width: 100%;
     padding: 12px 0;
     text-align: center;
+}
+
+.add-account-pwd{
+    width: 100%;
+    justify-content: flex-end;
+}
+
+/*注入样式*/
+.auto-login-line{
+    width: 100%;
+    height: 1px;
+    background-color: #DDDDDD;
+}
+
+.auto-login-back-wall{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+}
+
+.auto-login-flex-row{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+.layui-form-checked[lay-skin=primary] i{
+    border-color:#1791FF!important;
+    background-color:#1791FF;
+    color:#fff
+}
+
+.auto-login-flex-col{
+    width: 95px;
+    text-align: right;
+    font-size: 14px;
+}
+
+.auto-login-input{
+    width: 330px;
+    padding: 7px;
+    font-size: 14px;
+    color: #222222;
+    margin-left: 22px;
+    background:rgba(244,245,246,1);
+    border-radius:4px;
+    border:1px solid rgba(234,234,234,1);
+    cursor:pointer;
+}
+
+.auto-login-string-config{
+    margin-left: -10px;
+}
+
+.auto-login-string-config-label{
+    margin-left: 10px;
+    background-color: #009DD9;
+    color: white;
+    font-size: 14px;
+}
+#slide-pass-set{
+    /* width: 70%; */
+    width: 64%;
+    margin-left: 22px;
+}
+#slidePassSetVal{
+    margin-left: 22px;
+}
+.my-login-checkbox{
+    height: auto!important;
+    line-height: normal!important;
+    min-width: 18px;
+    min-height: 18px;
+    border: none!important;
+    margin-right: 0;
+    padding-left: 28px;
+    padding-right: 0;
+    background: 0 0;
+}
+
+.my-login-checkbox-words{
+    padding-left: 0;
+    padding-right: 15px;
+    line-height: 18px;
+    background: 0 0;
+    color: #666;
+}
+.layui-icon-ok:before{
+    content: '\2714' !important;
+}
+
+.auto-login-safe-block{
+    margin-left: 20px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+.auto-login-safe-col{
+    width: 99px;
+    height: 10px;
+    background-color: #F4F5F6;
+    margin-left: 2px;
+}
+.auto-login-safe-col-checked{
+    background-color: #90D5FE;
+}
+.button-controller-auto-login{
+    text-align: center;
+    margin-right: 20px;
+}
+.add-new-account-modal{
+    box-sizing: border-box;
+    z-index: 10001;
+}
+.alert-auto-login-modal{
+    background: rgba(255,255,255,0.3)!important;
+    z-index: 10001;
+}
+.auto-login-start-click-account{
+    font-size: 14px;
+}
+.auto-login-selected-account{
+    width: 280px;
+    margin: 0 auto;
+    height: 40px;
+    position: relative;
+    background-color: white;
+}
+.auto-login-click-account-small-image{
+    width: 20px;
+    height: 20px;
+}
+.auto-login-account-textarea{
+    background-color: white;
+    padding: 15px;
+    width: 280px;
+    margin: 0px auto;
+    box-sizing: border-box;
+    height: 208px;
+    overflow: auto;
 }
