@@ -195,3 +195,10 @@
     height: 208px;
     overflow: auto;
 }
+
+.icon-pwd {
+    width: 18px;
+    height: 18px;
+    margin: 0 5px;
+    cursor: pointer;
+}

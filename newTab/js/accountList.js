@@ -107,16 +107,19 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	// 删除账号
 	$('.del-account-record').on('click', function() {
 		layer.confirm('是否删除?', function(index){
-			let delParams = []
+			let delParams = {
+				typeId:[]
+			}
 			$('.my-create-checkbox').map(function(index, value) {
 				// 表示选中
 				if(value.checked) {
-					delParams.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
+					delParams.typeId.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
 				}
 			})
 			console.log("delParams>>>>",delParams)
 			myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams).then((res) => {
 				if(res.code === 10000) {
+					layer.msg('删除成功');
 					layer.close(index);
 					getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
 				}else{
@@ -148,6 +151,8 @@ function renderMyCrateData(laytpl, result) {
 	$(".my-create-account").map(function(element, index, array) {
 		$(index).on('click',function(item){
 			console.log('点击',item.target.innerHTML)
+			console.log('点击',item.target.dataset)
+			window.open('./addNewAccount.html?typeId='+item.target.dataset.typeid+"&IsSorC="+item.target.dataset.issorc)
 			//二次验证
 			// $(".auto-login-back-wall").attr('style','')
 			// $(".account-verify-modal").attr('style','')

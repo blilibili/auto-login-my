@@ -4,24 +4,24 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 	,laytpl = layui.laytpl
 	,slider = layui.slider
 
-	const formObj = {}
-	let searchObj = {
-		typeId: 2,
-		myuserId: 1,
-		accountType: 1,
-		IsSorC: 1
-	}
-
 	// 判断是否有userid
 	if(getQueryString('typeId')) {
-		myTabAjax('/miyun/sys/UserPwdController/getUserPwdEntity', 'get', searchObj).then((res) => {
-			$('.add-account-input').map(function(k, v){
-				const keyMap = v.getAttribute('data-get-fields')
-				v.value = res.data[keyMap]
-			})
-			$('.add-account-checkbox')[0].checked = res.data.isagaincheck === 1?true: false
-			// 重新渲染
-			form.render()
+		let param = {
+			typeId:getQueryString('typeId'),
+			accountType:1,
+			IsSorC:getQueryString('IsSorC'),
+		}
+		console.log("param===>",param)
+		myTabAjax('/miyun/sys/UserPwdController/getUserPwdEntity', 'get', param).then((res) => {
+			console.log(res.data)
+			//给表单赋值
+			form.val("formDemo", { 
+				"website": res.data.url
+				,"name": res.data.name
+				,"userAccount" : res.data.userAccount
+				,"userPassword" : res.data.userPassword
+				,"isAgainCheck" : res.data.isAgainCheck === 1?"checked": ""
+			});
 		})
 	}
 
@@ -36,10 +36,12 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 		// if(!$("input[name='userPassword']").val())return
 		if($("input[name='userPassword']").attr('data-isShow') === '0'){
 			console.log("点击显示密码")
+			$(this).attr("src","../img/showpwd.png")
 			$("input[name='userPassword']").attr('type','text')
 			$("input[name='userPassword']").attr('data-isShow','1')
 		}else{
 			console.log("点击影藏密码")
+			$(this).attr("src","../img/hidepwd.png")
 			$("input[name='userPassword']").attr('type','password')
 			$("input[name='userPassword']").attr('data-isShow','0')
 		}
@@ -178,20 +180,16 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 	});
 
 	form.on('submit(*)', function(data){
-		
-		let param = {
-			accountType:1,
-			isAgainCheck:data.field.isAgainCheck?1:2,
-			typeData : [{
-				name: data.field.name,
-				url: data.field.website
-			}],
-			userAccount:data.field.userAccount,
-			userPassword:data.field.userPassword,
-		}
-		console.log("提交表单：",param)
 		if(getQueryString('typeId')) {
-			param.typeId = getQueryString('typeId')
+			let param = {
+				accountType:1,
+				isAgainCheck:data.field.isAgainCheck?1:2,
+				typeId:getQueryString('typeId'),
+				userAccount:data.field.userAccount,
+				userPassword:data.field.userPassword,
+				name:data.field.name,
+				url:data.field.website,
+			}
 			let requestUrl = '/miyun/sys/UserPwdController/updateMyUserPwd'
 			myTabAjax(requestUrl, 'post', param).then((res) => {
 				if(res.code === 10000) {
@@ -201,6 +199,17 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				}
 			})
 		}else{
+			let param = {
+				accountType:1,
+				isAgainCheck:data.field.isAgainCheck?1:2,
+				typeData : [{
+					name: data.field.name,
+					url: data.field.website
+				}],
+				userAccount:data.field.userAccount,
+				userPassword:data.field.userPassword,
+			}
+			console.log("提交表单：",param)
 			let requestUrl = '/miyun/sys/UserPwdController/saveMyUserPwd'
 			myTabAjax(requestUrl, 'post', param).then((res) => {
 				if(res.code === 10000) {
