@@ -17,6 +17,13 @@
 }
 
 .auto-login-flex-row{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+.auto-login-list-flex-row{
     padding: 15px;
     display: flex;
     align-items: center;
@@ -168,4 +175,13 @@
     padding: 15px;
     display: flex;
     justify-content: space-between;
+}
+
+.copy-button-add-account{
+    position: absolute;
+    top: 14px;
+    right: 30px;
+    color: #1791FF;
+    font-size: 14px;
+    cursor:pointer;
 }

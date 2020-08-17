@@ -16,7 +16,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	 </div>
 	 <div class="auto-login-account-row-content-box">
 		 {{#  layui.each(d.list, function(index, item){ }}
-			<div class="auto-login-flex-row" style="margin-top: 0;" data-account={{ item.userAccount}} data-typeId={{ item.typeId }} >
+			<div class="auto-login-list-flex-row" style="margin-top: 0;" data-account={{ item.userAccount}} data-typeId={{ item.typeId }} >
 				<img src="http://122.51.89.68:81/key.png" class="auto-login-click-account-small-image" alt="">
 				<div style="margin-left: 10px;">
 					<div style="color: #222222;">{{ item.name }} [{{item.userAccount}}]</div>
@@ -53,7 +53,7 @@ const addNewAccountConfig = `<div>
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col"><span style="color: #FF2727;">*</span>生成密码</div>
 			<input class="auto-login-input" type="text" placeholder="" id="accountPwd" value="" readonly>
-			<div id="copybtn" style="position: absolute;top: 7px;right: 30px;color: #1791FF;font-size: 14px;cursor:pointer;">复制</div>
+			<div id="copybtn" class="copy-button-add-account">复制</div>
 		</div>
 		
 		<div class="auto-login-flex-row">
