@@ -17,7 +17,7 @@
 }
 
 .auto-login-flex-row{
-    margin-top: 20px;
+    padding: 15px;
     display: flex;
     align-items: center;
     position: relative;
@@ -131,10 +131,41 @@
 }
 .auto-login-account-textarea{
     background-color: white;
-    padding: 15px;
-    width: 280px;
+    width: 100%;
     margin: 0px auto;
     box-sizing: border-box;
-    height: 208px;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
+}
+.auto-login-account-textarea-title{
+    padding: 17px;
+    font-size: 16px;
+    color: #222;
+}
+.auto-login-account-row-title-box{
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #ddd;
+}
+.auto-login-account-textarea-close-image{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    cursor: pointer;
+}
+
+.auto-login-account-row-content-box{
     overflow: auto;
+    width: 100%;
+    position: relative;
+    height: 186px;
+}
+
+.auto-login-account-footer{
+    border-top: 1px solid #ddd;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }

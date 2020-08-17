@@ -66,7 +66,7 @@ function createBackWall() {
 }
 
 function keyUsernameClick() {
-    const modalDom = createModal(280, 208)
+    const modalDom = createModal(380, 282)
 
     let searchObj = {
         myuserId: 2,

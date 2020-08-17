@@ -10,20 +10,26 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 <!--	</div>-->
 	
 	<div class="auto-login-account-textarea">
-	{{#  layui.each(d.list, function(index, item){ }}
-		<div class="auto-login-flex-row" style="margin-top: 0;" data-account={{ item.userAccount}} data-typeId={{ item.typeId }} >
-			<img src="http://122.51.89.68:81/key.png" class="auto-login-click-account-small-image" alt="">
-			<div style="margin-left: 10px;">
-				<div style="color: #222222;">{{ item.name }} [{{item.userAccount}}]</div>
-				<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
+	 <div class="auto-login-account-row-title-box" style="position: relative;">
+			<img src="http://122.51.89.68:81/close.png" class="auto-login-account-textarea-close-image no-matching-close-button" alt="" style="width: 19px;height: 19px;">
+			<div class="auto-login-account-textarea-title">欢迎登陆</div> 
+	 </div>
+	 <div class="auto-login-account-row-content-box">
+		 {{#  layui.each(d.list, function(index, item){ }}
+			<div class="auto-login-flex-row" style="margin-top: 0;" data-account={{ item.userAccount}} data-typeId={{ item.typeId }} >
+				<img src="http://122.51.89.68:81/key.png" class="auto-login-click-account-small-image" alt="">
+				<div style="margin-left: 10px;">
+					<div style="color: #222222;">{{ item.name }} [{{item.userAccount}}]</div>
+					<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
+				</div>
 			</div>
-		</div>
-		
-		<div style="width: 100%;background-color: #ECEBEB;height: 1px;margin: 15px 0;"></div>
-	{{#  }) }}	
-		<div style="display: flex;justify-content: space-between;padding: 0px;margin-top: 25px;">
+			
+			<div style="width: 100%;background-color: #ECEBEB;height: 1px;"></div>
+		{{#  }) }}	
+	 </div>
+	<div class="auto-login-account-footer">
 		<div style="cursor: pointer;color: #1791FF;" class="no-matching-add-new-account">添加新账号</div>
-		<div style="cursor: pointer;" class="no-matching-close-button">关闭</div>
+		<div style="cursor: pointer;" class="no-matching-close-button">关闭</div>	
 	</div>
 	</div>
 	
