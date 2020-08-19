@@ -14,7 +14,8 @@
     "tabs",
     "webRequest",
     "storage",
-    "notifications"
+    "notifications",
+    "management"
   ],
   // 使用的外部插件资源
   "web_accessible_resources": ["jquery.js" , "index.js", "/newTab/layer/layui.all.js", "/newTab/layer/css/layui.css"],

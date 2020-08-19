@@ -1,5 +1,5 @@
 // 我创建的搜索条件
-let myuserId = '1'
+let myuserId = window.localStorage.getItem("userid")
 let searchMyCreateObj = {
 	myuserId: myuserId,
 	selectType: '2',

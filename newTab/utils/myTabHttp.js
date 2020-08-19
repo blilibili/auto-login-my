@@ -6,7 +6,7 @@ async function myTabAjax(url, methods, data, headers={'Content-Type':'applicatio
 		headers.token = window.localStorage.token
 	}else{
 		const loginData = {
-			userId: '1',
+			userId: window.localStorage.getItem("userid"),
 			// userName: 'daniel'
 		}
 		let token = await getLoginToken(loginData)

@@ -69,7 +69,7 @@ function keyUsernameClick() {
     const modalDom = createModal(380, 282)
 
     let searchObj = {
-        myuserId: 2,
+        myuserId: window.localStorage.getItem("userid"), //2,
         currentPage: 1,
         pageSize: 100,
         selectType: 2,
@@ -389,6 +389,9 @@ function loginCommonMethods() {
     // }, function (tabs) { //It returns an array
     //    console.log(tabs)
     // });
+
+    console.log("基础信息:")
+    console.log(window.localStorage)
 
     const inputArr = $('input')
     var username = inputArr[0]
