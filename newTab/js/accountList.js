@@ -117,7 +117,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 				}
 			})
 			console.log("delParams>>>>",delParams)
-			myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams).then((res) => {
+			myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams, myuserId).then((res) => {
 				if(res.code === 10000) {
 					layer.msg('删除成功');
 					layer.close(index);
@@ -177,7 +177,7 @@ function renderTrData(laytpl, result) {
 // 获取分享给我的数据
 function getAccountPwdList (searchObj, laytpl, layPage ,type = 1) {
 	type === 1 ? searchObj.webStatus = 1 : searchObj.webStatus = 2
-	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
+	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, myuserId).then((res) => {
 		if(res.code === 10000){
 			if(type === 1){
 				renderMyCrateData(laytpl, res.data.records)

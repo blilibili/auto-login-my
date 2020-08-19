@@ -3,7 +3,7 @@ let searchObj = {
 	currentPage: 1,
 	pageSize: 10
 }
-
+const myuserId = window.localStorage.getItem("userid")
 layui.use(['laypage', 'laytpl'], function(){
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
@@ -78,7 +78,7 @@ function renderOftenIp(laytpl, result) {
 
 function getUsingInfoList(searchObj,laytpl, laypage) {
 	console.log(searchObj)
-	myTabAjax('/miyun/sys/UserLoginController/getUserDetailList', 'get', searchObj).then((res) => {
+	myTabAjax('/miyun/sys/UserLoginController/getUserDetailList', 'get', searchObj, myuserId).then((res) => {
 		console.log(res.data)
 		// 拼接终端
 		let terminalName = []

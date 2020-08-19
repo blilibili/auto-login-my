@@ -16,7 +16,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	 </div>
 	 <div class="auto-login-account-row-content-box">
 		 {{#  layui.each(d.list, function(index, item){ }}
-			<div class="auto-login-list-flex-row" style="margin-top: 0;" data-account={{ item.userAccount}} data-typeId={{ item.typeId }} >
+			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
 				<img src="http://122.51.89.68:81/key.png" class="auto-login-click-account-small-image" alt="">
 				<div style="margin-left: 10px;">
 					<div style="color: #222222;">{{ item.name }} [{{item.userAccount}}]</div>

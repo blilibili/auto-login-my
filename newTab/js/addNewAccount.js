@@ -1,3 +1,4 @@
+const myuserId = window.localStorage.getItem("userid")
 layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 	var layer = layui.layer
 	,form = layui.form
@@ -12,7 +13,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			IsSorC:getQueryString('IsSorC'),
 		}
 		console.log("param===>",param)
-		myTabAjax('/miyun/sys/UserPwdController/getUserPwdEntity', 'get', param).then((res) => {
+		myTabAjax('/miyun/sys/UserPwdController/getUserPwdEntity', 'get',param, myuserId).then((res) => {
 			console.log(res.data)
 			//给表单赋值
 			form.val("formDemo", { 
@@ -191,7 +192,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				url:data.field.website,
 			}
 			let requestUrl = '/miyun/sys/UserPwdController/updateMyUserPwd'
-			myTabAjax(requestUrl, 'post', param).then((res) => {
+			myTabAjax(requestUrl, 'post', param, myuserId).then((res) => {
 				if(res.code === 10000) {
 					layer.msg('编辑成功')
 				}else{
@@ -211,7 +212,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			}
 			console.log("提交表单：",param)
 			let requestUrl = '/miyun/sys/UserPwdController/saveMyUserPwd'
-			myTabAjax(requestUrl, 'post', param).then((res) => {
+			myTabAjax(requestUrl, 'post', param, myuserId).then((res) => {
 				if(res.code === 10000) {
 					layer.msg('新增成功')
 				}else{

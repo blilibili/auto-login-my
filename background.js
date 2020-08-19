@@ -24,6 +24,11 @@ chrome.management.getAll(callback=>{
         msg:'hello'
     },function(res) {
         console.log("res:",res)
+
+        chrome.storage.local.set({userid: res.chatserverId}, function() {
+            console.log("保存id:",res.chatserverId);
+        });
+
         window.localStorage.setItem('userid', res.chatserverId)
     })
 })

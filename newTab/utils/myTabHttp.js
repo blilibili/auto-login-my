@@ -1,12 +1,12 @@
 const hostname = 'http://116.85.11.146:9021'
 
-async function myTabAjax(url, methods, data, headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
+async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
 	if(window.localStorage.token) {
 		headers.token = window.localStorage.token
 	}else{
 		const loginData = {
-			userId: window.localStorage.getItem("userid"),
+			userId: uid,
 			// userName: 'daniel'
 		}
 		let token = await getLoginToken(loginData)
@@ -25,7 +25,7 @@ async function myTabAjax(url, methods, data, headers={'Content-Type':'applicatio
 				// 登录失效
 				if(result.code === 50004) {
 					window.localStorage.removeItem('token')
-					myTabAjax(url, methods, data, headers)
+					myTabAjax(url, methods, data, uid, headers)
 				}
 				resolve(result)
 			},

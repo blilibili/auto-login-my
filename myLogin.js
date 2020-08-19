@@ -7,6 +7,7 @@
 //     }
 // });
 var globalData = {
+    userid:'',
     myName: '',
     myUrl: '',
     myuserName: '',
@@ -69,13 +70,13 @@ function keyUsernameClick() {
     const modalDom = createModal(380, 282)
 
     let searchObj = {
-        myuserId: window.localStorage.getItem("userid"), //2,
+        // myuserId: globalData.userid, 
         currentPage: 1,
         pageSize: 100,
         selectType: 2,
         // webStatus: 1
     }
-    myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj).then((res) => {
+    myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, globalData.userid).then((res) => {
         layui.use(['laytpl'], function() {
             createBackWall()
             var data = { //数据
@@ -91,28 +92,33 @@ function keyUsernameClick() {
 
                 createAddAccountDom()
 
-                $('.auto-login-flex-row').on('click', function() {
-                    // 主键id 用于找账号密码
-                    let keyId = this.getAttribute('data-typeId')
-                    let accountObj = res.data.records.filter((result) => {
-                        return parseInt(result.typeId, 10) === parseInt(keyId, 10)
-                    })[0]
-
-                    // 设置账号密码
-                    setUserName(accountObj.userAccount)
-                    setPassword(accountObj.userPassword)
-
-                    // 设置记录的数据
-                    globalData.myName = accountObj.name
-                    globalData.myUrl = accountObj.url
-                    globalData.myuserName = accountObj.useraccount
-
-                    $(modalDom).remove()
-                    $('.auto-login-back-wall').remove()
-                })
                 $('.no-matching-close-button').on('click', function() {
                     $(modalDom).remove()
                     $('.auto-login-back-wall').remove()
+                })
+
+                $('.account-list-use').each((key,val)=>{
+                    $(val).on('click',function(item){
+                        let keyId = this.getAttribute('data-typeId')
+                        console.log("typeId:",keyId)
+                        let accountObj = res.data.records.filter((result) => {
+                            return parseInt(result.typeId, 10) === parseInt(keyId, 10)
+                        })[0]
+
+                        // 设置账号密码
+                        setUserName(accountObj.userAccount)
+                        setPassword(accountObj.sharedPwd)
+
+                        // 设置记录的数据
+                        globalData.myName = accountObj.name
+                        globalData.myUrl = accountObj.url
+                        globalData.myuserName = accountObj.userAccount
+
+                        $(findLoginButton()[0]).addClass('active')
+
+                        $(modalDom).remove()
+                        $('.auto-login-back-wall').remove()
+                    })
                 })
             });
         })
@@ -228,11 +234,11 @@ function createAddAccountDom() {
         $('.auto-login-pass-set-use').on('click', function() {
             if(!account)return
             console.log('提交')
-            $($("input[type='text']")[0]).val(account)
-            let pass = $("input[type='password']")
-            for (let i = 0; i < pass.length; i++) {
-                $(pass[i]).val($("#accountPwd").val())
-            }
+            // 设置账号密码
+            setUserName(account)
+            setPassword($("#accountPwd").val())
+            $(findLoginButton()[0]).addClass('active')
+
             closeModal()
         })
 
@@ -276,12 +282,10 @@ function autoCreatePwd(){
         return '';//密码长度不能为0
     }
     // let settingType = [1,1,1,1] //大写,小写,数字,字符
-    console.log("settingType:",settingType)
     let settingTypeL = 0
     settingType.forEach(item=>{
         settingTypeL += item
     })
-    console.log("settingTypeL:",settingTypeL)
     if(settingTypeL < 1){
         return '';//字符设置不能为空
     }
@@ -302,20 +306,14 @@ function autoCreatePwd(){
         }),
     ]
 
-    console.log("pwdLib:",pwdLib)
     let count = parseInt(pwdLength/settingTypeL)
-    console.log("pwdLength:",pwdLength)
-    console.log("count:",count)
     //先判断是否可以均分
     if(pwdLength%settingTypeL === 0){
-        console.log("均分")
         let list = (settingType[0] ? getRandomArrayElements(pwdLib[0],count) : '') + (settingType[1] ? getRandomArrayElements(pwdLib[1],count) : '') + (settingType[2] ? getRandomArrayElements(pwdLib[2],count) : '') + (settingType[3] ? getRandomArrayElements(pwdLib[3],count) : '')
         retPwd = upsetArr(Array.from(list)).join('')
     }else {
-        console.log("不可均分")
         //不可以均分，每多一个，排序在前的数列多一位
         let remainder = pwdLength%settingTypeL
-        console.log("remainder：",remainder)
         let list = (settingType[0] ? getRandomArrayElements(pwdLib[0],count+(--remainder>=0?1:0)) : '') + (settingType[1] ? getRandomArrayElements(pwdLib[1],count+(--remainder>=0?1:0)) : '') + (settingType[2] ? getRandomArrayElements(pwdLib[2],count+(--remainder>=0?1:0)) : '') + (settingType[3] ? getRandomArrayElements(pwdLib[3],count) : '')
         retPwd = upsetArr(Array.from(list)).join('')
     }
@@ -389,9 +387,11 @@ function loginCommonMethods() {
     // }, function (tabs) { //It returns an array
     //    console.log(tabs)
     // });
-
-    console.log("基础信息:")
-    console.log(window.localStorage)
+    
+    chrome.storage.local.get(['userid'],function(result) {
+        console.log("用户id:",result.userid)
+        globalData.userid = result.userid
+    });
 
     const inputArr = $('input')
     var username = inputArr[0]
@@ -403,19 +403,20 @@ function loginCommonMethods() {
     // 点击登录按钮 插入记录
     const loginButton = findLoginButton()
 
-
     loginButton[0].addEventListener('click' , function() {
         let insertModel = {
-            accountId: 1,
-            myAddress: globalData.myUrl,
+            accountId: globalData.userid,
+            // myAddress: globalData.myUrl,
             myName: globalData.myName,
             myUrl: globalData.myUrl,
-            myUserIp: '192.168.1.43',
+            // myUserIp: '192.168.1.43',
             terminalName: '',
             terminalType: 3,
-            userName: globalData.userName
+            // userName: globalData.userName
         }
-        myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel).then((res) => {
+        console.log("点击登录:",JSON.stringify(insertModel))
+        // if(!globalData.myName)return
+        myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel, globalData.userid).then((res) => {
             console.log(res.data)
         })
     })
