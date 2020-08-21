@@ -10,25 +10,27 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
-chrome.management.getAll(callback=>{
-    console.log("callback:",callback)
-    let id = ""
-    callback.forEach(item=> {
-        if(item.name == "云中云管家") {
-            console.log("id：",item.id)
-            id = item.id
-        }
-    })
-    chrome.runtime.sendMessage(id,{
-        type:"msgFrom",
-        msg:'hello'
-    },function(res) {
-        console.log("res:",res)
-
-        chrome.storage.local.set({userid: res.chatserverId}, function() {
-            console.log("保存id:",res.chatserverId);
-        });
-
-        window.localStorage.setItem('userid', res.chatserverId)
+chrome.tabs.onCreated.addListener(function(tab) {
+    chrome.management.getAll(callback=>{
+        console.log("callback:",callback)
+        let id = ""
+        callback.forEach(item=> {
+            if(item.name == "云中云管家") {
+                console.log("id：",item.id)
+                id = item.id
+            }
+        })
+        chrome.runtime.sendMessage(id,{
+            type:"msgFrom",
+            msg:'hello'
+        },function(res) {
+            console.log("res:",res)
+    
+            chrome.storage.local.set({userid: res.chatserverId}, function() {
+                console.log("保存id:",res.chatserverId);
+            });
+    
+            window.localStorage.setItem('userid', res.chatserverId)
+        })
     })
 })
