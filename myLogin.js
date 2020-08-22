@@ -21,8 +21,8 @@ function keyDomFunc(insertDom, callback=() => {}) {
     keyDom.width = 30
     keyDom.height = 30
     keyDom.style.position = 'absolute'
-    keyDom.style.top = 0
-    keyDom.style.right = 0
+    keyDom.style.top = insertDom.getBoundingClientRect().offsetTop + 'px'
+    keyDom.style.left = insertDom.getBoundingClientRect().offsetLeft + 'px'
     keyDom.style.cursor = 'pointer'
     keyDom.onclick = callback
     if(insertDom) {
@@ -70,7 +70,7 @@ function keyUsernameClick() {
     const modalDom = createModal(380, 282)
 
     let searchObj = {
-        // myuserId: globalData.userid, 
+        // myuserId: globalData.userid,
         currentPage: 1,
         pageSize: 100,
         selectType: 2,
@@ -387,7 +387,7 @@ function loginCommonMethods() {
     // }, function (tabs) { //It returns an array
     //    console.log(tabs)
     // });
-    
+
     chrome.storage.local.get(['userid'],function(result) {
         console.log("用户id:",result.userid)
         globalData.userid = result.userid
@@ -395,6 +395,7 @@ function loginCommonMethods() {
 
     const inputArr = $('input')
     var username = inputArr[0]
+    console.log('username', username)
     keyDomFunc(username, keyUsernameClick)
 
     var password = inputArr[1]
