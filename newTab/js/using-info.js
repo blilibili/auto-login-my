@@ -8,6 +8,7 @@ layui.use(['laypage', 'laytpl'], function(){
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
 	getUsingInfoList(searchObj,laytpl, laypage)
+
 });
 
 // 点击跳转
@@ -30,19 +31,20 @@ function renderUsingInfoData(laytpl, result) {
 	});
 }
 
+let isShowMoreAddress = false
 function renderOftenAddress(laytpl, result) {
 	let commonAddressList = []
+	let completeAddressList = []
 	for (let i = 0; i < result.length; i++) {
-		if(i === 2){
-			commonAddressList.push('...')
-			break;
+		if(i < 2) {
+			commonAddressList.push(result[i])
 		}
-		commonAddressList.push(result[i])
+		completeAddressList.push(result[i])
 	}
 	$("#often-address").attr('title',"常用地址："+result.toString())
 
 	var data = { //数据
-		oftenAddress:commonAddressList
+		oftenAddress:!isShowMoreAddress?commonAddressList:completeAddressList
 	}
 	let getTpl = document.getElementById('myUsingOftenAddress').innerHTML
 	laytpl(getTpl).render(data, function(html){
@@ -50,21 +52,26 @@ function renderOftenAddress(laytpl, result) {
 	});
 }
 
+let isShowMoreIp = false
 function renderOftenIp(laytpl, result) {
 	let commonTerminalList = []
 	let titleList = []
 	for (let i = 0; i < result.length; i++) {
+		if(!isShowMoreIp) {
+			if(i >= 2) {
+				break
+			}
+		}
 		if(result[i].type === 1){
 			titleList.push("电脑："+result[i].name)
-			commonTerminalList[0] = commonTerminalList[0] ? commonTerminalList[0] : ("电脑："+result[i].name)
+			commonTerminalList[i] = commonTerminalList[i] ? commonTerminalList[i] : ("电脑："+result[i].name)
 		}
 		if(result[i].type === 2){
 			titleList.push("手机："+result[i].name)
-			commonTerminalList[1] = commonTerminalList[1] ? commonTerminalList[1] : ("手机："+result[i].name)
+			commonTerminalList[i] = commonTerminalList[i] ? commonTerminalList[i] : ("手机："+result[i].name)
 		}
-		
 	}
-	commonTerminalList.push("...")
+
 	var data = { //数据
 		oftenIp:commonTerminalList
 	}
@@ -94,6 +101,18 @@ function getUsingInfoList(searchObj,laytpl, laypage) {
 		}
 		renderOftenIp(laytpl, terminalName)
 		renderOftenAddress(laytpl,res.data.common.commonAddress)
+
+		// 点击展开地址更多
+		$('#more-address').on('click', function() {
+			isShowMoreAddress = !isShowMoreAddress
+			renderOftenAddress(laytpl,res.data.common.commonAddress)
+		})
+		// 点击展开ip更多
+		$('#more-ip').on('click', function() {
+			isShowMoreIp = !isShowMoreIp
+			renderOftenIp(laytpl, terminalName)
+		})
+
 		renderUsingInfoData(laytpl, res.data.records)
 
 		if(searchObj.currentPage === 1){

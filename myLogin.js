@@ -20,9 +20,10 @@ function keyDomFunc(insertDom, callback=() => {}) {
     keyDom.src = 'http://122.51.89.68:81/key.png'
     keyDom.width = 30
     keyDom.height = 30
-    keyDom.style.position = 'absolute'
-    keyDom.style.top = insertDom.getBoundingClientRect().offsetTop + 'px'
-    keyDom.style.left = insertDom.getBoundingClientRect().offsetLeft + 'px'
+    keyDom.style.position = 'fixed'
+    console.log('top', insertDom.getBoundingClientRect().left)
+    keyDom.style.top = insertDom.getBoundingClientRect().top + 'px'
+    keyDom.style.left = insertDom.getBoundingClientRect().left + insertDom.getBoundingClientRect().width - 40 + 'px'
     keyDom.style.cursor = 'pointer'
     keyDom.onclick = callback
     if(insertDom) {
@@ -426,6 +427,7 @@ function loginCommonMethods() {
 // 递归判断是否加载完成
 testIsComplete()
 function testIsComplete() {
+    console.log('开始执行')
     if(window.document.readyState === 'complete'){
         loginCommonMethods()
     }else{
