@@ -1,3 +1,9 @@
+.account-list{
+    width: 1440px;
+    margin:  15px auto 0 auto;
+    background-color: white;
+    padding: 10px 20px;
+}
 .search-input{
     width: 200px;
     padding: 8px;

@@ -43,3 +43,7 @@ html {
     color: #222222;
     font-size: 14px;
 }
+.common-button{
+    border-radius: 4px;
+    width: 96px;
+}
