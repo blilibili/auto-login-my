@@ -73,16 +73,20 @@ function keyUsernameClick() {
     let searchObj = {
         // myuserId: globalData.userid,
         currentPage: 1,
-        pageSize: 100,
-        selectType: 2,
+        pageSize: 10,
+        selectType: 3,
+        searchValue: window.location.origin,
+        accounttype: 1
         // webStatus: 1
     }
     myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, globalData.userid).then((res) => {
         layui.use(['laytpl'], function() {
             createBackWall()
+            console.log('data', res)
             var data = { //数据
-                list: res.data.records
+                list: res.data === null?[]: res.data.records
             }
+            console.log('data', data)
 
             // $('.share-result-td').append(shareListHtml)
             var laytpl = layui.laytpl;
