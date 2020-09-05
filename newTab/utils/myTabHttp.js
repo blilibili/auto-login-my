@@ -76,3 +76,53 @@ function getQueryString(par) {
 	}
 	return get_par;
 }
+
+const pwdkey = 18; //偏移量，后台获得
+
+/**
+ * 明文
+ * @param {*} plain 
+ * @param {*} key //偏移量，后台获得
+ */
+function do_encrypt(plain,key) {
+	var ctext = "";
+
+	// do the encoding
+	for( var i = 0; i < plain.length; i ++ ) {
+		var pcode = plain.charCodeAt( i );
+		var ccode = pcode;
+		if ( pcode >= 65 && pcode <= 90 ) {
+			ccode = ( ( pcode - 65 ) + key * 1 ) % 26 + 65;
+		}
+		if ( pcode >= 97 && pcode <= 122 ) {
+			ccode = ( ( pcode - 97 ) + key * 1 ) %26 + 97;
+		}
+		ctext += String.fromCharCode(ccode);
+	}
+
+	return ctext;
+}
+
+/**
+ * 密文
+ * @param {*} ctext 
+ * @param {*} key //偏移量，后台获得
+ */
+function do_decrypt(ctext,key) {
+	var plain = "";
+
+	// do the encoding
+	for( var i = 0; i < ctext.length; i ++ ) {
+		var ccode = ctext.charCodeAt( i );
+		var pcode = ccode;
+		if ( ccode >= 65 && ccode <= 90 ) {
+			pcode = ( ( ccode - 65 ) - key * 1 +26 ) % 26 + 65;
+		}
+		if ( ccode >= 97 && ccode <= 122 ) {
+			pcode = ( ( ccode - 97 ) - key * 1 + 26) % 26 + 97;
+		}
+		plain += String.fromCharCode(pcode);
+	}
+
+	return plain;
+}
