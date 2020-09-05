@@ -20,7 +20,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				"website": res.data.url
 				,"name": res.data.name
 				,"userAccount" : res.data.userAccount
-				,"userPassword" : res.data.userPassword
+				,"userPassword" : do_decrypt(res.data.userPassword)
 				,"isAgainCheck" : res.data.isAgainCheck === 1?"checked": ""
 			});
 		})
@@ -187,7 +187,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				isAgainCheck:data.field.isAgainCheck?1:2,
 				typeId:getQueryString('typeId'),
 				userAccount:data.field.userAccount,
-				userPassword:data.field.userPassword,
+				userPassword:do_encrypt(data.field.userPassword),
 				name:data.field.name,
 				url:data.field.website,
 			}
@@ -208,7 +208,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 					url: data.field.website
 				}],
 				userAccount:data.field.userAccount,
-				userPassword:data.field.userPassword,
+				userPassword:do_encrypt(data.field.userPassword),
 			}
 			console.log("提交表单：",param)
 			let requestUrl = '/miyun/sys/UserPwdController/saveMyUserPwd'

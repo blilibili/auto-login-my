@@ -12,6 +12,10 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 		let token = await getLoginToken(loginData)
 		headers.token = token
 		window.localStorage.setItem('token', token)
+		//获取偏移量
+		myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', uid, {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
+			window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
+		})
 	}
 
 	return new Promise((resolve, reject) => {
@@ -56,6 +60,25 @@ function getLoginToken(loginData) {
 	})
 }
 
+function getOffset() {
+	return new Promise((reslove, reject) => {
+		$.ajax({
+			url: hostname + '/miyun/sys/UserPwdController/getTheOffset',
+			type: 'get',
+			headers: {'Content-Type':'application/json;charset=utf8;'},
+			dataType: "json",
+			success: (result) => {
+				reslove(result.data.token)
+			},
+			error: (e) => {
+				console.log('接口异常', e)
+			},
+			complete: (e) => {
+			}
+		})
+	})
+}
+
 function getQueryString(par) {
 	//获取当前URL
 	var local_url = window.location.href;
@@ -77,14 +100,105 @@ function getQueryString(par) {
 	return get_par;
 }
 
+var Base64 = {
+	_keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZ+/=abcdefghijklmnopqrstuvwxyz0123456789",
+	encode: function(e) {
+		var t = "";
+		var n, r, i, s, o, u, a;
+		var f = 0;
+		e = Base64._utf8_encode(e);
+		while (f < e.length) {
+			n = e.charCodeAt(f++);
+			r = e.charCodeAt(f++);
+			i = e.charCodeAt(f++);
+			s = n >> 2;
+			o = (n & 3) << 4 | r >> 4;
+			u = (r & 15) << 2 | i >> 6;
+			a = i & 63;
+			if (isNaN(r)) {
+				u = a = 64
+			} else if (isNaN(i)) {
+				a = 64
+			}
+			t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a)
+		}
+		return t
+	},
+	decode: function(e) {
+		var t = "";
+		var n, r, i;
+		var s, o, u, a;
+		var f = 0;
+		e = e.replace(/[^A-Za-z0-9+/=]/g, "");
+		while (f < e.length) {
+			s = this._keyStr.indexOf(e.charAt(f++));
+			o = this._keyStr.indexOf(e.charAt(f++));
+			u = this._keyStr.indexOf(e.charAt(f++));
+			a = this._keyStr.indexOf(e.charAt(f++));
+			n = s << 2 | o >> 4;
+			r = (o & 15) << 4 | u >> 2;
+			i = (u & 3) << 6 | a;
+			t = t + String.fromCharCode(n);
+			if (u != 64) {
+				t = t + String.fromCharCode(r)
+			}
+			if (a != 64) {
+				t = t + String.fromCharCode(i)
+			}
+		}
+		t = Base64._utf8_decode(t);
+		return t
+	},
+	_utf8_encode: function(e) {
+		e = e.replace(/rn/g, "n");
+		var t = "";
+		for (var n = 0; n < e.length; n++) {
+			var r = e.charCodeAt(n);
+			if (r < 128) {
+				t += String.fromCharCode(r)
+			} else if (r > 127 && r < 2048) {
+				t += String.fromCharCode(r >> 6 | 192);
+				t += String.fromCharCode(r & 63 | 128)
+			} else {
+				t += String.fromCharCode(r >> 12 | 224);
+				t += String.fromCharCode(r >> 6 & 63 | 128);
+				t += String.fromCharCode(r & 63 | 128)
+			}
+		}
+		return t
+	},
+	_utf8_decode: function(e) {
+		var t = "";
+		var n = 0;
+		var r = c1 = c2 = 0;
+		while (n < e.length) {
+			r = e.charCodeAt(n);
+			if (r < 128) {
+				t += String.fromCharCode(r);
+				n++
+			} else if (r > 191 && r < 224) {
+				c2 = e.charCodeAt(n + 1);
+				t += String.fromCharCode((r & 31) << 6 | c2 & 63);
+				n += 2
+			} else {
+				c2 = e.charCodeAt(n + 1);
+				c3 = e.charCodeAt(n + 2);
+				t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+				n += 3
+			}
+		}
+		return t
+	}
+}
+
 const pwdkey = 18; //偏移量，后台获得
 
 /**
  * 明文
  * @param {*} plain 
- * @param {*} key //偏移量，后台获得
  */
-function do_encrypt(plain,key) {
+function do_encrypt(plain) {
+	const key = window.localStorage.offset
 	var ctext = "";
 
 	// do the encoding
@@ -100,15 +214,16 @@ function do_encrypt(plain,key) {
 		ctext += String.fromCharCode(ccode);
 	}
 
-	return ctext;
+	return Base64.encode(ctext);
 }
 
 /**
  * 密文
- * @param {*} ctext 
- * @param {*} key //偏移量，后台获得
+ * @param {*} str 
  */
-function do_decrypt(ctext,key) {
+function do_decrypt(str) {
+	const key = window.localStorage.offset
+	var ctext = Base64.decode(str)
 	var plain = "";
 
 	// do the encoding
