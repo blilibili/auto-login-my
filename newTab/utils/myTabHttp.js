@@ -1,7 +1,15 @@
 const hostname = 'http://116.85.11.146:9021'
+let requestHistory = {}
 
 async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
+	requestHistory = {
+		url: url,
+		methods: methods,
+		data: data,
+		uid: uid,
+		headers: headers
+	}
 	if(window.localStorage.token) {
 		headers.token = window.localStorage.token
 	}else{
@@ -28,15 +36,11 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 			data: methods === 'post'?JSON.stringify(data): data,
 			dataType: "json",
 			success: (result) => {
+				console.log('结果结果', result)
 				// 登录失效
 				if(result.code === 50004) {
 					window.localStorage.removeItem('token')
 					myTabAjax(url, methods, data, uid, headers)
-				}
-				// 未激活状态
-				if(result.code === 43007) {
-					window.localStorage.removeItem('token')
-					goToActive(url, methods, data, uid, headers, {userName: loginData.userName, userId: loginData.userId})
 				}
 				resolve(result)
 			},
@@ -57,8 +61,22 @@ function getLoginToken(loginData) {
 			dataType: "json",
 			success: (result) => {
 				console.log('result', result)
-				reslove(result.data.token)
-
+				// 未激活状态
+				if(result.code === 43007) {
+					console.log('开始激活')
+					window.localStorage.removeItem('token')
+					goToActive({userName: loginData.userName, userId: loginData.userId}).then((value) => {
+						getLoginToken(loginData).then((token) => {
+							reslove(token.data.token)
+						})
+					}, () => {
+						getLoginToken(loginData).then((token) => {
+							reslove(token.data.token)
+						})
+					})
+				}else{
+					reslove(result.data.token)
+				}
 			},
 			error: (e) => {
 				console.log('接口异常', e)
@@ -69,25 +87,25 @@ function getLoginToken(loginData) {
 	})
 }
 
-function goToActive (url, methods, data, uid, headers, loginData) {
-	$.ajax({
-		url: hostname + '/miyun/sys/UserLoginController/activationMiYunUser',
-		type: 'post',
-		headers: {'Content-Type':'application/json;charset=utf8;'},
-		data: JSON.stringify({userName: loginData.userName, userId: loginData.userId}),
-		dataType: "json",
-		success: (result) => {
-			getLoginToken({userName: loginData.userName, userId: loginData.userId}).then(() => {
-				myTabAjax(url, methods, data, uid, headers)
-			})
-		},
-		error: (e) => {
-			getLoginToken({userName: loginData.userName, userId: loginData.userId}).then(() => {
-				myTabAjax(url, methods, data, uid, headers)
-			})
-		},
-		complete: (e) => {
-		}
+function goToActive (loginData) {
+	return new Promise((reslove, reject) => {
+		$.ajax({
+			url: hostname + '/miyun/sys/UserLoginController/activationMiYunUser',
+			type: 'post',
+			headers: {'Content-Type':'application/json;charset=utf8;', 'token': ''},
+			data: JSON.stringify({userName: loginData.userName, userId: loginData.userId}),
+			dataType: "json",
+			success: (result) => {
+				console.log('激活',result)
+				reslove(result)
+			},
+			error: (e) => {
+				console.log('异常',e)
+				reslove(e)
+			},
+			complete: (e) => {
+			}
+		})
 	})
 }
 
