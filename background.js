@@ -25,12 +25,20 @@ chrome.tabs.onCreated.addListener(function(tab) {
             msg:'hello'
         },function(res) {
             console.log("res:",res)
-    
-            chrome.storage.local.set({userid: res.chatserverId}, function() {
-                console.log("保存id:",res.chatserverId);
-            });
-    
-            window.localStorage.setItem('userid', res.chatserverId)
+
+            if(res.chatserverId) {
+                chrome.storage.local.set({userid: res.chatserverId}, function() {
+                    console.log("保存id:",res.chatserverId);
+                });
+                window.localStorage.setItem('userid', res.chatserverId)
+            }
+
+            if(res.chatServerId) {
+                chrome.storage.local.set({userid: res.chatServerId}, function() {
+                    console.log("保存id:",res.chatServerId);
+                });
+                window.localStorage.setItem('userid', res.chatServerId)
+            }
         })
     })
 })

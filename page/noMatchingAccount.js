@@ -101,3 +101,45 @@ const addNewAccountConfig = `<div>
 		<button type="button" class="layui-btn  auto-login-pass-set-use">使用</button>
 	</div>
 </div>`
+
+const verifyModal = `
+  <!--验证弹框-->
+    <div class="account-verify-modal" style="display: none;">
+      <div class="account-verify-title">
+        <div style="color: #222222;font-size: 16px;">验证</div>
+        <!-- <span class="account-verify-close-image" style="width: 19px;height: 19px;">X</span> -->
+        <img src="http://122.51.89.68:81/close.png" class="account-verify-close-image" alt="" style="width: 19px;height: 19px;">
+      </div>
+
+      <div class="ddd-line">
+
+      </div>
+      <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title" style="text-align: center;border-bottom: 0;">
+          <li class="layui-this" style="font-size: 18px;padding: 0 24px;line-height: 28px;margin-right: 60px;">小慧扫码</li>
+          <li style="font-size: 18px;padding: 0 24px;line-height: 28px;">小慧密码</li>
+        </ul>
+
+        <div class="layui-tab-content">
+          <div class="layui-tab-item layui-show">
+            <div class="xh-login-scan-row" style="text-align: center;margin-top: 30px;">
+              <img src="#" class="xh-login-scan-image" alt="">
+            </div>
+            <div style="text-align: center;color: #999999;font-size: 14px;">
+              点击刷新二维码
+            </div>
+          </div>
+          <div class="layui-tab-item" style="text-align: center;">
+            <div class="xh-pass-input">
+              <!-- <span style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;">X</span> -->
+              <img src="http://122.51.89.68:81/close.png" style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;" alt="">
+              <input type="text" style="width: 100%;">
+            </div>
+
+            <div class="layui-btn layui-btn-normal auto-login-submit-xh-pass">提交</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+`

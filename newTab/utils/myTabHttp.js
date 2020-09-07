@@ -49,6 +49,9 @@ function getLoginToken(loginData) {
 			data: loginData,
 			dataType: "json",
 			success: (result) => {
+				if(!result.data) {
+					alert('请先登录云中云')
+				}
 				reslove(result.data.token)
 			},
 			error: (e) => {
@@ -195,7 +198,7 @@ const pwdkey = 18; //偏移量，后台获得
 
 /**
  * 明文
- * @param {*} plain 
+ * @param {*} plain
  */
 function do_encrypt(plain) {
 	const key = window.localStorage.offset
@@ -219,7 +222,7 @@ function do_encrypt(plain) {
 
 /**
  * 密文
- * @param {*} str 
+ * @param {*} str
  */
 function do_decrypt(str) {
 	const key = window.localStorage.offset

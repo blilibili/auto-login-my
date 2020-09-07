@@ -110,6 +110,11 @@ function keyUsernameClick() {
                             return parseInt(result.typeId, 10) === parseInt(keyId, 10)
                         })[0]
 
+                        // 需要二次验证
+                        if(accountObj.isAgainCheck) {
+                            // const modalDom = createModal(500, 500, 'is-again-check-modal')
+
+                        }
                         // 设置账号密码
                         setUserName(accountObj.userAccount)
                         setPassword(accountObj.sharedPwd)
@@ -353,8 +358,7 @@ function upsetArr(arr){
 }
 
 function setUserName(username='') {
-    var inputArr = $('input')
-    var usernameDom = inputArr[0]
+    var usernameDom = setUserAccountArr[0]
     var evt = new InputEvent('input', {
         inputType: 'insertText',
         data: username,
@@ -366,8 +370,7 @@ function setUserName(username='') {
 }
 
 function setPassword(password='') {
-    var inputArr = $('input')
-    var usernameDom = inputArr[1]
+    var usernameDom = setUserPassArr[0]
     var evt = new InputEvent('input', {
         inputType: 'insertText',
         data: password,
@@ -378,11 +381,13 @@ function setPassword(password='') {
     usernameDom.dispatchEvent(evt);
 }
 
+const setUserAccountArr = []
+const setUserPassArr = []
 function loginCommonMethods() {
     const pathname = window.location.pathname
-    if(pathname.indexOf('login') === -1) {
-        return
-    }
+    // if(pathname.indexOf('login') === -1) {
+    //     return
+    // }
 
     // chrome.tabs.query({
     //     "currentWindow": true, //Filters tabs in current window
@@ -399,11 +404,22 @@ function loginCommonMethods() {
     });
 
     const inputArr = $('input')
-    var username = inputArr[0]
+
+    // 查找输入框中第一个是text和password
+    for(let i = 0;i < inputArr.length;i++) {
+        if(inputArr[i].attributes[0].value === 'text') {
+            setUserAccountArr.push(inputArr[i])
+        }
+        if(inputArr[i].attributes[0].value === 'password') {
+            setUserPassArr.push(inputArr[i])
+        }
+    }
+
+    var username = setUserAccountArr[0]
     console.log('username', username)
     keyDomFunc(username, keyUsernameClick)
 
-    var password = inputArr[1]
+    var password = setUserPassArr[0]
     keyDomFunc(password, keyUsernameClick)
 
     // 点击登录按钮 插入记录
