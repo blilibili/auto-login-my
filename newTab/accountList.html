@@ -105,58 +105,62 @@
 
       <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-          <table class="layui-table" lay-skin="nob" style="margin-top: 15px;">
-            <colgroup>
-              <col width="150">
-              <col width="200">
-              <col>
-            </colgroup>
-            <thead>
-            <tr>
-              <th class="website-info">
-                <form class="layui-form" action="">
-                  <div class="layui-form-item">
-                    <input lay-filter="allCheck" type="checkbox" name="" title="" lay-skin="primary">
-                  </div>
-                </form>
-              </th>
-              <th class="table-header-title">网址/应用</th>
-              <th class="table-header-title">名称</th>
-              <th class="table-header-title">账号</th>
-              <th class="table-header-title">使用需二次验证</th>
-            </tr>
-            </thead>
-            <tbody id="createDataListResult">
+          <div class="my-create-table">
+            <table class="layui-table" lay-skin="nob" style="margin-top: 15px;">
+              <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="website-info">
+                  <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                      <input lay-filter="allCheck" type="checkbox" name="" title="" lay-skin="primary">
+                    </div>
+                  </form>
+                </th>
+                <th class="table-header-title">网址/应用</th>
+                <th class="table-header-title">名称</th>
+                <th class="table-header-title">账号</th>
+                <th class="table-header-title">使用需二次验证</th>
+              </tr>
+              </thead>
+              <tbody id="createDataListResult">
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
 
           <div id="my-create-page" style="text-align: right;"></div>
         </div>
 
         <div class="layui-tab-item">
-          <table class="layui-table" lay-skin="nob" style="margin-top: 15px;">
-            <colgroup>
-              <col width="150">
-              <col width="200">
-              <col>
-            </colgroup>
-            <thead>
-            <tr>
-              <th class="table-header-title">来源</th>
-              <th class="table-header-title">网址</th>
-              <th class="table-header-title">名称</th>
-              <th class="table-header-title">账号</th>
-              <th class="table-header-title">到期时间</th>
-              <th class="table-header-title">允许再次分享</th>
-              <th class="table-header-title">使用需二次验证</th>
-              <th class="table-header-title">备注</th>
-            </tr>
-            </thead>
-            <tbody id="share-data-list-result">
+          <div class="my-share-table">
+            <table class="layui-table" lay-skin="nob" style="margin-top: 15px;">
+              <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+              </colgroup>
+              <thead>
+              <tr>
+                <th class="table-header-title">来源</th>
+                <th class="table-header-title">网址</th>
+                <th class="table-header-title">名称</th>
+                <th class="table-header-title">账号</th>
+                <th class="table-header-title">到期时间</th>
+                <th class="table-header-title">允许再次分享</th>
+                <th class="table-header-title">使用需二次验证</th>
+                <th class="table-header-title">备注</th>
+              </tr>
+              </thead>
+              <tbody id="share-data-list-result">
 
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
 
           <div id="my-share-page" style="text-align: right;"></div>
         </div>

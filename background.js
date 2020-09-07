@@ -16,7 +16,6 @@ chrome.tabs.onCreated.addListener(function(tab) {
         let id = ""
         callback.forEach(item=> {
             if(item.name == "云中云管家") {
-                console.log("id：",item.id)
                 id = item.id
             }
         })
@@ -25,19 +24,24 @@ chrome.tabs.onCreated.addListener(function(tab) {
             msg:'hello'
         },function(res) {
             console.log("res:",res)
-
+            if(res === null) {
+                console.log('未登录云中云, 获取的数据', res)
+            }
+            let userId = ''
+            // 小慧
             if(res.chatserverId) {
-                chrome.storage.local.set({userid: res.chatserverId}, function() {
+                userId = res.chatserverId + res.xiaohui
+                chrome.storage.local.set({userid: userId, userName: res.chatServerName}, function() {
                     console.log("保存id:",res.chatserverId);
                 });
-                window.localStorage.setItem('userid', res.chatserverId)
             }
 
+            // 小智
             if(res.chatServerId) {
-                chrome.storage.local.set({userid: res.chatServerId}, function() {
+                userId = res.chatServerId + res.powerbabe
+                chrome.storage.local.set({userid: userId, userName: res.chatServerName}, function() {
                     console.log("保存id:",res.chatServerId);
                 });
-                window.localStorage.setItem('userid', res.chatServerId)
             }
         })
     })

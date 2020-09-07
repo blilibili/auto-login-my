@@ -373,11 +373,11 @@ function setPassword(password='') {
     var usernameDom = setUserPassArr[0]
     var evt = new InputEvent('input', {
         inputType: 'insertText',
-        data: password,
+        data: do_decrypt(password),
         dataTransfer: null,
         isComposing: false
     });
-    usernameDom.value = password
+    usernameDom.value = do_decrypt(password)
     usernameDom.dispatchEvent(evt);
 }
 
@@ -398,9 +398,12 @@ function loginCommonMethods() {
     //    console.log(tabs)
     // });
 
-    chrome.storage.local.get(['userid'],function(result) {
-        console.log("用户id:",result.userid)
+    chrome.storage.local.get(['userid', 'userName'],function(result) {
+        console.log("用户信息:",result)
         globalData.userid = result.userid
+        globalData.userName = result.userName
+        window.localStorage.setItem('userid', result.userid)
+        window.localStorage.setItem('userName', result.userName)
     });
 
     const inputArr = $('input')
@@ -438,8 +441,9 @@ function loginCommonMethods() {
         }
         console.log("点击登录:",JSON.stringify(insertModel))
         // if(!globalData.myName)return
+
         myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel, globalData.userid).then((res) => {
-            console.log(res.data)
+            console.log('记录数据', res.data)
         })
     })
 }

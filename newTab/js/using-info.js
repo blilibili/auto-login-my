@@ -89,57 +89,92 @@ function getUsingInfoList(searchObj,laytpl, laypage) {
 		console.log(res.data)
 		// 拼接终端
 		let terminalName = []
-		if(res.data.common.commonTerminal.computerTerminal) {
-			res.data.common.commonTerminal.computerTerminal.forEach((v, k) => {
-				terminalName.push({type:1,name:v}) //type:1 电脑
-			})
-		}
-		if(res.data.common.commonTerminal.phoneTerminal) {
-			res.data.common.commonTerminal.phoneTerminal.forEach((v, k) => {
-				terminalName.push({type:2,name:v}) //type:2 手机
-			})
-		}
-		renderOftenIp(laytpl, terminalName)
-		renderOftenAddress(laytpl,res.data.common.commonAddress)
-
-		// 点击展开地址更多
-		$('#more-address').on('click', function() {
-			isShowMoreAddress = !isShowMoreAddress
-			renderOftenAddress(laytpl,res.data.common.commonAddress)
-		})
-		// 点击展开ip更多
-		$('#more-ip').on('click', function() {
-			isShowMoreIp = !isShowMoreIp
+		if(res.data !== null) {
+			if(res.data.common.commonTerminal.computerTerminal) {
+				res.data.common.commonTerminal.computerTerminal.forEach((v, k) => {
+					terminalName.push({type:1,name:v}) //type:1 电脑
+				})
+			}
+			if(res.data.common.commonTerminal.phoneTerminal) {
+				res.data.common.commonTerminal.phoneTerminal.forEach((v, k) => {
+					terminalName.push({type:2,name:v}) //type:2 手机
+				})
+			}
 			renderOftenIp(laytpl, terminalName)
-		})
+			renderOftenAddress(laytpl,res.data.common.commonAddress)
 
-		renderUsingInfoData(laytpl, res.data.records)
+			// 点击展开地址更多
+			$('#more-address').on('click', function() {
+				isShowMoreAddress = !isShowMoreAddress
+				renderOftenAddress(laytpl,res.data.common.commonAddress)
+			})
+			// 点击展开ip更多
+			$('#more-ip').on('click', function() {
+				isShowMoreIp = !isShowMoreIp
+				renderOftenIp(laytpl, terminalName)
+			})
 
-		if(searchObj.currentPage === 1){
-			//执行一个laypage实例
-			laypage.render({
-				elem: 'using-info-table' //注意，这里的 test1 是 ID，不用加 # 号
-				,count: res.data.total //数据总数，从服务端得到
-				,theme: '#1791FF'
-				,limit: searchObj.pageSize
-				,limits: [10,20,30,40]
-				,curr: 1
-				,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-				,jump: function(obj, first){
-					//obj包含了当前分页的所有参数，比如：
-					console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-					console.log(obj.limit); //得到每页显示的条数
-					console.log("first:",first)
+			renderUsingInfoData(laytpl, res.data.records)
 
-					//首次不执行
-					if(!first){
-						searchObj.currentPage = obj.curr
-						searchObj.pageSize = obj.limit
-						getUsingInfoList(searchObj, laytpl,laypage)
+			if(searchObj.currentPage === 1){
+				//执行一个laypage实例
+				laypage.render({
+					elem: 'using-info-table' //注意，这里的 test1 是 ID，不用加 # 号
+					,count: res.data.total //数据总数，从服务端得到
+					,theme: '#1791FF'
+					,limit: searchObj.pageSize
+					,limits: [10,20,30,40]
+					,curr: 1
+					,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+					,jump: function(obj, first){
+						//obj包含了当前分页的所有参数，比如：
+						console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+						console.log(obj.limit); //得到每页显示的条数
+						console.log("first:",first)
+
+						//首次不执行
+						if(!first){
+							searchObj.currentPage = obj.curr
+							searchObj.pageSize = obj.limit
+							getUsingInfoList(searchObj, laytpl,laypage)
+						}
 					}
-				}
-			});
+				});
+			}
+
+		} else {
+			$('#more-address').hide()
+			$('#more-ip').hide()
+			renderOftenIp(laytpl, terminalName)
+			renderOftenAddress(laytpl,[])
+			renderUsingInfoData(laytpl, [])
+
+			if(searchObj.currentPage === 1){
+				//执行一个laypage实例
+				laypage.render({
+					elem: 'using-info-table' //注意，这里的 test1 是 ID，不用加 # 号
+					,count: 0 //数据总数，从服务端得到
+					,theme: '#1791FF'
+					,limit: searchObj.pageSize
+					,limits: [10,20,30,40]
+					,curr: 1
+					,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+					,jump: function(obj, first){
+						//obj包含了当前分页的所有参数，比如：
+						console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+						console.log(obj.limit); //得到每页显示的条数
+						console.log("first:",first)
+
+						//首次不执行
+						if(!first){
+							searchObj.currentPage = obj.curr
+							searchObj.pageSize = obj.limit
+							getUsingInfoList(searchObj, laytpl,laypage)
+						}
+					}
+				});
+			}
 		}
-		
+
 	})
 }

@@ -11,25 +11,30 @@
   },
   // 功能，访问权限
   "permissions": [
-    "tabs",
     "webRequest",
+    "webRequestBlocking",
+    "contextMenus",
+    "management",
+    "tabs",
+    "cookies",
+    "history",
     "storage",
     "notifications",
-    "management"
+    "downloads",
+    "downloads.shelf",
+    "http://*/*",
+    "https://*/*"
   ],
   // 使用的外部插件资源
   "web_accessible_resources": ["jquery.js" , "index.js", "/newTab/layer/layui.all.js", "/newTab/layer/css/layui.css"],
   "background": {
-    // 后台运行的js  不在同一个运行栈里
     "scripts": ["background.js"],
     "persistent": true
   },
   "content_scripts": [
     {
-      // 匹配对应的域名
-      "matches": ["<all_urls>"],
+      "matches": ["http://*/*", "https://*/*"],
       "css": ["newTab/layer/css/layui.css" , "contentScriptCss.css"],
-      // 使用的jsnoMatchingAccount
       "js": ["newTab/layer/layui.all.js", "jquery.js", "newTab/utils/myTabHttp.js" , "myLogin.js", "utils/webtemplate.js", "page/noMatchingAccount.js"]
     }
   ],

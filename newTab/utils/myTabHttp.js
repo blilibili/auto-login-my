@@ -5,8 +5,10 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 	if(window.localStorage.token) {
 		headers.token = window.localStorage.token
 	}else{
+		// token过期，或者一开始登录
 		const loginData = {
-			userId: uid,
+			userId: window.localStorage.getItem('userid'),
+			userName: window.localStorage.getItem('userName')
 			// userName: 'daniel'
 		}
 		let token = await getLoginToken(loginData)
@@ -31,6 +33,11 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 					window.localStorage.removeItem('token')
 					myTabAjax(url, methods, data, uid, headers)
 				}
+				// 未激活状态
+				if(result.code === 43007) {
+					window.localStorage.removeItem('token')
+					goToActive(url, methods, data, uid, headers, {userName: loginData.userName, userId: loginData.userId})
+				}
 				resolve(result)
 			},
 			error: (e) => {
@@ -49,10 +56,9 @@ function getLoginToken(loginData) {
 			data: loginData,
 			dataType: "json",
 			success: (result) => {
-				if(!result.data) {
-					alert('请先登录云中云')
-				}
+				console.log('result', result)
 				reslove(result.data.token)
+
 			},
 			error: (e) => {
 				console.log('接口异常', e)
@@ -60,6 +66,28 @@ function getLoginToken(loginData) {
 			complete: (e) => {
 			}
 		})
+	})
+}
+
+function goToActive (url, methods, data, uid, headers, loginData) {
+	$.ajax({
+		url: hostname + '/miyun/sys/UserLoginController/activationMiYunUser',
+		type: 'post',
+		headers: {'Content-Type':'application/json;charset=utf8;'},
+		data: JSON.stringify({userName: loginData.userName, userId: loginData.userId}),
+		dataType: "json",
+		success: (result) => {
+			getLoginToken({userName: loginData.userName, userId: loginData.userId}).then(() => {
+				myTabAjax(url, methods, data, uid, headers)
+			})
+		},
+		error: (e) => {
+			getLoginToken({userName: loginData.userName, userId: loginData.userId}).then(() => {
+				myTabAjax(url, methods, data, uid, headers)
+			})
+		},
+		complete: (e) => {
+		}
 	})
 }
 

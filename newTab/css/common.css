@@ -7,6 +7,10 @@ html {
     background-color: #EBEBEB;
 }
 
+.no-record{
+    width: 100%;
+    text-align: center;
+}
 .using-often {
     padding: 20px;
     display: flex;

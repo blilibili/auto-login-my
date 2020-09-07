@@ -45,29 +45,8 @@
       </div>
     </div>
 
-    <div style="padding: 20px;">
-      <table class="layui-table" lay-skin="nob">
-        <colgroup>
-          <col width="150">
-          <col width="200">
-          <col>
-        </colgroup>
-        <thead>
-        <tr>
-          <th>网址/应用</th>
-          <th>名称</th>
-          <th>账号</th>
-          <th>地址</th>
-          <th>终端</th>
-          <th>IP</th>
-          <th>登录时间</th>
-          <th>状态</th>
-        </tr>
-        </thead>
-        <tbody id="using-info-table-result">
+    <div style="padding: 20px;" id="using-info-table-result">
 
-        </tbody>
-      </table>
     </div>
 
 
@@ -78,9 +57,12 @@
   <script id="myUsingOftenIp" type="text/html">
     <span>常用终端:</span>
 
+    {{# if(d.oftenIp.length !== 0) {  }}
     {{#  layui.each(d.oftenIp, function(index, item){ }}
       <span class="card-info" style="width: 189px;">{{item}}</span>
     {{#  }) }}
+
+    {{# } }}
   </script>
 
   <!--常用地区-->
@@ -92,18 +74,45 @@
   </script>
   <!--使用详情列表-->
   <script id="myUsingInfoList" type="text/html">
-    {{#  layui.each(d.list, function(index, item){ }}
-    <tr>
-      <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
-      <td>{{item.name}}</td>
-      <td>{{item.userAccount}}</td>
-      <td>{{item.myAddress}}</td>
-      <td>{{item.terminalName}}</td>
-      <td>{{item.myUserIP}}</td>
-      <td>{{item.myLoginTime}}</td>
-      <td class="problem-info">{{['', '地区异常', '终端异常', '地区/终端异常', '正常'][item.accountStatus]}}</td>
-    </tr>
-    {{#  }) }}
+    <table class="layui-table" lay-skin="nob">
+      <colgroup>
+        <col width="150">
+        <col width="200">
+        <col>
+      </colgroup>
+      <thead>
+      <tr>
+        <th>网址/应用</th>
+        <th>名称</th>
+        <th>账号</th>
+        <th>地址</th>
+        <th>终端</th>
+        <th>IP</th>
+        <th>登录时间</th>
+        <th>状态</th>
+      </tr>
+      </thead>
+        <tbody>
+        {{#  layui.each(d.list, function(index, item){ }}
+
+        <tr>
+          <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.userAccount}}</td>
+          <td>{{item.myAddress}}</td>
+          <td>{{item.terminalName}}</td>
+          <td>{{item.myUserIP}}</td>
+          <td>{{item.myLoginTime}}</td>
+          <td class="problem-info">{{['', '地区异常', '终端异常', '地区/终端异常', '正常'][item.accountStatus]}}</td>
+        </tr>
+        {{#  }) }}
+
+      </tbody>
+    </table>
+
+    {{# if(d.list.length === 0) { }}
+      <div class="no-record">暂无数据</div>
+    {{# } }}
   </script>
   <script src="utils/jquery.js"></script>
   <script src="utils/myTabHttp.js"></script>
