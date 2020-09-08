@@ -255,8 +255,6 @@ var Base64 = {
 	}
 }
 
-const pwdkey = 18; //偏移量，后台获得
-
 /**
  * 明文
  * @param {*} plain
