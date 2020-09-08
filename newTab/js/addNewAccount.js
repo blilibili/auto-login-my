@@ -16,7 +16,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 		myTabAjax('/miyun/sys/UserPwdController/getUserPwdEntity', 'get',param, myuserId).then((res) => {
 			console.log(res.data)
 			//给表单赋值
-			form.val("formDemo", { 
+			form.val("formDemo", {
 				"website": res.data.url
 				,"name": res.data.name
 				,"userAccount" : res.data.userAccount
@@ -30,7 +30,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 		layer.open({
 			title: '帮助信息'
 			,content: '每次使用该账号时，都需要进行指纹/扫码/密码验证'
-		});     
+		});
 	})
 
 	$(".add-account-showPwd").on('click',function(){
@@ -163,7 +163,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 		$('.close-set-pass-config').on('click', function() {
             $('.add-new-account-modal').remove()
 		})
-		
+
 		$('.auto-login-pass-set-use').on('click', function() {
             console.log('提交')
             $("input[name='userPassword']").val($("#accountPwd").val())
@@ -177,7 +177,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				return '名称不能为空';
 			}
 		}
-	
+
 	});
 
 	form.on('submit(*)', function(data){
@@ -215,6 +215,9 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			myTabAjax(requestUrl, 'post', param, myuserId).then((res) => {
 				if(res.code === 10000) {
 					layer.msg('新增成功')
+					setTimeout(() => {
+						window.close()
+					}, 1500)
 				}else{
 					layer.msg(res.message)
 				}

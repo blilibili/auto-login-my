@@ -66,12 +66,27 @@ function getLoginToken(loginData) {
 					console.log('开始激活')
 					window.localStorage.removeItem('token')
 					goToActive({userName: loginData.userName, userId: loginData.userId}).then((value) => {
-						getLoginToken(loginData).then((token) => {
-							reslove(token.data.token)
+						$.ajax({
+							url: hostname + '/miyun/sys/UserLoginController/getMyuserToken',
+							type: 'get',
+							headers: {'Content-Type':'application/json;charset=utf8;'},
+							data: loginData,
+							dataType: "json",
+							success: (tokens) => {
+								reslove(tokens.data.token)
+							}
 						})
 					}, () => {
-						getLoginToken(loginData).then((token) => {
-							reslove(token.data.token)
+						$.ajax({
+							url: hostname + '/miyun/sys/UserLoginController/getMyuserToken',
+							type: 'get',
+							headers: {'Content-Type':'application/json;charset=utf8;'},
+							data: loginData,
+							dataType: "json",
+							success: (tokens) => {
+								console.log('第二次请求token', tokens)
+								reslove(tokens.data.token)
+							}
 						})
 					})
 				}else{
