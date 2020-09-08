@@ -1,15 +1,7 @@
 const hostname = 'http://116.85.11.146:9021'
-let requestHistory = {}
 
 async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
-	requestHistory = {
-		url: url,
-		methods: methods,
-		data: data,
-		uid: uid,
-		headers: headers
-	}
 	if(window.localStorage.token) {
 		headers.token = window.localStorage.token
 	}else{
@@ -22,10 +14,6 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 		let token = await getLoginToken(loginData)
 		headers.token = token
 		window.localStorage.setItem('token', token)
-		//获取偏移量
-		myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', uid, {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
-			window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
-		})
 	}
 
 	return new Promise((resolve, reject) => {

@@ -213,13 +213,16 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			console.log("提交表单：",param)
 			let requestUrl = '/miyun/sys/UserPwdController/saveMyUserPwd'
 			myTabAjax(requestUrl, 'post', param, myuserId).then((res) => {
-				if(res.code === 10000) {
+				console.log('新增请求', res)
+				if(res && res.code === 10000) {
 					layer.msg('新增成功')
 					setTimeout(() => {
 						window.close()
 					}, 1500)
 				}else{
-					layer.msg(res.message)
+					if(res) {
+						layer.msg(res.message)
+					}
 				}
 			})
 		}

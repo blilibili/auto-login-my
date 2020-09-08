@@ -86,16 +86,16 @@ function renderOftenIp(laytpl, result) {
 function getUsingInfoList(searchObj,laytpl, laypage) {
 	console.log(searchObj)
 	myTabAjax('/miyun/sys/UserLoginController/getUserDetailList', 'get', searchObj, myuserId).then((res) => {
-		console.log(res.data)
+		console.log('请求结果', res)
 		// 拼接终端
 		let terminalName = []
 		if(res.data !== null) {
-			if(res.data.common.commonTerminal.computerTerminal) {
+			if(res.data.common && res.data.common.commonTerminal.computerTerminal) {
 				res.data.common.commonTerminal.computerTerminal.forEach((v, k) => {
 					terminalName.push({type:1,name:v}) //type:1 电脑
 				})
 			}
-			if(res.data.common.commonTerminal.phoneTerminal) {
+			if(res.data.common && res.data.common.commonTerminal.phoneTerminal) {
 				res.data.common.commonTerminal.phoneTerminal.forEach((v, k) => {
 					terminalName.push({type:2,name:v}) //type:2 手机
 				})

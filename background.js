@@ -31,17 +31,23 @@ chrome.tabs.onCreated.addListener(function(tab) {
             // 小慧
             if(res.chatserverId) {
                 userId = res.chatserverId + res.xiaohui
-                chrome.storage.local.set({userid: userId, userName: res.chatServerName}, function() {
+                chrome.storage.local.set({userid: userId, userName: res.chatServerName, accountId: res.chatserverId}, function() {
                     console.log("保存id:",res.chatserverId);
                 });
+                window.localStorage.setItem('userid', userId)
+                window.localStorage.setItem('userName', res.chatServerName)
+                window.localStorage.setItem('accountId', res.chatserverId)
             }
 
             // 小智
             if(res.chatServerId) {
-                userId = res.chatServerId + res.powerbabe
-                chrome.storage.local.set({userid: userId, userName: res.chatServerName}, function() {
+                userId = res.chatServerId + res.xiaohui
+                chrome.storage.local.set({userid: userId, userName: res.chatServerName, accountId: res.chatserverId}, function() {
                     console.log("保存id:",res.chatServerId);
                 });
+                window.localStorage.setItem('userid', userId)
+                window.localStorage.setItem('userName', res.chatServerName)
+                window.localStorage.setItem('accountId', res.chatServerId)
             }
         })
     })

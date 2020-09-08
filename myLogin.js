@@ -21,9 +21,12 @@ function keyDomFunc(insertDom, callback=() => {}) {
     keyDom.width = 30
     keyDom.height = 30
     keyDom.style.position = 'fixed'
-    console.log('top', insertDom.getBoundingClientRect().left)
-    keyDom.style.top = insertDom.getBoundingClientRect().top + 'px'
-    keyDom.style.left = insertDom.getBoundingClientRect().left + insertDom.getBoundingClientRect().width - 40 + 'px'
+    console.log('inserDom', insertDom)
+    if(insertDom) {
+        console.log('top', insertDom.getBoundingClientRect().left)
+        keyDom.style.top = insertDom.getBoundingClientRect().top + 'px'
+        keyDom.style.left = insertDom.getBoundingClientRect().left + insertDom.getBoundingClientRect().width - 40 + 'px'
+    }
     keyDom.style.cursor = 'pointer'
     keyDom.onclick = callback
     if(insertDom) {
@@ -398,12 +401,24 @@ function loginCommonMethods() {
     //    console.log(tabs)
     // });
 
-    chrome.storage.local.get(['userid', 'userName'],function(result) {
-        console.log("用户信息:",result)
+    chrome.storage.local.get(['userid', 'userName', 'accountId'],async function(result) {
+        console.log("云中云获取用户信息:",result)
         globalData.userid = result.userid
         globalData.userName = result.userName
         window.localStorage.setItem('userid', result.userid)
         window.localStorage.setItem('userName', result.userName)
+        window.localStorage.setItem('accountId', result.accountId)
+
+        window.localStorage.removeItem('token')
+        let loginData = {
+            userId: result.userid,
+            userName: result.userName
+        }
+        const token = await getToken(loginData)
+        //获取偏移量
+        myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', '', {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
+            window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
+        })
     });
 
     const inputArr = $('input')
@@ -430,7 +445,7 @@ function loginCommonMethods() {
 
     loginButton[0].addEventListener('click' , function() {
         let insertModel = {
-            accountId: globalData.userid,
+            accountId: parseInt(window.localStorage.getItem('accountId'), 10),
             // myAddress: globalData.myUrl,
             myName: globalData.myName,
             myUrl: globalData.myUrl,
@@ -444,6 +459,14 @@ function loginCommonMethods() {
 
         myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel, globalData.userid).then((res) => {
             console.log('记录数据', res.data)
+        })
+    })
+}
+
+function getToken(data) {
+    return new Promise((resolve) => {
+        myTabAjax('/miyun/sys/UserLoginController/getMyuserToken', 'get', data).then((res) => {
+            resolve(res.data.token)
         })
     })
 }
