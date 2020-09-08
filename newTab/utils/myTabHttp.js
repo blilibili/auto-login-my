@@ -11,8 +11,9 @@ function getChromeToken() {
 
 async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
-	if(window.localStorage.token) {
-		headers.token = window.localStorage.token
+	console.log('token', window.localStorage.getItem('token'))
+	if(window.localStorage.getItem('token')) {
+		headers.token = window.localStorage.getItem('token')
 	}else{
 		// token过期，或者一开始登录
 		const loginData = {

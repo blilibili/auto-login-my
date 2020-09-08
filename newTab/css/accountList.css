@@ -81,3 +81,10 @@
     height: 140px;
     cursor: pointer;
 }
+
+.layui-form-checked[lay-skin=primary] i{
+    border-color:#1791FF !important;
+    background-color:#FFF !important;
+    color:#1791FF !important;
+    font-weight: bold;
+}

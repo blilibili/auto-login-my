@@ -126,6 +126,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 					layer.msg('删除成功');
 					layer.close(index);
 					getAccountPwdList(searchMyCreateObj, laytpl, laypage , currentTabId)
+					// window.location.reload()
 				}else{
 					layer.msg(res.message);
 				}

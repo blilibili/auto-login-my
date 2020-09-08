@@ -55,7 +55,9 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 userName: result.userName
             }
             getToken(loginData).then((res) => {
-                window.localStorage.setItem('token', res.data.token)
+                if(!window.localStorage.getItem('token')) {
+                    window.localStorage.setItem('token', res.data.token)
+                }
             })
 
         })

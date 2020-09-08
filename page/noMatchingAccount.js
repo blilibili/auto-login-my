@@ -16,7 +16,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	 </div>
 	 <div class="auto-login-account-row-content-box">
 	   {{# if(d.list.length === 0) { }}
-	      <div style="padding: 15px;">暂无匹配密码</div>
+	      <div style="padding: 15px;color:#333;">抱歉，没有匹配的账号密码</div>
 	   {{#} }} 
 		 {{#  layui.each(d.list, function(index, item){ }}
 			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
@@ -32,7 +32,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	 </div>
 	<div class="auto-login-account-footer">
 		<div style="cursor: pointer;color: #1791FF;" class="no-matching-add-new-account">添加新账号</div>
-		<div style="cursor: pointer;" class="no-matching-close-button">关闭</div>	
+		<div style="cursor: pointer;color:#333;" class="no-matching-close-button">关闭</div>	
 	</div>
 	</div>
 	

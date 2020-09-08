@@ -75,6 +75,7 @@ function createBackWall() {
 
 function keyUsernameClick() {
     const modalDom = createModal(380, 282)
+    currentPage = 1
 
     let searchObj = {
         // myuserId: globalData.userid,
@@ -453,12 +454,12 @@ function loginCommonMethods() {
         window.localStorage.setItem('userName', result.userName)
         window.localStorage.setItem('accountId', result.accountId)
 
-        window.localStorage.removeItem('token')
-        let loginData = {
-            userId: result.userid,
-            userName: result.userName
-        }
-        const token = await getToken(loginData)
+        // window.localStorage.removeItem('token')
+        // let loginData = {
+        //     userId: result.userid,
+        //     userName: result.userName
+        // }
+        // const token = await getToken(loginData)
         //获取偏移量
         myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', '', {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
             window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
