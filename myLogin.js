@@ -6,6 +6,9 @@
 //
 //     }
 // });
+var currentPage = 1
+var pageSize = 5
+var clientHeight = 0
 var globalData = {
     userid:'',
     myName: '',
@@ -75,13 +78,14 @@ function keyUsernameClick() {
 
     let searchObj = {
         // myuserId: globalData.userid,
-        currentPage: 1,
-        pageSize: 10,
+        currentPage: currentPage,
+        pageSize: pageSize,
         selectType: 3,
         searchValue: window.location.origin,
         accounttype: 1
         // webStatus: 1
     }
+
     myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, globalData.userid).then((res) => {
         layui.use(['laytpl'], function() {
             createBackWall()
@@ -106,6 +110,7 @@ function keyUsernameClick() {
                 })
 
                 $('.account-list-use').each((key,val)=>{
+                    clientHeight = parseInt(clientHeight, 10) + parseInt($(val)[0].clientHeight, 10)
                     $(val).on('click',function(item){
                         let keyId = this.getAttribute('data-typeId')
                         console.log("typeId:",keyId)
@@ -133,10 +138,49 @@ function keyUsernameClick() {
                         $('.auto-login-back-wall').remove()
                     })
                 })
+
+                $('.auto-login-account-row-content-box').scroll(function(e) {
+                    let scrollTop = $(this)[0].scrollTop
+                    let maxScroll = $(this)[0].scrollHeight - $(this)[0].offsetHeight;
+                    console.log('scrolltop', scrollTop, maxScroll)
+                    if(scrollTop >= maxScroll) {
+                        currentPage++
+                        renderMorePwdList(currentPage)
+                    }
+                })
             });
         })
     })
 
+}
+
+function renderMorePwdList(nextPage) {
+    let searchObj = {
+        // myuserId: globalData.userid,
+        currentPage: nextPage,
+        pageSize: pageSize,
+        selectType: 3,
+        searchValue: window.location.origin,
+        accounttype: 1
+        // webStatus: 1
+    }
+    myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, globalData.userid).then((res) => {
+        console.log('下一页数据', res)
+        layui.use(['laytpl'], function() {
+            var data = { //数据
+                list: res.data === null?[]: res.data.records
+            }
+
+            // $('.share-result-td').append(shareListHtml)
+            var laytpl = layui.laytpl;
+            var getTpl = renderPwdList
+
+            laytpl(getTpl).render(data, function(html){
+                console.log('模板输出', html)
+                $('.auto-login-account-row-content-box').append(html)
+            })
+        })
+    })
 }
 
 let pwdLength = 20
