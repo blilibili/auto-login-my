@@ -37,6 +37,23 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 window.localStorage.setItem('userid', userId)
                 window.localStorage.setItem('userName', res.chatServerName)
                 window.localStorage.setItem('accountId', res.chatserverId)
+
+                let loginData = {
+                    userId: userId,
+                    userName: res.chatServerName
+                }
+
+                // 查询当前是否有token
+                chrome.storage.local.get('token', function(result) {
+                    console.log("获取token:",result);
+                    chrome.storage.local.clear()
+                    getToken(loginData).then((token) => {
+                        window.localStorage.setItem('token', token)
+                        chrome.storage.local.set({token: token}, function() {
+                            console.log("保存token:",token);
+                        });
+                    })
+                });
             }
 
             // 小智
@@ -49,16 +66,6 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 window.localStorage.setItem('userName', res.chatServerName)
                 window.localStorage.setItem('accountId', res.chatServerId)
             }
-
-            let loginData = {
-                userId: result.userid,
-                userName: result.userName
-            }
-            getToken(loginData).then((res) => {
-                if(!window.localStorage.getItem('token')) {
-                    window.localStorage.setItem('token', res.data.token)
-                }
-            })
 
         })
     })

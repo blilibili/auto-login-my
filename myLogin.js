@@ -455,11 +455,19 @@ function loginCommonMethods() {
         window.localStorage.setItem('accountId', result.accountId)
 
         // window.localStorage.removeItem('token')
+
+        // const token = await getToken(loginData)
         // let loginData = {
         //     userId: result.userid,
         //     userName: result.userName
         // }
-        // const token = await getToken(loginData)
+        // getToken(loginData).then((token) => {
+        //     console.log('myLogin', token)
+        //     window.localStorage.setItem('token', token)
+        //     chrome.storage.local.set({token: token}, function() {
+        //         console.log("保存token:",token);
+        //     });
+        // })
         //获取偏移量
         myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', '', {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
             window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了

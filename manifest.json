@@ -25,9 +25,9 @@
     "https://*/*"
   ],
   // 使用的外部插件资源
-  "web_accessible_resources": ["jquery.js" , "index.js", "/newTab/layer/layui.all.js", "/newTab/layer/css/layui.css"],
+  "web_accessible_resources": ["jquery.js" , "index.js", "newTab/layer/layui.all.js", "newTab/layer/css/layui.css"],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["background.js", "newTab/utils/jquery.js", "newTab/utils/myTabHttp.js"],
     "persistent": true
   },
   "content_scripts": [
