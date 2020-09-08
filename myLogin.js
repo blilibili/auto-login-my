@@ -452,7 +452,7 @@ function loginCommonMethods() {
             // myUserIp: '192.168.1.43',
             terminalName: '',
             terminalType: 3,
-            // userName: globalData.userName
+            userName: window.localStorage.getItem('userName')
         }
         console.log("点击登录:",JSON.stringify(insertModel))
         // if(!globalData.myName)return

@@ -49,6 +49,29 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 window.localStorage.setItem('userName', res.chatServerName)
                 window.localStorage.setItem('accountId', res.chatServerId)
             }
+
+            let loginData = {
+                userId: result.userid,
+                userName: result.userName
+            }
+            getToken(loginData).then((res) => {
+                window.localStorage.setItem('token', res.data.token)
+            })
+
         })
     })
 })
+
+// 点击插件图标事件
+chrome.browserAction.onClicked.addListener(function(Tab) {
+    console.log('点击事件')
+    window.open('newTab/accountList.html')
+});
+
+function getToken(data) {
+    return new Promise((resolve) => {
+        myTabAjax('/miyun/sys/UserLoginController/getMyuserToken', 'get', data).then((res) => {
+            resolve(res.data.token)
+        })
+    })
+}

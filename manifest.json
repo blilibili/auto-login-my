@@ -6,8 +6,7 @@
 
   //要加载的资源,如果你的html里需要引入js的话,请务必写上
   "browser_action": {
-    "default_title": "密云自动登录",
-    "default_popup": "index.html"
+    "default_title": "密云自动登录"
   },
   // 功能，访问权限
   "permissions": [
@@ -38,5 +37,5 @@
       "js": ["newTab/layer/layui.all.js", "jquery.js", "newTab/utils/myTabHttp.js" , "myLogin.js", "utils/webtemplate.js", "page/noMatchingAccount.js"]
     }
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; 'img-src' 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com; object-src 'self'"
 }

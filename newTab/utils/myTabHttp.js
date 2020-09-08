@@ -1,5 +1,14 @@
 const hostname = 'http://116.85.11.146:9021'
 
+// 获取浏览器中存储的token
+function getChromeToken() {
+	return new Promise((resolve, reject) => {
+		chrome.storage.local.get('token', function(result) {
+			resolve(result.token)
+		});
+	})
+}
+
 async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
 	if(window.localStorage.token) {

@@ -213,16 +213,10 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			console.log("提交表单：",param)
 			let requestUrl = '/miyun/sys/UserPwdController/saveMyUserPwd'
 			myTabAjax(requestUrl, 'post', param, myuserId).then((res) => {
-				console.log('新增请求', res)
-				if(res && res.code === 10000) {
+				if(res.code === 10000) {
 					layer.msg('新增成功')
-					setTimeout(() => {
-						window.close()
-					}, 1500)
 				}else{
-					if(res) {
-						layer.msg(res.message)
-					}
+					layer.msg(res.message)
 				}
 			})
 		}
@@ -343,3 +337,9 @@ function upsetArr(arr){
 function upsetArr(arr){
     return arr.sort(function(){return Math.random()-0.5})
 }
+
+// 点击跳转
+$('#backBtnAdd').on('click', function(e) {
+	e.preventDefault()
+	window.location.href = '/newTab/accountList.html'
+})

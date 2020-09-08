@@ -135,6 +135,7 @@
 .auto-login-click-account-small-image{
     width: 20px;
     height: 20px;
+    flex-shrink: 0;
 }
 .auto-login-account-textarea{
     background-color: white;

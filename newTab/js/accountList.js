@@ -105,7 +105,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 
 	// 新增账号
 	$('.add-new-account').on('click', function() {
-		window.open('/newTab/addNewAccount.html')
+		window.location.href = '/newTab/addNewAccount.html'
 	})
 
 	// 删除账号
