@@ -2,14 +2,12 @@
 var currentTabId = 1
 // 我创建的搜索条件
 let myuserId = window.localStorage.getItem("userid")
+let accountId = window.localStorage.getItem('accountId')
 let searchMyCreateObj = {
-	myuserId: myuserId,
 	selectType: '2',
 	webStatus: 1,
 	currentPage: 1,
-	pageSize: 10,
-	name: '',
-	userAccount: ''
+	pageSize: 10
 }
 var layuiForm
 

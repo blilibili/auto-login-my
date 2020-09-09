@@ -450,9 +450,9 @@ function loginCommonMethods() {
         console.log("云中云获取用户信息:",result)
         globalData.userid = result.userid
         globalData.userName = result.userName
-        window.localStorage.setItem('userid', result.userid)
-        window.localStorage.setItem('userName', result.userName)
-        window.localStorage.setItem('accountId', result.accountId)
+        // window.localStorage.setItem('userid', result.userid)
+        // window.localStorage.setItem('userName', result.userName)
+        // window.localStorage.setItem('accountId', result.accountId)
 
         // window.localStorage.removeItem('token')
 
@@ -468,10 +468,11 @@ function loginCommonMethods() {
         //         console.log("保存token:",token);
         //     });
         // })
+        // let token = window.localStorage.getItem('token')
         //获取偏移量
-        myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', '', {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
-            window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
-        })
+        // myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', '', {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
+        //     window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
+        // })
     });
 
     const inputArr = $('input')
