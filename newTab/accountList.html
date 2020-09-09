@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="img-src 'self' data:;default-src 'self' *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
-  <title>账号列表</title>
+  <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: *;default-src 'self' *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <title>所有账号</title>
   <link rel="stylesheet" href="./layer/css/layui.css" media="all">
   <link rel="stylesheet" href="./css/common.css">
   <link rel="stylesheet" href="./css/accountList.css">
@@ -46,9 +46,10 @@
 
       </div>
       <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-        <ul class="layui-tab-title" style="text-align: center;border-bottom: 0;">
+        <ul class="layui-tab-title" style="text-align: center;border-bottom: 0;position: relative;">
           <li class="layui-this" style="font-size: 18px;padding: 0 24px;line-height: 28px;margin-right: 60px;">小慧扫码</li>
           <li style="font-size: 18px;padding: 0 24px;line-height: 28px;">小慧密码</li>
+
         </ul>
 
         <div class="layui-tab-content">
@@ -74,11 +75,12 @@
 
     </div>
 
-    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief1">
+    <div class="layui-tab layui-tab-brief" style="position: relative;" lay-filter="docDemoTabBrief1">
       <ul class="layui-tab-title">
         <li class="layui-this" lay-id="1" >我创建的</li>
         <li lay-id="2">分享给我的</li>
       </ul>
+      <div id="auto-login-my-user-info" class="fixed-user-info"></div>
 
       <div style="margin-top: 15px;">
         如查看应用账号，请打开 [ 小慧APP-云块-密云 ]
@@ -168,6 +170,14 @@
 
     </div>
   </div>
+  <script id="auto-login-my-user-info-tpl" type="text/html">
+    <div class="my-login-user-info-row">
+      <img src="{{d.avatar}}" class="my-login-user-info-image" alt="">
+      <div>
+        {{d.userName}}({{d.nickName}})
+      </div>
+    </div>
+  </script>
   <!--我创建的 数据列表-->
   <script id="myCreateAccountList" type="text/html">
     {{#  layui.each(d.list, function(index, item){ }}

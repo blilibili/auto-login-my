@@ -30,7 +30,8 @@
     "index.js",
     "newTab/layer/layui.all.js",
     "newTab/layer/css/layui.css",
-    "img/key.png"
+    "img/key.png",
+    "img/close.png"
   ],
   "background": {
     "scripts": ["background.js", "newTab/utils/jquery.js", "newTab/utils/myTabHttp.js"],

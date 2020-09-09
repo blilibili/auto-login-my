@@ -2,7 +2,7 @@
     width: 1440px;
     margin:  15px auto 0 auto;
     background-color: white;
-    padding: 10px 20px;
+    padding: 20px 30px;
 }
 .search-input{
     width: 200px;
@@ -75,7 +75,11 @@
     width: 320px;
     margin: 50px auto 0 auto;
 }
-
+.fixed-user-info{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .xh-login-scan-image{
     width: 140px;
     height: 140px;
@@ -95,4 +99,15 @@
 .my-create-account:hover {
     text-decoration:underline;
     text-underline: #1791FF;
+}
+.my-login-user-info-row{
+    display: flex;
+    align-items: center;
+}
+.my-login-user-info-image {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 25px;
 }

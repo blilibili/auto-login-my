@@ -1,4 +1,4 @@
-
+// 密码列表
 const noMatchingAccount = `<div class="auto-login-start-click-account">
 <!--	<div style="padding: 25px;text-align: center;font-size: 24px;">抱歉，没有匹配账号密码</div>-->
 <!--	<div style="font-size: 30px;color: white;width: 100%;text-align: center;margin-top: 80px;">欢迎登陆</div>-->
@@ -11,7 +11,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	
 	<div class="auto-login-account-textarea">
 	 <div class="auto-login-account-row-title-box" style="position: relative;">
-			<img src="http://122.51.89.68:81/close.png" class="auto-login-account-textarea-close-image no-matching-close-button" alt="" style="width: 19px;height: 19px;">
+			<img src="{{chrome.extension.getURL('img/close.png')}}" class="auto-login-account-textarea-close-image no-matching-close-button" alt="" style="width: 19px;height: 19px;">
 			<div class="auto-login-account-textarea-title">欢迎登陆</div> 
 	 </div>
 	 <div class="auto-login-account-row-content-box">
@@ -20,9 +20,9 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	   {{#} }} 
 		 {{#  layui.each(d.list, function(index, item){ }}
 			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
-				<img src="http://122.51.89.68:81/key.png" class="auto-login-click-account-small-image" alt="">
+				<img src="{{chrome.extension.getURL('img/key.png')}}" class="auto-login-click-account-small-image" alt="">
 				<div style="margin-left: 10px;">
-					<div style="color: #222222;">{{ item.name }} [{{item.userAccount}}]</div>
+					<div class="auto-login-user-account-row">{{ item.name }} [{{item.userAccount}}]</div>
 					<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
 				</div>
 			</div>
@@ -38,12 +38,13 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	
 </div>`
 
+// 加载更多插入的dom
 const renderPwdList = `
     {{#  layui.each(d.list, function(index, item){ }}
 			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
-				<img src="http://122.51.89.68:81/key.png" class="auto-login-click-account-small-image" alt="">
+				<img src="{{chrome.extension.getURL('img/key.png')}}" class="auto-login-click-account-small-image" alt="">
 				<div style="margin-left: 10px;">
-					<div style="color: #222222;">{{ item.name }} [{{item.userAccount}}]</div>
+					<div class="auto-login-user-account-row">{{ item.name }} [{{item.userAccount}}]</div>
 					<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
 				</div>
 			</div>

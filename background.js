@@ -31,23 +31,40 @@ chrome.tabs.onCreated.addListener(function(tab) {
             // 小慧
             if(res.chatserverId) {
                 userId = res.chatServerName + '@' + res.chatserverId
-                chrome.storage.local.set({userid: userId, userName: res.chatServerName, accountId: res.chatserverId}, function() {
+                chrome.storage.local.set({
+                    userid: userId,
+                    userName: res.chatServerName,
+                    accountId: res.chatserverId,
+                    nickname: res.nickname,
+                    avatar: res.avatar
+                }, function() {
                     console.log("保存id:",res.chatserverId);
                 });
                 window.localStorage.setItem('userid', userId)
                 window.localStorage.setItem('userName', res.chatServerName)
                 window.localStorage.setItem('accountId', res.chatserverId)
+                window.localStorage.setItem('nickname', res.nickname)
+                window.localStorage.setItem('avatar', res.avatar)
             }
 
             // 小智
             if(res.chatServerId) {
                 userId = res.chatServerName + '@' + res.chatServerId
-                chrome.storage.local.set({userid: userId, userName: res.chatServerName, accountId: res.chatserverId}, function() {
+                chrome.storage.local.set(
+                  {
+                      userid: userId,
+                      userName: res.chatServerName,
+                      accountId: res.chatserverId,
+                      nickname: res.nickname,
+                      avatar: res.avatar
+                  }, function() {
                     console.log("保存id:",res.chatServerId);
                 });
                 window.localStorage.setItem('userid', userId)
                 window.localStorage.setItem('userName', res.chatServerName)
                 window.localStorage.setItem('accountId', res.chatServerId)
+                window.localStorage.setItem('nickname', res.nickname)
+                window.localStorage.setItem('avatar', res.avatar)
             }
 
         })

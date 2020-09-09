@@ -73,6 +73,13 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
 
+	renderUserInfo(laytpl, {
+		userName: window.localStorage.getItem('userName') || '',
+		accountId: window.localStorage.getItem('accountId') || '',
+		nickName: window.localStorage.getItem('nickname') || '',
+		avatar: window.localStorage.getItem('avatar') || '',
+	})
+
 	getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
 
 	getAccountPwdList(searchMyCreateObj, laytpl, laypage , 2)
@@ -153,6 +160,15 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	})
 
 });
+
+function renderUserInfo(laytpl, result) {
+	let data = result
+	let getTpl = document.getElementById('auto-login-my-user-info-tpl').innerHTML
+	laytpl(getTpl).render(data, function(html){
+		document.getElementById('auto-login-my-user-info').innerHTML = html;
+		layuiForm.render();
+	});
+}
 
 function renderMyCrateData(laytpl, result) {
 	var data = { //数据
