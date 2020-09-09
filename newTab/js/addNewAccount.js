@@ -249,7 +249,7 @@ function pwdSafe(pwd) {
     let safeList = ['低','中','高']
     let index = 3
     if(settingTypeL === 1 || pwd.length <= 10)index = 1
-    else if((settingTypeL === 2 && pwd.length > 10) || (settingTypeL === 3 && (pwd.length > 10 || pwd.length < 20)))index = 2
+    else if((settingTypeL === 2 && pwd.length > 10) || (settingTypeL === 3 && (pwd.length > 10 && pwd.length < 20)))index = 2
     else if((settingTypeL === 3 && pwd.length >= 20) || (settingTypeL === 4 && pwd.length > 10))index = 3
     $('.auto-login-safe-col').each((ids,val)=>{
         if($(val).attr('id') <= index){

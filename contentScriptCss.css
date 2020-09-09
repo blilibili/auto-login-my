@@ -190,3 +190,138 @@
 .add-new-account-modal{
     color: black;
 }
+/*二次提示*/
+.no-same-account-modal {
+    width: 300px;
+    height: 200px;
+    position:absolute;
+    top:0;
+    right:5px;
+    z-index: 10001;
+    background-color: #ffffff;
+    padding: 0 20px;
+    border:1px solid #D9D9D9;
+}
+
+.no-same-account {
+    width: 100%;
+}
+
+.no-same-account-title {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.no-same-account-title div {
+    font-size: 20px;
+}
+
+.no-same-account-close {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.no-same-account-body {
+    display:flex;
+    justify-content: flex-start;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.no-same-account-body div {
+    font-size: 16px;
+}
+
+.no-same-account-body input {
+    height: 25px;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+.no-same-account-btns {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 10px 0;
+}
+
+.no-same-account-btn1 {
+    border: none;
+    width: 50px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 4px;
+    background: #1890FF;
+    color: #ffffff;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.no-same-account-btn2 {
+    border: 1px solid #D9D9D9;
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 4px;
+    background: #ffffff;
+    color: #000000;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.no-same-account-succ {
+    font-size: 30px;
+    padding: 60px;
+}
+
+.the-same-account-modal {
+    width: 300px;
+    height: 150px;
+    position:absolute;
+    top:0;
+    right:100px;
+    z-index: 10001;
+    background-color: #ffffff;
+    padding: 0 10px;
+    border:1px solid #D9D9D9;
+}
+
+.the-same-account {
+    width: 100%;
+}
+
+.the-same-account-close {
+    margin: 5px;
+    text-align: right;
+}
+
+.the-same-account-title {
+    padding:10px 30px;
+    font-size: 20px;
+}
+
+.the-same-account-btns {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.the-same-account-btn1 {
+    border: none;
+    width: 50px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 4px;
+    background: #1890FF;
+    color: #ffffff;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.the-same-account-succ {
+    font-size: 30px;
+    padding: 50px 40px;
+}
+>>>>>>> e50ff70a97ec62eb7b880cd2b0f3b1cef056a4c5
