@@ -72,7 +72,9 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
+
 	getAccountPwdList(searchMyCreateObj, laytpl, laypage , 1)
+
 	getAccountPwdList(searchMyCreateObj, laytpl, laypage , 2)
 
 
@@ -186,9 +188,12 @@ function renderTrData(laytpl, result) {
 }
 
 // 获取分享给我的数据
-function getAccountPwdList (searchObj, laytpl, layPage ,type = 1) {
-	type === 1 ? searchObj.webStatus = 1 : searchObj.webStatus = 2
-	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, myuserId).then((res) => {
+function getAccountPwdList (searchObj, laytpl, layPage ,type) {
+	console.log('传参type', type)
+	const params = Object.assign({}, searchObj)
+	params.webStatus = type
+
+	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', params, myuserId).then((res) => {
 		console.log('查询数据', res.data)
 		if(res.code === 10000){
 			console.log('res.data', res.data)

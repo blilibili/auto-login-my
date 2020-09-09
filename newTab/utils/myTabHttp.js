@@ -4,26 +4,52 @@ const hostname = 'http://116.85.11.146:9021'
 function getChromeToken() {
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.get('token', function(result) {
-			resolve(result.token)
+			if(result.token) {
+				resolve(result.token)
+			}
 		});
 	})
 }
 
+function getLoginData() {
+	return new Promise((resolve, reject) => {
+		chrome.storage.local.get(['userid', 'userName'], function(result) {
+			resolve({userId: result.userid})
+		});
+	})
+}
+
+
+function setToken(loginData) {
+	return new Promise((resolve, reject) => {
+		getLoginToken(loginData).then((token) => {
+			window.localStorage.setItem('token', token)
+			chrome.storage.local.set({token: token}, function() {
+				console.log("保存token:",token);
+			});
+			window.localStorage.setItem('token', token)
+			resolve(token)
+		})
+	})
+}
+
+
+
 async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
 	// 判断有没有token 没有就登录取
-	if(window.localStorage.getItem('token')) {
-		headers.token = window.localStorage.getItem('token')
-	}else{
-		// token过期，或者一开始登录
-		const loginData = {
-			userId: window.localStorage.getItem('userid'),
-			userName: window.localStorage.getItem('userName')
-			// userName: 'daniel'
-		}
-		let token = await getLoginToken(loginData)
-		headers.token = token
-		window.localStorage.setItem('token', token)
-	}
+	// if(window.localStorage.getItem('token')) {
+	// 	headers.token = window.localStorage.getItem('token')
+	// }else{
+	// 	// token过期，或者一开始登录
+	// 	const loginData = {
+	// 		userId: window.localStorage.getItem('userid'),
+	// 		userName: window.localStorage.getItem('userName')
+	// 		// userName: 'daniel'
+	// 	}
+	// }
+
+	const loginData = await getLoginData()
+	headers.token = await getChromeToken()
 
 	return new Promise((resolve, reject) => {
 		$.ajax({
@@ -35,10 +61,12 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 			success: (result) => {
 				console.log('结果结果', result)
 				// 登录失效
-				// if(result.code === 50004) {
-				// 	window.localStorage.removeItem('token')
-				// 	myTabAjax(url, methods, data, uid, headers)
-				// }
+				if(result.code === 50004) {
+					setToken(loginData).then((value) => {
+						console.log('设置token', value)
+						myTabAjax(url, methods, data, uid, headers)
+					})
+				}
 				resolve(result)
 			},
 			error: (e) => {
