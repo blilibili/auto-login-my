@@ -414,7 +414,7 @@ function createAddAccountDom() {
                         
                         $(".no-same-account-btn2").on('click',function(){
                             //明天再提示 TODO:
-
+                            closeModal()
                         })
                         
                     });
