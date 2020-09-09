@@ -189,7 +189,7 @@ function renderMyCrateData(laytpl, result) {
 
 	$(".my-create-account").map(function(element, index, array) {
 		$(index).on('click',function(item){
-			window.open('./addNewAccount.html?typeId='+item.target.dataset.typeid+"&IsSorC="+item.target.dataset.issorc)
+			window.location.href = './addNewAccount.html?typeId='+item.target.dataset.typeid+"&IsSorC="+item.target.dataset.issorc
 			//二次验证
 			// $(".auto-login-back-wall").attr('style','')
 			// $(".account-verify-modal").attr('style','')

@@ -195,6 +195,9 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			myTabAjax(requestUrl, 'post', param, myuserId).then((res) => {
 				if(res.code === 10000) {
 					layer.msg('编辑成功')
+					setTimeout(() => {
+						window.location.reload()
+					}, 1000)
 				}else{
 					layer.msg(res.message)
 				}
