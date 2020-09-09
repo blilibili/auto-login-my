@@ -446,13 +446,13 @@ function loginCommonMethods() {
     //    console.log(tabs)
     // });
 
-    chrome.storage.local.get(['userid', 'userName', 'accountId'],async function(result) {
+    chrome.storage.local.get(['userid', 'userName', 'accountId', 'token'],function(result) {
         console.log("云中云获取用户信息:",result)
         globalData.userid = result.userid
         globalData.userName = result.userName
-        // window.localStorage.setItem('userid', result.userid)
-        // window.localStorage.setItem('userName', result.userName)
-        // window.localStorage.setItem('accountId', result.accountId)
+        window.localStorage.setItem('userid', result.userid)
+        window.localStorage.setItem('userName', result.userName)
+        window.localStorage.setItem('accountId', result.accountId)
 
         // window.localStorage.removeItem('token')
 

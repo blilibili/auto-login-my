@@ -44,16 +44,13 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 }
 
                 // 查询当前是否有token
-                chrome.storage.local.get('token', function(result) {
-                    console.log("获取token:",result);
-                    chrome.storage.local.clear()
-                    getToken(loginData).then((token) => {
-                        window.localStorage.setItem('token', token)
-                        chrome.storage.local.set({token: token}, function() {
-                            console.log("保存token:",token);
-                        });
-                    })
-                });
+                // chrome.storage.local.remove('token')
+                // getToken(loginData).then((token) => {
+                //     window.localStorage.setItem('token', token)
+                //     chrome.storage.local.set({token: token}, function() {
+                //         console.log("保存token:",token);
+                //     });
+                // })
             }
 
             // 小智
