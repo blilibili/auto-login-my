@@ -157,3 +157,43 @@ const verifyModal = `
 
     </div>
 `
+
+
+const noSameAccount = `
+<div class="no-same-account">
+	<div class="no-same-account-title">
+		<div>要保存密码到密云吗？</div>
+		<img src="http://122.51.89.68:81/close.png" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
+	</div>
+	<div class="no-same-account-body">
+		<div>账号：</div>
+		<input id="no-same-account-account" type="text" placeholder="" value="" readonly>
+	</div>
+	<div class="no-same-account-body">
+		<div>密码：</div>
+		<input id="no-same-account-pwd" type="password" placeholder="" value="" readonly>
+	</div>
+	<div class="no-same-account-btns">
+		<button class="no-same-account-btn1">保存</button>
+		<button class="no-same-account-btn2">明天再提示</button>
+	</div>
+</div>
+<div class="no-same-account-succ" style="display:none">
+	保存成功！
+</div>
+`
+
+const theSameAccount = `
+<div class="the-same-account" >
+	<div class="the-same-account-close">
+		<img src="http://122.51.89.68:81/close.png" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
+	</div>
+	<div class="the-same-account-title">密云中存在相同的账号密码，是否要更新？</div>
+	<div class="the-same-account-btns">
+		<button class="the-same-account-btn1">确认</button>
+	</div>
+</div>
+<div class="the-same-account-succ" style="display:none">
+	更新成功！
+</div>
+`
