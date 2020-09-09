@@ -30,32 +30,18 @@ chrome.tabs.onCreated.addListener(function(tab) {
             let userId = ''
             // 小慧
             if(res.chatserverId) {
-                userId = res.chatserverId + res.xiaohui
+                userId = res.chatServerName + '@' + res.chatserverId
                 chrome.storage.local.set({userid: userId, userName: res.chatServerName, accountId: res.chatserverId}, function() {
                     console.log("保存id:",res.chatserverId);
                 });
                 window.localStorage.setItem('userid', userId)
                 window.localStorage.setItem('userName', res.chatServerName)
                 window.localStorage.setItem('accountId', res.chatserverId)
-
-                let loginData = {
-                    userId: userId,
-                    userName: res.chatServerName
-                }
-
-                // 查询当前是否有token
-                // chrome.storage.local.remove('token')
-                // getToken(loginData).then((token) => {
-                //     window.localStorage.setItem('token', token)
-                //     chrome.storage.local.set({token: token}, function() {
-                //         console.log("保存token:",token);
-                //     });
-                // })
             }
 
             // 小智
             if(res.chatServerId) {
-                userId = res.chatServerId + res.xiaohui
+                userId = res.chatServerName + '@' + res.chatServerId
                 chrome.storage.local.set({userid: userId, userName: res.chatServerName, accountId: res.chatserverId}, function() {
                     console.log("保存id:",res.chatServerId);
                 });

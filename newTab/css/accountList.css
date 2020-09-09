@@ -88,3 +88,11 @@
     color:#1791FF !important;
     font-weight: bold;
 }
+
+.my-create-account{
+    color: #1791FF;
+}
+.my-create-account:hover {
+    text-decoration:underline;
+    text-underline: #1791FF;
+}

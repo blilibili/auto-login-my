@@ -6,6 +6,8 @@ function getChromeToken() {
 		chrome.storage.local.get('token', function(result) {
 			if(result.token) {
 				resolve(result.token)
+			}else {
+				resolve('')
 			}
 		});
 	})
@@ -14,7 +16,7 @@ function getChromeToken() {
 function getLoginData() {
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.get(['userid', 'userName'], function(result) {
-			resolve({userId: result.userid})
+			resolve({userId: result.userid, userName: result.userName})
 		});
 	})
 }
@@ -50,7 +52,6 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 
 	const loginData = await getLoginData()
 	headers.token = await getChromeToken()
-
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			url: hostname + url,

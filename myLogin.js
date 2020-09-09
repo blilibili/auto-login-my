@@ -6,6 +6,8 @@
 //
 //     }
 // });
+var globalTypeId
+var globalTerName = ''
 var currentPage = 1
 var pageSize = 5
 var clientHeight = 0
@@ -20,13 +22,11 @@ var globalData = {
 // 创建账号密码钥匙
 function keyDomFunc(insertDom, callback=() => {}) {
     const keyDom = document.createElement('img')
-    keyDom.src = 'http://122.51.89.68:81/key.png'
-    keyDom.width = 30
-    keyDom.height = 30
+    keyDom.src = chrome.extension.getURL('img/key.png');
     keyDom.style.position = 'fixed'
-    console.log('inserDom', insertDom)
     if(insertDom) {
-        console.log('top', insertDom.getBoundingClientRect().left)
+        keyDom.width = insertDom.clientHeight - 6
+        keyDom.height = insertDom.clientHeight - 6
         keyDom.style.top = insertDom.getBoundingClientRect().top + 'px'
         keyDom.style.left = insertDom.getBoundingClientRect().left + insertDom.getBoundingClientRect().width - 40 + 'px'
     }
@@ -88,9 +88,10 @@ function keyUsernameClick() {
     }
 
     myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, globalData.userid).then((res) => {
+
+        console.log('返回', res)
         layui.use(['laytpl'], function() {
             createBackWall()
-            console.log('data', res)
             var data = { //数据
                 list: res.data === null?[]: res.data.records
             }
@@ -115,6 +116,7 @@ function keyUsernameClick() {
                     $(val).on('click',function(item){
                         let keyId = this.getAttribute('data-typeId')
                         console.log("typeId:",keyId)
+                        globalTypeId = parseInt(keyId, 10)
                         let accountObj = res.data.records.filter((result) => {
                             return parseInt(result.typeId, 10) === parseInt(keyId, 10)
                         })[0]
@@ -132,6 +134,7 @@ function keyUsernameClick() {
                         globalData.myName = accountObj.name
                         globalData.myUrl = accountObj.url
                         globalData.myuserName = accountObj.userAccount
+                        globalTerName = accountObj.name
 
                         $(findLoginButton()[0]).addClass('active')
 
@@ -475,15 +478,29 @@ function loginCommonMethods() {
         // })
     });
 
-    const inputArr = $('input')
+    let inputArr = $('input')
+
+    // iframe 有跨域问题
+    // $('iframe').each((index, item) => {
+    //     console.log(item, index)
+    //     let obj = item.contentWindow
+    //     console.log('找到元素', obj.document.getElementsByTagName('input'))
+    // })
+
+    console.log('找到的input', inputArr)
 
     // 查找输入框中第一个是text和password
     for(let i = 0;i < inputArr.length;i++) {
-        if(inputArr[i].attributes[0].value === 'text') {
-            setUserAccountArr.push(inputArr[i])
-        }
-        if(inputArr[i].attributes[0].value === 'password') {
-            setUserPassArr.push(inputArr[i])
+        let attributes = inputArr[i].attributes
+        for(let j = 0;j < attributes.length;j++) {
+            if(attributes[j].name === 'type') {
+                if(attributes[j].value === 'text') {
+                    setUserAccountArr.push(inputArr[i])
+                }
+                if(attributes[j].value === 'password') {
+                    setUserPassArr.push(inputArr[i])
+                }
+            }
         }
     }
 
@@ -499,14 +516,13 @@ function loginCommonMethods() {
 
     loginButton[0].addEventListener('click' , function() {
         let insertModel = {
-            accountId: parseInt(window.localStorage.getItem('accountId'), 10),
+            accountId: globalTypeId,
             // myAddress: globalData.myUrl,
             myName: globalData.myName,
             myUrl: globalData.myUrl,
             // myUserIp: '192.168.1.43',
-            terminalName: '',
-            terminalType: 3,
-            userName: window.localStorage.getItem('userName')
+            terminalName: globalTerName,
+            terminalType: 3
         }
         console.log("点击登录:",JSON.stringify(insertModel))
         // if(!globalData.myName)return

@@ -33,12 +33,10 @@
     <div class="using-often">
       <div title="">
         <span id="often-address"></span>
-        <span class="card-info" id="more-address" style="width: 68px;">...</span>
       </div>
 
       <div title="" style="margin-left: 100px;">
         <span id="using-often-ip"></span>
-        <span class="card-info" id="more-ip" style="width: 68px;">...</span>
       </div>
       <div >
         <button id="backBtn" class="layui-btn layui-btn-normal">返回</button>
@@ -63,6 +61,10 @@
     {{#  }) }}
 
     {{# } }}
+
+    {{# if(d.oftenIp.length > 2) { }}
+      <span class="card-info" id="more-ip" style="width: 68px;">...</span>
+    {{# } }}
   </script>
 
   <!--常用地区-->
@@ -71,6 +73,10 @@
     {{#  layui.each(d.oftenAddress, function(index, item){ }}
       <span class="card-info" style="width: 68px;">{{item}}</span>
     {{#  }) }}
+
+    {{# if(d.oftenAddress.length > 2) { }}
+    <span class="card-info" id="more-address" style="width: 68px;">...</span>
+    {{# } }}
   </script>
   <!--使用详情列表-->
   <script id="myUsingInfoList" type="text/html">
