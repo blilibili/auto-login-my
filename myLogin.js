@@ -308,120 +308,140 @@ function createAddAccountDom() {
             setPassword(pwd,false)
             $(findLoginButton()[0]).addClass('active')
             closeModal()
-            //查询密码是否一致
-            const url = window.location.href
-            const myuserId = window.localStorage.getItem('userid')
-            let param = {
-                accountType:1,
-                userAccount:account,
-                url,
+            //查询是否已经设置了明天再提示
+            let val = {
+                userId:globalData.userid
             }
-            console.log("param===>",param)
-            myTabAjax('/miyun/sys/UserPwdController/getPassWordByUser', 'get',param, myuserId).then((res) => {
-                if(res.code === 10000){
-                    //相同，判断密码是否相同，相同的话不做任何操作
-                    const encodePwd = do_encrypt(pwd)
-                    console.log("加密后密文:",encodePwd)
-                    if(res.data.userPassword !== encodePwd){
-                        console.log("两个密码不一致，提示更新")
-                        //提示更新
-                        layui.use(['laytpl'], function(){
-                            const renderAccountNewModalDom = createltModal('the-same-account-modal')
-                            // 渲染新增新账号
-                            var data = { //数据
-                                list: []
+            console.log("req:",val)
+            myTabAjax('/miyun/sys/UserRecodsController/getUserUseRecods', 'get', val, globalData.userid).then((res) => {
+                console.log("resp:",res)
+                if(res.code === 42003) {
+                    //需要提示
+                    //查询密码是否一致
+                    const url = window.location.href
+                    let param = {
+                        accountType:1,
+                        userAccount:account,
+                        url,
+                    }
+                    console.log("param===>",param)
+                    myTabAjax('/miyun/sys/UserPwdController/getPassWordByUser', 'get',param, globalData.userid).then((res) => {
+                        if(res.code === 10000){
+                            //相同，判断密码是否相同，相同的话不做任何操作
+                            const encodePwd = do_encrypt(pwd)
+                            console.log("加密后密文:",encodePwd)
+                            if(res.data.userPassword !== encodePwd){
+                                console.log("两个密码不一致，提示更新")
+                                //提示更新
+                                layui.use(['laytpl'], function(){
+                                    const renderAccountNewModalDom = createltModal('the-same-account-modal')
+                                    // 渲染新增新账号
+                                    var data = { //数据
+                                        list: []
+                                    }
+                            
+                                    var laytpl = layui.laytpl;
+                                    var getTpl = theSameAccount
+                            
+                                    laytpl(getTpl).render(data, function(html){
+                                        $(renderAccountNewModalDom).append(html)
+                                    });
+
+                                    $(".the-same-account-close").on('click',function(){
+                                        closeModal()
+                                    })
+
+                                    $(".the-same-account-btn1").on('click',function(){
+                                        let val = {
+                                            accountType:1,
+                                            typeId:res.data.id,
+                                            userAccount:account,
+                                            userPassword:encodePwd,
+                                        }
+                                        console.log("req:",val)
+                                        myTabAjax('/miyun/sys/UserPwdController/updateMyUserPwd', 'post', val, globalData.userid).then((res) => {
+                                            if(res.code === 10000) {
+                                                $(".the-same-account").hide()
+                                                $(".the-same-account-succ").show()
+                                                setTimeout(() => {
+                                                    closeModal()
+                                                }, 3000)
+                                            }else{
+                                                alert("更新失败！")
+                                            }
+                                        })
+                                    })
+                                })
                             }
+                        }
+                        if(res.code===80003){
+                            //都不相同
+                            layui.use(['laytpl'], function(){
+                                const renderAccountNewModalDom = createltModal('no-same-account-modal')
+                                // 渲染新增新账号
+                                var data = { //数据
+                                    list: []
+                                }
+                        
+                                var laytpl = layui.laytpl;
+                                var getTpl = noSameAccount
+                        
+                                laytpl(getTpl).render(data, function(html){
+                                    $(renderAccountNewModalDom).append(html)
+                                });
+
+                                $("#no-same-account-account").val(account)
+                                $("#no-same-account-pwd").val(pwd)
                     
-                            var laytpl = layui.laytpl;
-                            var getTpl = theSameAccount
-                    
-                            laytpl(getTpl).render(data, function(html){
-                                $(renderAccountNewModalDom).append(html)
+                                $(".no-same-account-close").on('click',function(){
+                                    closeModal()
+                                })
+                                
+                                $(".no-same-account-btn1").on('click',function(){
+                                    //确认则保存成功，3秒后弹窗消失
+                                    let val = {
+                                        accountType:1,
+                                        isAgainCheck:2,
+                                        typeData : [{
+                                            name: url,
+                                            url
+                                        }],
+                                        userAccount:account,
+                                        userPassword:do_encrypt(pwd),
+                                    }
+                                    console.log("req:",val)
+                                    myTabAjax('/miyun/sys/UserPwdController/saveMyUserPwd', 'post', val, globalData.userid).then((res) => {
+                                        if(res.code === 10000) {
+                                            $(".no-same-account").hide()
+                                            $(".no-same-account-succ").show()
+                                            setTimeout(() => {
+                                                closeModal()
+                                            }, 3000)
+                                        }else{
+                                            alert("保存失败！")
+                                        }
+                                    })
+                                })
+                                
+                                $(".no-same-account-btn2").on('click',function(){
+                                    //明天再提示
+                                    let val = {
+                                        userId:globalData.userid
+                                    }
+                                    console.log("req:",val)
+                                    myTabAjax('/miyun/sys/UserRecodsController/saveMyUserUseRecods', 'get', val, globalData.userid).then((res) => {
+                                        if(res.code === 10000) {
+                                            closeModal()
+                                        }else{
+                                            alert("设置失败！")
+                                        }
+                                    })
+                                })
+                                
                             });
 
-                            $(".the-same-account-close").on('click',function(){
-                                closeModal()
-                            })
-
-                            $(".the-same-account-btn1").on('click',function(){
-                                let val = {
-                                    accountType:1,
-                                    typeId:res.data.id,
-                                    userAccount:account,
-                                    userPassword:encodePwd,
-                                }
-                                console.log("req:",val)
-                                myTabAjax('/miyun/sys/UserPwdController/updateMyUserPwd', 'post', val, myuserId).then((res) => {
-                                    if(res.code === 10000) {
-                                        $(".the-same-account").hide()
-                                        $(".the-same-account-succ").show()
-                                        setTimeout(() => {
-                                            closeModal()
-                                        }, 3000)
-                                    }else{
-                                        alert("更新失败！")
-                                    }
-                                })
-                            })
-                        })
-                    }
-                }
-                if(res.code===80003){
-                    //都不相同
-                    layui.use(['laytpl'], function(){
-                        const renderAccountNewModalDom = createltModal('no-same-account-modal')
-                        // 渲染新增新账号
-                        var data = { //数据
-                            list: []
                         }
-                
-                        var laytpl = layui.laytpl;
-                        var getTpl = noSameAccount
-                
-                        laytpl(getTpl).render(data, function(html){
-                            $(renderAccountNewModalDom).append(html)
-                        });
-
-                        $("#no-same-account-account").val(account)
-                        $("#no-same-account-pwd").val(pwd)
-            
-                        $(".no-same-account-close").on('click',function(){
-                            closeModal()
-                        })
-                        
-                        $(".no-same-account-btn1").on('click',function(){
-                            //确认则保存成功，3秒后弹窗消失
-                            let val = {
-                                accountType:1,
-                                isAgainCheck:2,
-                                typeData : [{
-                                    name: url,
-                                    url
-                                }],
-                                userAccount:account,
-                                userPassword:do_encrypt(pwd),
-                            }
-                            console.log("req:",val)
-                            myTabAjax('/miyun/sys/UserPwdController/saveMyUserPwd', 'post', val, myuserId).then((res) => {
-                                if(res.code === 10000) {
-                                    $(".no-same-account").hide()
-                                    $(".no-same-account-succ").show()
-                                    setTimeout(() => {
-                                        closeModal()
-                                    }, 3000)
-                                }else{
-                                    alert("保存失败！")
-                                }
-                            })
-                        })
-                        
-                        $(".no-same-account-btn2").on('click',function(){
-                            //明天再提示 TODO:
-                            closeModal()
-                        })
-                        
-                    });
-
+                    })
                 }
             })
         })
