@@ -59,7 +59,7 @@ const backWall = `
 
 
 const addNewAccountConfig = `<div>
-	<img class="close-set-pass-config" style="position: absolute;top: 19px;right: 19px;width: 15px;height: 15px;cursor: pointer;" src="http://122.51.89.68:81/close.png" alt="">
+	<img class="close-set-pass-config" style="position: absolute;top: 19px;right: 19px;width: 15px;height: 15px;cursor: pointer;" src="{{chrome.extension.getURL('img/close.png')}}" alt="">
 	<div style="text-align: left;font-size: 16px;font-weight: bold;padding: 19px;">密云（帐号密码设置）</div>
 	<div class="auto-login-line"></div>
 	<div class="auto-login-form">

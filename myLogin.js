@@ -23,7 +23,7 @@ var globalData = {
 function keyDomFunc(insertDom, callback=() => {}) {
     const keyDom = document.createElement('img')
     keyDom.src = chrome.extension.getURL('img/key.png');
-    keyDom.style.position = 'fixed'
+    keyDom.style.position = 'absolute'
     if(insertDom) {
         keyDom.width = insertDom.clientHeight - 6
         keyDom.height = insertDom.clientHeight - 6
@@ -33,7 +33,7 @@ function keyDomFunc(insertDom, callback=() => {}) {
     keyDom.style.cursor = 'pointer'
     keyDom.onclick = callback
     if(insertDom) {
-        insertDom.parentNode.appendChild(keyDom)
+        document.body.appendChild(keyDom)
     }
 }
 
@@ -121,32 +121,7 @@ function keyUsernameClick() {
                 $('.account-list-use').each((key,val)=>{
                     clientHeight = parseInt(clientHeight, 10) + parseInt($(val)[0].clientHeight, 10)
                     $(val).on('click',function(item){
-                        let keyId = this.getAttribute('data-typeId')
-                        console.log("typeId:",keyId)
-                        globalTypeId = parseInt(keyId, 10)
-                        let accountObj = res.data.records.filter((result) => {
-                            return parseInt(result.typeId, 10) === parseInt(keyId, 10)
-                        })[0]
-
-                        // 需要二次验证
-                        if(accountObj.isAgainCheck) {
-                            // const modalDom = createModal(500, 500, 'is-again-check-modal')
-
-                        }
-                        // 设置账号密码
-                        setUserName(accountObj.userAccount)
-                        setPassword(accountObj.sharedPwd)
-
-                        // 设置记录的数据
-                        globalData.myName = accountObj.name
-                        globalData.myUrl = accountObj.url
-                        globalData.myuserName = accountObj.userAccount
-                        globalTerName = accountObj.name
-
-                        $(findLoginButton()[0]).addClass('active')
-
-                        $(modalDom).remove()
-                        $('.auto-login-back-wall').remove()
+                        clickPwdListRowEvent.call(this, modalDom, res)
                     })
                 })
 
@@ -163,6 +138,35 @@ function keyUsernameClick() {
         })
     })
 
+}
+
+function clickPwdListRowEvent(modalDom, res) {
+    let keyId = this.getAttribute('data-typeId')
+    console.log("typeId:",keyId)
+    globalTypeId = parseInt(keyId, 10)
+    let accountObj = res.data.records.filter((result) => {
+        return parseInt(result.typeId, 10) === parseInt(keyId, 10)
+    })[0]
+
+    // 需要二次验证
+    if(accountObj.isAgainCheck) {
+        // const modalDom = createModal(500, 500, 'is-again-check-modal')
+
+    }
+    // 设置账号密码
+    setUserName(accountObj.userAccount)
+    setPassword(accountObj.sharedPwd)
+
+    // 设置记录的数据
+    globalData.myName = accountObj.name
+    globalData.myUrl = accountObj.url
+    globalData.myuserName = accountObj.userAccount
+    globalTerName = accountObj.name
+
+    $(findLoginButton()[0]).addClass('active')
+
+    $(modalDom).remove()
+    $('.auto-login-back-wall').remove()
 }
 
 function renderMorePwdList(nextPage) {
@@ -331,10 +335,10 @@ function createAddAccountDom() {
                             var data = { //数据
                                 list: []
                             }
-                    
+
                             var laytpl = layui.laytpl;
                             var getTpl = theSameAccount
-                    
+
                             laytpl(getTpl).render(data, function(html){
                                 $(renderAccountNewModalDom).append(html)
                             });
@@ -374,21 +378,21 @@ function createAddAccountDom() {
                         var data = { //数据
                             list: []
                         }
-                
+
                         var laytpl = layui.laytpl;
                         var getTpl = noSameAccount
-                
+
                         laytpl(getTpl).render(data, function(html){
                             $(renderAccountNewModalDom).append(html)
                         });
 
                         $("#no-same-account-account").val(account)
                         $("#no-same-account-pwd").val(pwd)
-            
+
                         $(".no-same-account-close").on('click',function(){
                             closeModal()
                         })
-                        
+
                         $(".no-same-account-btn1").on('click',function(){
                             //确认则保存成功，3秒后弹窗消失
                             let val = {
@@ -414,12 +418,12 @@ function createAddAccountDom() {
                                 }
                             })
                         })
-                        
+
                         $(".no-same-account-btn2").on('click',function(){
                             //明天再提示 TODO:
                             closeModal()
                         })
-                        
+
                     });
 
                 }
@@ -604,6 +608,7 @@ function loginCommonMethods() {
     });
 
     let inputArr = $('input')
+    console.log('表单', $('form'))
 
     // iframe 有跨域问题
     // $('iframe').each((index, item) => {

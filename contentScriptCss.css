@@ -331,3 +331,29 @@
     white-space: nowrap;
     width: 300px;
 }
+
+.layui-form-item .layui-form-checkbox[lay-skin=primary] {
+    width: auto!important;
+}
+
+.layui-form-checkbox[lay-skin=primary] span {
+    padding-left: 0px!important;
+    padding-right: 15px!important;
+    line-height: 18px!important;
+    color: rgb(102, 102, 102) !important;
+    background: 0px 0px!important;
+    font-size: 14px!important;
+}
+.layui-form-checkbox[lay-skin=primary]{
+    min-width: 18px!important;
+    min-height: 18px!important;
+    margin-right: 0px!important;
+    padding-left: 28px!important;
+    padding-right: 0px!important;
+}
+.layui-form-checkbox i{
+    top: 0!important;
+     width: auto!important;
+     height: auto!important;
+     line-height: unset!important;
+}
