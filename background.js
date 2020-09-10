@@ -27,10 +27,11 @@ chrome.tabs.onCreated.addListener(function(tab) {
             if(res === null) {
                 console.log('未登录云中云, 获取的数据', res)
             }
+            // 插入平台信息
             let userId = ''
             // 小慧
             if(res.chatserverId) {
-                userId = res.chatServerName + '@' + res.chatserverId
+                userId = res.xiaohui + '@' + res.chatserverId
                 chrome.storage.local.set({
                     userid: userId,
                     userName: res.chatServerName,
@@ -49,7 +50,7 @@ chrome.tabs.onCreated.addListener(function(tab) {
 
             // 小智
             if(res.chatServerId) {
-                userId = res.chatServerName + '@' + res.chatServerId
+                userId = res.xiaohui + '@' + res.chatServerId
                 chrome.storage.local.set(
                   {
                       userid: userId,

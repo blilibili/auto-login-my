@@ -37,7 +37,12 @@ function setToken(loginData) {
 
 
 
-async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'application/json;charset=utf8;', 'token': ''}) {
+async function myTabAjax(url, methods, data, uid="", headers={
+	'referer': 'http://116.85.11.146:9021',
+	'host': '116.85.11.146',
+	'Content-Type':'application/json;charset=utf8;',
+	'token': ''
+}) {
 	// 判断有没有token 没有就登录取
 	// if(window.localStorage.getItem('token')) {
 	// 	headers.token = window.localStorage.getItem('token')
@@ -50,6 +55,7 @@ async function myTabAjax(url, methods, data, uid="", headers={'Content-Type':'ap
 	// 	}
 	// }
 
+	headers.Origin = ''
 	const loginData = await getLoginData()
 	headers.token = await getChromeToken()
 	return new Promise((resolve, reject) => {

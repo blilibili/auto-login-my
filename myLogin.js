@@ -24,15 +24,19 @@ function keyDomFunc(insertDom, callback=() => {}) {
     const keyDom = document.createElement('img')
     keyDom.src = chrome.extension.getURL('img/key.png');
     keyDom.style.position = 'absolute'
+    keyDom.style.zIndex = 100
     if(insertDom) {
         keyDom.width = insertDom.clientHeight - 6
         keyDom.height = insertDom.clientHeight - 6
-        keyDom.style.top = insertDom.getBoundingClientRect().top + 'px'
-        keyDom.style.left = insertDom.getBoundingClientRect().left + insertDom.getBoundingClientRect().width - 40 + 'px'
+        keyDom.style.top = insertDom.getBoundingClientRect().y + 'px'
+        keyDom.style.left = insertDom.getBoundingClientRect().x + insertDom.getBoundingClientRect().width - 40 + 'px'
+        // keyDom.style.top = 2 + 'px'
+        // keyDom.style.right = 20 + 'px'
     }
     keyDom.style.cursor = 'pointer'
     keyDom.onclick = callback
     if(insertDom) {
+        // insertDom.parentNode.style.position = 'relative'
         document.body.appendChild(keyDom)
     }
 }
@@ -131,7 +135,7 @@ function keyUsernameClick() {
                     console.log('scrolltop', scrollTop, maxScroll)
                     if(scrollTop >= maxScroll) {
                         currentPage++
-                        renderMorePwdList(currentPage)
+                        renderMorePwdList(currentPage, modalDom)
                     }
                 })
             });
@@ -169,7 +173,7 @@ function clickPwdListRowEvent(modalDom, res) {
     $('.auto-login-back-wall').remove()
 }
 
-function renderMorePwdList(nextPage) {
+function renderMorePwdList(nextPage, modalDom) {
     let searchObj = {
         // myuserId: globalData.userid,
         currentPage: nextPage,
@@ -193,6 +197,11 @@ function renderMorePwdList(nextPage) {
             laytpl(getTpl).render(data, function(html){
                 console.log('模板输出', html)
                 $('.auto-login-account-row-content-box').append(html)
+                $('.account-list-use').each((key,val)=>{
+                    $(val).on('click',function(item){
+                        clickPwdListRowEvent.call(this, modalDom, res)
+                    })
+                })
             })
         })
     })
