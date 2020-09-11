@@ -513,7 +513,7 @@ function autoCreatePwd(){
     let retPwd = ''
 
     let pwdLib = [
-        settingType[0] && '~!@#￥%^&*()_-+=|{}:"<>?/\\'.split(""),
+        settingType[0] && '~!@#¥%^&*()_-+=|{}:"<>?/\\'.split(""),
         settingType[1] && Array.from(Array(26),(v,k)=>{
             return String.fromCharCode(k+65)
         }),

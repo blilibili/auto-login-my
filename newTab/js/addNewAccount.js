@@ -13,6 +13,8 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			IsSorC:getQueryString('IsSorC'),
 		}
 		console.log("param===>",param)
+		$('.add-new-account-title-words').html('编辑账号')
+		document.title = '编辑账号'
 		myTabAjax('/miyun/sys/UserPwdController/getUserPwdEntity', 'get',param, myuserId).then((res) => {
 			console.log(res.data)
 			//给表单赋值
@@ -24,6 +26,9 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				,"isAgainCheck" : res.data.isAgainCheck === 1?"checked": ""
 			});
 		})
+	}else{
+		$('.add-new-account-title-words').html('添加账号')
+		document.title = '添加账号'
 	}
 
 	$(".add-account-tip").on('click',function(){
@@ -181,6 +186,23 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 	});
 
 	form.on('submit(*)', function(data){
+		console.log(data.field.userAccount.length)
+		if(data.field.userAccount.length >= 50) {
+			layer.msg('最长50个字符')
+			return false
+		}
+		if(data.field.userPassword.length >= 50) {
+			layer.msg('最长50个字符')
+			return false
+		}
+		if(data.field.name.length >= 50) {
+			layer.msg('最长50个字符')
+			return false
+		}
+		if(data.field.website.length >= 50) {
+			layer.msg('最长50个字符')
+			return false
+		}
 		if(getQueryString('typeId')) {
 			let param = {
 				accountType:1,
@@ -219,7 +241,7 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				if(res.code === 10000) {
 					layer.msg('新增成功')
 					setTimeout(() => {
-						window.location.reload()
+						// window.location.reload()
 					}, 800)
 				}else{
 					layer.msg(res.message)
