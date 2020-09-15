@@ -1,0 +1,31 @@
+.fixed-user-info{
+    position: absolute;
+    top: 16px;
+    right: 20px;
+}
+.my-login-user-info-row{
+    display: flex;
+    align-items: center;
+}
+.my-login-user-info-image{
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 25px;
+}
+.using-info-page{
+    width: 1440px;
+    margin: 20px auto 0 auto;
+    background-color: white;
+    position: relative;
+}
+#using-info-table{
+    position: fixed;
+    bottom: 20px;
+    right: 50px;
+    z-index: 1000;
+}
+#backBtn{
+    margin-left: 20px;
+}

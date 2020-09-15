@@ -1,10 +1,25 @@
+function renderUserInfo(laytpl, result) {
+	let data = result
+	let getTpl = document.getElementById('auto-login-my-user-info-tpl').innerHTML
+	laytpl(getTpl).render(data, function(html){
+		document.getElementById('auto-login-my-user-info').innerHTML = html;
+	});
+}
+
 const myuserId = window.localStorage.getItem("userid")
+
 layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 	var layer = layui.layer
 	,form = layui.form
 	,laytpl = layui.laytpl
 	,slider = layui.slider
 
+	// 渲染userInfo
+	renderUserInfo(laytpl, {
+		chatServerName: window.localStorage.getItem('chatServerName') || '',
+		nickName: window.localStorage.getItem('nickname') || '',
+		avatar: window.localStorage.getItem('avatar') || '',
+	})
 	// 判断是否有userid
 	if(getQueryString('typeId')) {
 		let param = {
@@ -187,6 +202,14 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 
 	form.on('submit(*)', function(data){
 		console.log(data.field.userAccount.length)
+		if(/.*[\u4e00-\u9fa5]+.*$/.test(data.field.userPassword)) {
+			layer.msg('密码不能输入中文汉字')
+			return false
+		}
+		if(/.*[\u4e00-\u9fa5]+.*$/.test(data.field.userAccount)) {
+			layer.msg('账号不能输入中文汉字')
+			return false
+		}
 		if(data.field.userAccount.length >= 50) {
 			layer.msg('最长50个字符')
 			return false
@@ -241,14 +264,14 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 				if(res.code === 10000) {
 					layer.msg('新增成功')
 					setTimeout(() => {
-						// window.location.reload()
+						window.location.reload()
 					}, 800)
 				}else{
 					layer.msg(res.message)
 				}
 			})
 		}
-		return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+		return false//阻止表单跳转。如果需要表单跳转，去掉这段即可。
 	});
 
 });

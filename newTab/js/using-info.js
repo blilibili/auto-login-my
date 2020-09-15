@@ -8,6 +8,12 @@ layui.use(['laypage', 'laytpl'], function(){
 	var laytpl = layui.laytpl;
 	var laypage = layui.laypage;
 	getUsingInfoList(searchObj,laytpl, laypage)
+	// 渲染userInfo
+	renderUserInfo(laytpl, {
+		chatServerName: window.localStorage.getItem('chatServerName') || '',
+		nickName: window.localStorage.getItem('nickname') || '',
+		avatar: window.localStorage.getItem('avatar') || '',
+	})
 
 });
 
@@ -15,6 +21,14 @@ layui.use(['laypage', 'laytpl'], function(){
 $('#backBtn').on('click', function() {
 	history.back(-1)
 })
+
+function renderUserInfo(laytpl, result) {
+	let data = result
+	let getTpl = document.getElementById('auto-login-my-user-info-tpl').innerHTML
+	laytpl(getTpl).render(data, function(html){
+		document.getElementById('auto-login-my-user-info').innerHTML = html;
+	});
+}
 
 function renderUsingInfoData(laytpl, result) {
 	var oftenData = { //数据

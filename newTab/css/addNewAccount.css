@@ -5,13 +5,28 @@
 .add-new-account-page {
     font-size: 16px;
     color: #304554;
-    width: 1440px;
-    margin: 15px auto 0 auto;
+    width: 1200px;
+    margin: 68px auto 0 auto;
     background-color: white;
     position: relative;
-    height: 95vh;
+    height: 85vh;
 }
-
+.fixed-user-info{
+    position: absolute;
+    top: 20px;
+    right: 141px;
+}
+.my-login-user-info-row{
+    display: flex;
+    align-items: center;
+}
+.my-login-user-info-image{
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    border-radius: 25px;
+}
 .add-account-form {
     width: 96%;
     margin: 0 auto;

@@ -14,6 +14,7 @@
   </style>
 </head>
 <body>
+  <div id="auto-login-my-user-info" class="fixed-user-info"></div>
   <div class="add-new-account-page">
     <div class="add-new-account-title">
       <div class="add-new-account-title-words"></div>
@@ -23,27 +24,27 @@
     <form class="layui-form add-account-form" action="" lay-filter="formDemo">
       <div class="add-account-form">
         <div class="add-account-flex-row">
-          <div class="add-account-flex-col"><span style="color: #FF2727;">*</span>&nbsp;&nbsp;网址</div>
+          <div class="add-account-flex-col">网址&nbsp;&nbsp;<span style="color: #FF2727;">*</span></div>
           <input class="add-account-input" name="website" value="http://" lay-verify="url" type="text" placeholder="">
         </div>
         <div class="using-table-line"></div>
 
         <div class="add-account-flex-row">
-          <div class="add-account-flex-col"><span style="color: #FF2727;">*</span>&nbsp;&nbsp;名称</div>
+          <div class="add-account-flex-col">名称&nbsp;&nbsp;<span style="color: #FF2727;">*</span></div>
           <input class="add-account-input"  name="name" lay-verify="name" type="text" placeholder="">
         </div>
         <div class="using-table-line"></div>
 
         <div class="add-account-flex-row">
           <div class="add-account-flex-col">账号</div>
-          <input class="add-account-input" name="userAccount" type="text" placeholder="">
+          <input class="add-account-input" name="userAccount" type="text" placeholder="请输入账号">
         </div>
         <div class="using-table-line"></div>
 
         <div class="add-account-flex-row">
           <div class="add-account-flex-col">密码</div>
           <div class="add-account-flex-row add-account-pwd" style="padding: 0;">
-            <input class="add-account-input" data-isShow="0" name="userPassword" type="password" placeholder="">
+            <input class="add-account-input" placeholder="请输入密码" data-isShow="0" name="userPassword" type="password" >
             <img class="add-account-showPwd icon-pwd" src="../img/hidepwd.png"/>
             <img class="add-account-autoPwd icon-pwd" src="../img/autopwd.png"/>
           </div>
@@ -51,7 +52,7 @@
         <div class="using-table-line"></div>
 
         <div class="add-account-flex-row">
-          <div class="add-account-flex-col" >使用需二维码验证 <span class="add-account-tip">?</span></div>
+          <div class="add-account-flex-col" >使用需二次验证<span class="add-account-tip">?</span></div>
           <input class="add-account-checkbox" type="checkbox" name="isAgainCheck" lay-skin="switch">
         </div>
         <div class="using-table-line"></div>
@@ -65,6 +66,15 @@
     </form>
 
   </div>
+
+  <script id="auto-login-my-user-info-tpl" type="text/html">
+    <div class="my-login-user-info-row">
+      <img src="{{d.avatar}}" class="my-login-user-info-image" alt="">
+      <div>
+        {{d.nickName}}({{d.chatServerName}})
+      </div>
+    </div>
+  </script>
 
   <script src="./layer/layui.js"></script>
   <script src="./utils/myTabHttp.js"></script>

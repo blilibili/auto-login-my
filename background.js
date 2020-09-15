@@ -1,7 +1,6 @@
 /**
  * Created by liyigang on 1/5/2020.
  */
-console.log(chrome, '123')
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log(request, sender, sendResponse)
     if(request.type === 'REQUEST_USERS_ALL'){
@@ -27,6 +26,8 @@ chrome.tabs.onCreated.addListener(function(tab) {
             if(res === null) {
                 console.log('未登录云中云, 获取的数据', res)
             }
+            // 清空token
+            chrome.storage.local.remove('token')
             // 插入平台信息
             let userId = ''
             // 小慧
@@ -35,17 +36,22 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 chrome.storage.local.set({
                     userid: userId,
                     userName: res.chatServerName,
-                    accountId: res.chatserverId,
+                    chatServerId: res.chatserverId,
                     nickname: res.nickname,
-                    avatar: res.avatar
+                    avatar: res.avatar || 'https://chat.cloudak47.com:17100/file/avatar/0.png'
                 }, function() {
                     console.log("保存id:",res.chatserverId);
                 });
                 window.localStorage.setItem('userid', userId)
-                window.localStorage.setItem('userName', res.chatServerName)
-                window.localStorage.setItem('accountId', res.chatserverId)
+                // window.localStorage.setItem('userName', res.chatServerName)
+                // window.localStorage.setItem('accountId', res.chatserverId)
+                // window.localStorage.setItem('nickname', res.nickname)
+                // window.localStorage.setItem('avatar', res.avatar)
+
+                window.localStorage.setItem('chatServerName', res.chatServerName)
+                window.localStorage.setItem('chatServerId', res.chatserverId)
                 window.localStorage.setItem('nickname', res.nickname)
-                window.localStorage.setItem('avatar', res.avatar)
+                window.localStorage.setItem('avatar', res.avatar || 'https://chat.cloudak47.com:17100/file/avatar/0.png')
             }
 
             // 小智
@@ -55,17 +61,21 @@ chrome.tabs.onCreated.addListener(function(tab) {
                   {
                       userid: userId,
                       userName: res.chatServerName,
-                      accountId: res.chatserverId,
+                      chatServerId: res.chatServerId,
                       nickname: res.nickname,
-                      avatar: res.avatar
+                      avatar: res.avatar || 'https://chat.cloudak47.com:17100/file/avatar/0.png'
                   }, function() {
                     console.log("保存id:",res.chatServerId);
                 });
                 window.localStorage.setItem('userid', userId)
-                window.localStorage.setItem('userName', res.chatServerName)
-                window.localStorage.setItem('accountId', res.chatServerId)
+                // window.localStorage.setItem('userName', res.chatServerName)
+                // window.localStorage.setItem('accountId', res.chatServerId)
+                // window.localStorage.setItem('nickname', res.nickname)
+                // window.localStorage.setItem('avatar', res.avatar)
+                window.localStorage.setItem('chatServerName', res.chatServerName)
+                window.localStorage.setItem('chatServerId', res.chatServerId)
                 window.localStorage.setItem('nickname', res.nickname)
-                window.localStorage.setItem('avatar', res.avatar)
+                window.localStorage.setItem('avatar', res.avatar || 'https://chat.cloudak47.com:17100/file/avatar/0.png')
             }
 
         })

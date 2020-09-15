@@ -6,25 +6,11 @@
   <title>使用详情</title>
   <link rel="stylesheet" href="./css/layui.css" media="all">
   <link rel="stylesheet" href="./css/common.css" media="all">
-  <style>
-    .using-info-page{
-      width: 1440px;
-      margin: 20px auto 0 auto;
-      background-color: white;
-    }
-    #using-info-table{
-      position: fixed;
-      bottom: 20px;
-      right: 50px;
-      z-index: 1000;
-    }
-    #backBtn{
-      margin-left: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/usingInfo.css" media="all">
 </head>
 <body>
   <div class="using-info-page">
+    <div id="auto-login-my-user-info" class="fixed-user-info"></div>
     <div style="padding: 20px;">
       <span style="font-size: 16px;color: #304554;">密云使用记录</span>
       <span style="color: #747C83;font-size: 12px;margin-left: 10px;">以下是您最近3个月使用密云的记录，如有异常登录记录，请尽快修改密码。</span>
@@ -51,6 +37,15 @@
     <div id="using-info-table" style="margin-top: 20px;"></div>
   </div>
 
+  <!--用户信息-->
+  <script id="auto-login-my-user-info-tpl" type="text/html">
+    <div class="my-login-user-info-row">
+      <img src="{{d.avatar}}" class="my-login-user-info-image" alt="">
+      <div>
+        {{d.nickName}}({{d.chatServerName}})
+      </div>
+    </div>
+  </script>
   <!--常用ip-->
   <script id="myUsingOftenIp" type="text/html">
     <span>常用终端:</span>

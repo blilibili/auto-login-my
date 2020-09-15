@@ -199,7 +199,7 @@
     top:0;
     right:5px;
     z-index: 10001;
-    background-color: #ffffff;
+    background-color: rgba(255,255,255,0.8);
     padding: 0 20px;
     border:1px solid #D9D9D9;
 }
@@ -274,7 +274,7 @@
 }
 
 .no-same-account-succ {
-    font-size: 30px;
+    font-size: 25px;
     padding: 60px;
 }
 
@@ -285,9 +285,11 @@
     top:0;
     right:100px;
     z-index: 10001;
-    background-color: #ffffff;
+    background-color: rgba(255,255,255,0.8);
     padding: 0 10px;
     border:1px solid #D9D9D9;
+    color: black;
+    font-size: 14px;
 }
 
 .the-same-account {
@@ -322,7 +324,7 @@
 }
 
 .the-same-account-succ {
-    font-size: 30px;
+    font-size: 20px;
     padding: 50px 40px;
 }
 .auto-login-user-account-row {

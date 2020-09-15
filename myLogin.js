@@ -16,7 +16,7 @@ var globalData = {
     myName: '',
     myUrl: '',
     myuserName: '',
-    userName: 'daniel'
+    userName: ''
 }
 
 // 创建账号密码钥匙
@@ -209,6 +209,12 @@ function renderMorePwdList(nextPage, modalDom) {
 
 let pwdLength = 20
 let settingType = [1,1,1,1] //字符,大写,小写,数字
+// 获取当前操作系统信息
+function getCurrentSoftVersion() {
+    const appVersion = window.navigator.userAgent
+    const softInfo = appVersion.slice(appVersion.indexOf('(')+1, appVersion.indexOf(')'))
+    return softInfo
+}
 // 添加新账号
 function createAddAccountDom() {
     $('.no-matching-add-new-account').on('click', function() {
@@ -300,6 +306,8 @@ function createAddAccountDom() {
                 aux.select();
                 document.execCommand("copy");
                 document.body.removeChild(aux);
+
+                alert('复制成功')
             });
         });
 
@@ -612,28 +620,7 @@ function loginCommonMethods() {
         globalData.userid = result.userid
         globalData.userName = result.userName
         window.localStorage.setItem('userid', result.userid)
-        window.localStorage.setItem('userName', result.userName)
-        window.localStorage.setItem('accountId', result.accountId)
-
-        // window.localStorage.removeItem('token')
-
-        // const token = await getToken(loginData)
-        // let loginData = {
-        //     userId: result.userid,
-        //     userName: result.userName
-        // }
-        // getToken(loginData).then((token) => {
-        //     console.log('myLogin', token)
-        //     window.localStorage.setItem('token', token)
-        //     chrome.storage.local.set({token: token}, function() {
-        //         console.log("保存token:",token);
-        //     });
-        // })
-        // let token = window.localStorage.getItem('token')
-        //获取偏移量
-        // myTabAjax('/miyun/sys/UserPwdController/getTheOffset', 'get','', '', {'Content-Type':'application/json;charset=utf8;', 'token': token}).then((res) => {
-        //     window.localStorage.setItem('offset', res.data) //全局缓存了，从这里取偏移量就好了
-        // })
+        window.localStorage.setItem('chatServerId', result.chatServerId)
     });
 
     let inputArr = $('input')
@@ -679,7 +666,7 @@ function loginCommonMethods() {
             myName: globalData.myName,
             myUrl: globalData.myUrl,
             // myUserIp: '192.168.1.43',
-            terminalName: globalTerName,
+            terminalName: getCurrentSoftVersion(),
             terminalType: 3
         }
         console.log("点击登录:",JSON.stringify(insertModel))
@@ -687,6 +674,8 @@ function loginCommonMethods() {
 
         myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel, globalData.userid).then((res) => {
             console.log('记录数据', res.data)
+        }, (err) => {
+            console.log('记录接口异常', err)
         })
     })
 }

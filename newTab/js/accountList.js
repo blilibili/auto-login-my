@@ -9,6 +9,7 @@ let searchMyCreateObj = {
 	currentPage: 1,
 	pageSize: 10
 }
+let total = 0
 var layuiForm
 
 
@@ -74,8 +75,7 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 	var laypage = layui.laypage;
 
 	renderUserInfo(laytpl, {
-		userName: window.localStorage.getItem('userName') || '',
-		accountId: window.localStorage.getItem('accountId') || '',
+		chatServerName: window.localStorage.getItem('chatServerName') || '',
 		nickName: window.localStorage.getItem('nickname') || '',
 		avatar: window.localStorage.getItem('avatar') || '',
 	})
@@ -143,6 +143,11 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 				if(res.code === 10000) {
 					layer.msg('删除成功');
 					layer.close(index);
+
+					// 最后一条被删除
+					if(total % 10 === 1) {
+						searchMyCreateObj.currentPage--
+					}
 					getAccountPwdList(searchMyCreateObj, laytpl, laypage , currentTabId)
 					// window.location.reload()
 				}else{
@@ -166,7 +171,6 @@ function renderUserInfo(laytpl, result) {
 	let getTpl = document.getElementById('auto-login-my-user-info-tpl').innerHTML
 	laytpl(getTpl).render(data, function(html){
 		document.getElementById('auto-login-my-user-info').innerHTML = html;
-		layuiForm.render();
 	});
 }
 
@@ -227,33 +231,32 @@ function getAccountPwdList (searchObj, laytpl, layPage ,type) {
 	myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', params, myuserId).then((res) => {
 		console.log('查询数据', res.data)
 		if(res.code === 10000){
+			total = res.data.total
 			console.log('res.data', res.data)
 			if(type === 1){
 				renderMyCrateData(laytpl, res.data.records)
 			}else{
 				renderTrData(laytpl, res.data.records)
 			}
-			if(searchMyCreateObj.currentPage === 1){
-				//执行一个laypage实例
-				layPage.render({
-					elem: type === 1 ? 'my-create-page' : 'my-share-page' //注意，这里的 test1 是 ID，不用加 # 号
-					,count: res.data.total //数据总数，从服务端得到
-					,theme: '#1791FF'
-					,limit: searchMyCreateObj.pageSize
-					,limits: [10,20,30,40]
-					,curr: 1
-					,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
-					,jump: function(obj, first){
-						console.log('跳转', obj)
-						//首次不执行
-						if(!first){
-							searchMyCreateObj.currentPage = obj.curr
-							searchMyCreateObj.pageSize = obj.limit
-							getAccountPwdList(searchMyCreateObj, laytpl, layPage , type)
-						}
+			//执行一个laypage实例
+			layPage.render({
+				elem: type === 1 ? 'my-create-page' : 'my-share-page' //注意，这里的 test1 是 ID，不用加 # 号
+				,count: res.data.total //数据总数，从服务端得到
+				,theme: '#1791FF'
+				,limit: searchMyCreateObj.pageSize
+				,limits: [10,20,30,40]
+				,curr: searchMyCreateObj.currentPage
+				,layout: ['count', 'prev', 'page', 'next', 'limit', 'skip']
+				,jump: function(obj, first){
+					console.log('跳转', obj)
+					//首次不执行
+					if(!first){
+						searchMyCreateObj.currentPage = obj.curr
+						searchMyCreateObj.pageSize = obj.limit
+						getAccountPwdList(searchMyCreateObj, laytpl, layPage , type)
 					}
-				});
-			}
+				}
+			});
 
 		}else{
 			if(type === 1){
