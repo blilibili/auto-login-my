@@ -16,7 +16,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 	 </div>
 	 <div class="auto-login-account-row-content-box">
 	   {{# if(d.list.length === 0) { }}
-	      <div style="padding: 15px;color:#333;">抱歉，没有匹配的账号密码</div>
+	      <div style="padding: 15px;color:#333;text-align: left;">抱歉，没有匹配的账号密码</div>
 	   {{#} }} 
 		 {{#  layui.each(d.list, function(index, item){ }}
 			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
@@ -27,7 +27,7 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 					<span class="auto-login-user-account-row-user-account">[{{item.userAccount}}</span>
 				  <span style="display: inline-block;position: relative;top: -1px;">]</span>	
 				</div>
-					<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
+					<div style="font-size: 12px;color: #999999;text-align: left;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
 				</div>
 			</div>
 			
@@ -175,12 +175,12 @@ const noSameAccount = `
 		<img src="http://122.51.89.68:81/close.png" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
 	</div>
 	<div class="no-same-account-body">
-		<div>账号：</div>
-		<input id="no-same-account-account" type="text" placeholder="" value="" readonly>
+		<div style="font-size: 12px;width: 48px;flex-shrink: 0;">账号：</div>
+		<input style="margin: 0;font-size: 12px;padding: 0;" id="no-same-account-account" type="text" placeholder="" value="" readonly>
 	</div>
 	<div class="no-same-account-body">
-		<div>密码：</div>
-		<input id="no-same-account-pwd" type="password" placeholder="" value="" readonly>
+		<div style="font-size: 12px;width: 48px;flex-shrink: 0;">密码：</div>
+		<input style="margin: 0;font-size: 12px;padding: 0;" id="no-same-account-pwd" type="password" placeholder="" value="" readonly>
 	</div>
 	<div class="no-same-account-btns">
 		<button class="no-same-account-btn1">保存</button>
