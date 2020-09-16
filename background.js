@@ -51,7 +51,7 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 window.localStorage.setItem('chatServerName', res.chatServerName)
                 window.localStorage.setItem('chatServerId', res.chatserverId)
                 window.localStorage.setItem('nickname', res.nickname)
-                window.localStorage.setItem('avatar', res.avatar || 'https://chat.cloudak47.com:17100/file/avatar/0.png')
+                window.localStorage.setItem('avatar', res.avatars || chrome.extension.getURL('img/avator.png'))
             }
 
             // 小智
@@ -75,7 +75,7 @@ chrome.tabs.onCreated.addListener(function(tab) {
                 window.localStorage.setItem('chatServerName', res.chatServerName)
                 window.localStorage.setItem('chatServerId', res.chatServerId)
                 window.localStorage.setItem('nickname', res.nickname)
-                window.localStorage.setItem('avatar', res.avatar || 'https://chat.cloudak47.com:17100/file/avatar/0.png')
+                window.localStorage.setItem('avatar', res.avatars || chrome.extension.getURL('img/avator.png'))
             }
 
         })

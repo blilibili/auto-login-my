@@ -25,13 +25,15 @@ function keyDomFunc(insertDom, callback=() => {}) {
     keyDom.src = chrome.extension.getURL('img/key.png');
     keyDom.style.position = 'absolute'
     keyDom.style.zIndex = 100
+
+    let insertDomFontSize = parseInt(window.getComputedStyle(insertDom).fontSize, 10) || 14
+
     if(insertDom) {
-        keyDom.width = insertDom.clientHeight - 6
-        keyDom.height = insertDom.clientHeight - 6
-        keyDom.style.top = insertDom.getBoundingClientRect().y + 'px'
+        keyDom.width = insertDomFontSize + 12
+        keyDom.height = insertDomFontSize + 12
+        let heightHalf = Math.round(insertDom.getBoundingClientRect().height / 2)
+        keyDom.style.top = insertDom.getBoundingClientRect().y + heightHalf - (Math.round(keyDom.width / 2)) + 'px'
         keyDom.style.left = insertDom.getBoundingClientRect().x + insertDom.getBoundingClientRect().width - 40 + 'px'
-        // keyDom.style.top = 2 + 'px'
-        // keyDom.style.right = 20 + 'px'
     }
     keyDom.style.cursor = 'pointer'
     keyDom.onclick = callback
@@ -626,11 +628,12 @@ function loginCommonMethods() {
     let inputArr = $('input')
 
     // iframe 有跨域问题
-    // $('iframe').each((index, item) => {
-    //     console.log(item, index)
-    //     let obj = item.contentWindow
-    //     console.log('找到元素', obj.document.getElementsByTagName('input'))
-    // })
+    console.log($('iframe'))
+    $('iframe').each((index, item) => {
+        console.log(item, index)
+        let obj = item.contentWindow
+        console.log('找到元素', obj.document.getElementsByTagName('input'))
+    })
 
     console.log('找到的input', inputArr)
 

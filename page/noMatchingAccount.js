@@ -22,7 +22,11 @@ const noMatchingAccount = `<div class="auto-login-start-click-account">
 			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
 				<img src="{{chrome.extension.getURL('img/key.png')}}" class="auto-login-click-account-small-image" alt="">
 				<div style="margin-left: 10px;">
-					<div class="auto-login-user-account-row">{{ item.name }} [{{item.userAccount}}]</div>
+					<div class="auto-login-user-account-row">
+					<span class="auto-login-user-account-row-item-name">{{ item.name }}</span> 
+					<span class="auto-login-user-account-row-user-account">[{{item.userAccount}}</span>
+				  <span style="display: inline-block;position: relative;top: -1px;">]</span>	
+				</div>
 					<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
 				</div>
 			</div>
@@ -44,7 +48,11 @@ const renderPwdList = `
 			<div class="auto-login-list-flex-row account-list-use" style="margin-top: 0;" data-typeId={{ item.typeId }} >
 				<img src="{{chrome.extension.getURL('img/key.png')}}" class="auto-login-click-account-small-image" alt="">
 				<div style="margin-left: 10px;">
-					<div class="auto-login-user-account-row">{{ item.name }} [{{item.userAccount}}]</div>
+					<div class="auto-login-user-account-row">
+            <span class="auto-login-user-account-row-item-name">{{ item.name }}</span>
+            <span class="auto-login-user-account-row-user-account">[{{item.userAccount}}]</span>
+            <span style="display: inline-block;position: relative;top: -1px;">]</span>	
+					</div>
 					<div style="font-size: 12px;color: #999999;">{{ item.isSorC === 1?'我创建的': '别人分享给我的' }}</div>
 				</div>
 			</div>
@@ -65,12 +73,12 @@ const addNewAccountConfig = `<div>
 	<div class="auto-login-form">
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col"><span style="color: #FF2727;">*</span>账号</div>
-			<input class="auto-login-input" id="account" type="text" value="" placeholder="请输入账号">
+			<input style="margin: 0" class="auto-login-input" id="account" type="text" value="" placeholder="请输入账号">
 		</div>
 		
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col"><span style="color: #FF2727;">*</span>生成密码</div>
-			<input class="auto-login-input" type="text" placeholder="" id="accountPwd" value="" readonly>
+			<input style="margin: 0" class="auto-login-input" type="text" placeholder="" id="accountPwd" value="" readonly>
 			<div id="copybtn" class="copy-button-add-account">复制</div>
 		</div>
 		
@@ -87,7 +95,7 @@ const addNewAccountConfig = `<div>
 		<div class="auto-login-flex-row">
 			<div class="auto-login-flex-col">字符设置</div>
 			
-			<form class="layui-form" action="">
+			<form class="layui-form" action="" style="width: auto!important;margin: 0!important;">
 			  <div class="layui-form-item">
 			     <div style="margin-left: 20px;">
 			      <input type="checkbox" name="chrtype" lay-filter="chrtype" value="1" title="大写" checked lay-skin="primary">
