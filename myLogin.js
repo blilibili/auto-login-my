@@ -315,10 +315,14 @@ function createAddAccountDom() {
 
 
         $('.close-set-pass-config').on('click', function() {
+            pwdLength = 20
+            settingType = [1,1,1,1] //字符,大写,小写,数字
             closeModal()
         })
 
         $('.auto-login-pass-set-cancel').on('click', function() {
+            pwdLength = 20
+            settingType = [1,1,1,1] //字符,大写,小写,数字
             closeModal()
         })
 
@@ -330,6 +334,8 @@ function createAddAccountDom() {
             const pwd = $("#accountPwd").val()
             setPassword(pwd,false)
             $(findLoginButton()[0]).addClass('active')
+            pwdLength = 20
+            settingType = [1,1,1,1] //字符,大写,小写,数字
             closeModal()
             //查询是否已经设置了明天再提示
             let val = {
