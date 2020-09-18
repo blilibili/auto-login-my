@@ -352,19 +352,30 @@
     display: inline-block;
 }
 .layui-form-item .layui-form-checkbox[lay-skin=primary] {
-    width: auto!important;
+    width: 80px!important;
+    padding-left: 30px!important;
+    text-align: center!important;
 }
-
+.layui-btn-disabled, .layui-btn-disabled:active, .layui-btn-disabled:hover {
+    background-color: rgb(251, 251, 251)!important;
+    color: rgb(201, 201, 201)!important;
+    cursor: not-allowed!important;
+    opacity: 1!important;
+    border-width: 1px!important;
+    border-style: solid!important;
+    border-color: rgb(230, 230, 230)!important;
+    border-image: initial!important;
+}
 .layui-form-checkbox[lay-skin=primary] span {
     padding-left: 0px!important;
-    padding-right: 15px!important;
+    padding-right: 0px!important;
     line-height: 18px!important;
     color: rgb(102, 102, 102) !important;
     background: 0px 0px!important;
     font-size: 14px!important;
 }
 .layui-form-checkbox[lay-skin=primary]{
-    min-width: 18px!important;
+    min-width: 20px!important;
     min-height: 18px!important;
     margin-right: 0px!important;
     padding-left: 28px!important;
@@ -372,7 +383,8 @@
 }
 .layui-form-checkbox i{
     top: 0!important;
-     width: auto!important;
-     height: auto!important;
+     width: 18px!important;
+     height: 18px!important;
      line-height: unset!important;
+    margin-right: 20px;
 }

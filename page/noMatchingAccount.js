@@ -87,7 +87,7 @@ const addNewAccountConfig = `<div>
 		</div>
 		
 		<div class="auto-login-flex-row">
-			<div class="auto-login-flex-col">密码设置</div>
+			<div class="auto-login-flex-col">密码长度</div>
 			<div id="slide-pass-set"></div>
 			<div id="slidePassSetVal">20</div>
 		</div>
