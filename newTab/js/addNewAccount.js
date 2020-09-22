@@ -140,9 +140,18 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 
 		form.on('checkbox(chrtype)', function(data){
 			settingType[data.value] = data.elem.checked?1:0
-			setTimeout(()=>{
-				$("#accountPwd").val(autoCreatePwd())
-			},500)
+			let count = 0
+			settingType.forEach(item=>count+=item)
+			if(!count){
+				settingType[data.value] = 1
+				alert("至少选择一种字符类型!")
+				$(this).prop("checked",true)
+				form.render()
+			}else{
+				setTimeout(()=>{
+					$("#accountPwd").val(autoCreatePwd())
+				},500)
+			}
 		});
 
 		let sliderTimer = false
