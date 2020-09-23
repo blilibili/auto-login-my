@@ -26,20 +26,24 @@ function keyDomFunc(insertDom, callback=() => {}) {
     keyDom.style.position = 'absolute'
     keyDom.style.zIndex = 100
 
-    let insertDomFontSize = parseInt(window.getComputedStyle(insertDom).fontSize, 10) || 14
+    try {
+        let insertDomFontSize = parseInt(window.getComputedStyle(insertDom).fontSize, 10) || 14
 
-    if(insertDom) {
-        keyDom.width = insertDomFontSize + 12
-        keyDom.height = insertDomFontSize + 12
-        let heightHalf = Math.round(insertDom.getBoundingClientRect().height / 2)
-        keyDom.style.top = insertDom.getBoundingClientRect().y + heightHalf - (Math.round(keyDom.width / 2)) + 'px'
-        keyDom.style.left = insertDom.getBoundingClientRect().x + insertDom.getBoundingClientRect().width - 40 + 'px'
-    }
-    keyDom.style.cursor = 'pointer'
-    keyDom.onclick = callback
-    if(insertDom) {
-        // insertDom.parentNode.style.position = 'relative'
-        document.body.appendChild(keyDom)
+        if(insertDom) {
+            keyDom.width = insertDomFontSize + 12
+            keyDom.height = insertDomFontSize + 12
+            let heightHalf = Math.round(insertDom.getBoundingClientRect().height / 2)
+            keyDom.style.top = insertDom.getBoundingClientRect().y + heightHalf - (Math.round(keyDom.width / 2)) + 'px'
+            keyDom.style.left = insertDom.getBoundingClientRect().x + insertDom.getBoundingClientRect().width - 40 + 'px'
+        }
+        keyDom.style.cursor = 'pointer'
+        keyDom.onclick = callback
+        if(insertDom) {
+            // insertDom.parentNode.style.position = 'relative'
+            document.body.appendChild(keyDom)
+        }
+    } catch (e) {
+        console.log(e)
     }
 }
 
@@ -71,11 +75,18 @@ function findLoginButton() {
     }
 
     for(let i = 0;i < sliceEles.length;i++){
-        if(sliceEles[i].innerText === '登录' || sliceEles[i].innerText === '登 录' || sliceEles[i].value === '登录'){
-            simLoginButton.push(sliceEles[i])
+        if(sliceEles[i].nodeName === 'BUTTON') {
+            if(sliceEles[i].innerText.trim().indexOf('登录') !== -1){
+                simLoginButton.push(sliceEles[i])
+            }
+
+            if(sliceEles[i].innerText.trim().indexOf('登陆') !== -1){
+                simLoginButton.push(sliceEles[i])
+            }
         }
     }
 
+    console.log(simLoginButton)
     return simLoginButton
 }
 
@@ -146,6 +157,15 @@ function keyUsernameClick() {
 
 }
 
+function addClickShareRecord(data) {
+    let addParams = {
+        shareinfoId: data.recevieId
+    }
+    myTabAjax('/miyun/sys/ShareController/updateUseNum', 'post', addParams, globalData.userid).then((res) => {
+        console.log(res)
+    })
+}
+
 function clickPwdListRowEvent(modalDom, res) {
     let keyId = this.getAttribute('data-typeId')
     console.log("typeId:",keyId)
@@ -158,6 +178,10 @@ function clickPwdListRowEvent(modalDom, res) {
     if(accountObj.isAgainCheck) {
         // const modalDom = createModal(500, 500, 'is-again-check-modal')
 
+    }
+    // 如果点击的别人分享的 则需要调接口计入数量
+    if(accountObj.isSorC === 2) {
+        addClickShareRecord(accountObj)
     }
     // 设置账号密码
     setUserName(accountObj.userAccount)
@@ -642,13 +666,14 @@ function loginCommonMethods() {
 
     let inputArr = $('input')
 
+    console.log('input', document.getElementsByTagName('input'))
+
     // iframe 有跨域问题
-    console.log($('iframe'))
-    $('iframe').each((index, item) => {
-        console.log(item, index)
-        let obj = item.contentWindow
-        console.log('找到元素', obj.document.getElementsByTagName('input'))
-    })
+    // $('iframe').each((index, item) => {
+    //     console.log(item, index)
+    //     let obj = item.contentWindow
+    //     console.log('找到元素', obj.document.getElementsByTagName('input'))
+    // })
 
     console.log('找到的input', inputArr)
 

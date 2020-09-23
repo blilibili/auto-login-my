@@ -40,6 +40,7 @@
   },
   "content_scripts": [
     {
+      "all_frames": true,
       "matches": ["http://*/*", "https://*/*"],
       "css": ["newTab/layer/css/layui.css" , "contentScriptCss.css"],
       "js": ["newTab/layer/layui.all.js", "jquery.js", "newTab/utils/myTabHttp.js" , "myLogin.js", "utils/webtemplate.js", "page/noMatchingAccount.js"]

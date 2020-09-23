@@ -121,7 +121,10 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 		$('.my-create-checkbox').map(function(index, value) {
 			// 表示选中
 			if(value.checked) {
-				checkedArr.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
+				checkedArr.push({
+					typeId: parseInt(value.getAttribute('data-id'), 10),
+					IsSorC: 1
+				})
 			}
 		})
 		if(checkedArr.length === 0) {
@@ -130,14 +133,15 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 		}
 		layer.confirm('是否删除?', function(index){
 			let delParams = {
-				typeId:[]
+				IsSorC: [{IsSorC: 1}],
+				typeId: []
 			}
-			$('.my-create-checkbox').map(function(index, value) {
-				// 表示选中
-				if(value.checked) {
-					delParams.typeId.push({typeId:parseInt(value.getAttribute('data-id'), 10)})
-				}
+			checkedArr.forEach((v , k) => {
+				delParams.typeId.push({
+					typeId: v.typeId
+				})
 			})
+
 			console.log("delParams>>>>",delParams)
 			myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams, myuserId).then((res) => {
 				if(res.code === 10000) {
