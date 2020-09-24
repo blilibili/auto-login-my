@@ -97,10 +97,26 @@
         {{#  layui.each(d.list, function(index, item){ }}
 
         <tr>
-          <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.userAccount}}</td>
-          <td>{{item.myAddress}}</td>
+          <td class="website-info" title="{{item.url}}">
+            <div class="max-table-width" style="width: 220px;">
+              {{item.url}}
+            </div>
+          </td>
+          <td title="{{item.name}}">
+            <div class="max-table-width" style="width: 220px;">
+              {{item.name}}
+            </div>
+          </td>
+          <td title="{{item.userAccount}}">
+            <div class="max-table-width" style="width: 120px;">
+              {{item.userAccount}}
+            </div>
+          </td>
+          <td title="{{item.myAddress}}">
+            <div class="max-table-width" style="width: 120px;">
+              {{item.myAddress}}
+            </div>
+          </td>
           <td>{{item.terminalName}}</td>
           <td>{{item.myUserIP}}</td>
           <td>{{item.myLoginTime}}</td>

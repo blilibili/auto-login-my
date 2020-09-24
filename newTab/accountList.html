@@ -189,9 +189,27 @@
           </div>
         </form>
       </td>
-    <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
-      <td>{{item.name}}</td>
-      <td class="my-create-account" data-typeId="{{item.typeId}}" data-IsSorC="1">{{item.userAccount}}</td>
+      <td
+        class="website-info max-table-width"
+        title="{{item.url}}"
+      >{{item.url}}</td>
+      <td
+        title="{{item.name}}"
+      >
+        <div class="max-table-width">
+          {{item.name}}
+        </div>
+      </td>
+      <td
+        title="{{item.userAccount}}"
+        class="my-create-account"
+        data-typeId="{{item.typeId}}"
+        data-isSorC="1"
+      >
+        <div class="max-table-width">
+          {{item.userAccount}}
+        </div>
+      </td>
       <td>{{ ['', '需要', '不需要'][item.isAgainCheck]}}</td>
     </tr>
     {{#  }) }}
@@ -201,14 +219,38 @@
   <script id="accountListData" type="text/html">
     {{#  layui.each(d.list, function(index, item){ }}
     <tr class="share-result-td">
-      <td >{{item.sharedUserName}}</td>
-      <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{item.url}}</td>
-      <td>{{item.name}}</td>
-      <td data-typeId="{{item.typeId}}" data-IsSorC="2">{{item.userAccount}}</td>
+      <td
+        title="{{item.sharedUserName}}"
+      >
+        <div class="max-table-width" style="width: 150px;">
+          {{item.sharedUserName}}
+        </div>
+      </td>
+      <td class="website-info" title="{{item.url}}" style="max-width: 300px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+        <div class="max-table-width">
+          {{item.url}}
+        </div>
+      </td>
+      <td
+        title="{{item.name}}"
+      >
+        <div class="max-table-width" style="width: 70px;">
+          {{item.name}}
+        </div>
+      </td>
+      <td title="{{item.userAccount}}" data-typeId="{{item.typeId}}" data-IsSorC="2">
+        <div class="max-table-width" style="width: 50px;">
+          {{item.userAccount}}
+        </div>
+      </td>
       <td>{{item.shareEndDate?item.shareEndDate: '永久有效'}}</td>
       <td>{{ ['','是','否'][item.isShareNormal] }}</td>
       <td>{{ ['', '需要', '不需要'][item.isAgainCheck]}}</td>
-      <td>{{item.shareRemark}}</td>
+      <td title="{{item.shareRemark}}">
+        <div class="max-table-width" style="width: 50px;">
+          {{item.shareRemark?item.shareRemark: ''}}
+        </div>
+      </td>
     </tr>
     {{#  }) }}
   </script>

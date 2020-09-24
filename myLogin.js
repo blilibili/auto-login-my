@@ -16,7 +16,8 @@ var globalData = {
     myName: '',
     myUrl: '',
     myuserName: '',
-    userName: ''
+    userName: '',
+    shareinfoId: ''
 }
 
 // 创建账号密码钥匙
@@ -179,15 +180,13 @@ function clickPwdListRowEvent(modalDom, res) {
         // const modalDom = createModal(500, 500, 'is-again-check-modal')
 
     }
-    // 如果点击的别人分享的 则需要调接口计入数量
-    if(accountObj.isSorC === 2) {
-        addClickShareRecord(accountObj)
-    }
+
     // 设置账号密码
     setUserName(accountObj.userAccount)
     setPassword(accountObj.sharedPwd)
 
     // 设置记录的数据
+    globalData.shareinfoId = accountObj.shareinfoId?accountObj.shareinfoId: ''
     globalData.myName = accountObj.name
     globalData.myUrl = accountObj.url
     globalData.myuserName = accountObj.userAccount
@@ -461,6 +460,14 @@ function createAddAccountDom() {
 
                                 $(".no-same-account-btn1").on('click',function(){
                                     //确认则保存成功，3秒后弹窗消失
+                                    if(account.length > 50) {
+                                        alert('账号不可超过50个字符')
+                                        return
+                                    }
+                                    if(pwd.length > 50) {
+                                        alert('账号不可超过50个字符')
+                                        return
+                                    }
                                     let val = {
                                         accountType:1,
                                         isAgainCheck:2,
@@ -712,7 +719,13 @@ function loginCommonMethods() {
             terminalName: getCurrentSoftVersion(),
             terminalType: 3
         }
-        console.log("点击登录:",JSON.stringify(insertModel))
+
+        if(globalData.shareinfoId && globalData.shareinfoId !== '') {
+            insertModel.shareinfoId = globalData.shareinfoId
+        }
+        // 如果点击的别人分享的 则需要调接口计入数量
+
+        console.log("插入登录记录:",JSON.stringify(insertModel))
         // if(!globalData.myName)return
 
         myTabAjax('/miyun/sys/UserLoginController/saveLoginMyuserDetail', 'post', insertModel, globalData.userid).then((res) => {

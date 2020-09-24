@@ -195,9 +195,13 @@ function renderMyCrateData(laytpl, result) {
 		layuiForm.render();
 	});
 
+	console.log('create', $(".my-create-account"))
+
 	$(".my-create-account").map(function(element, index, array) {
 		$(index).on('click',function(item){
-			window.location.href = './addNewAccount.html?typeId='+item.target.dataset.typeid+"&IsSorC="+item.target.dataset.issorc
+			const typeId = this.getAttribute('data-typeId')
+			const isSorC = this.getAttribute('data-isSorC')
+			window.location.href = './addNewAccount.html?typeId='+ typeId +"&IsSorC=" + isSorC
 			//二次验证
 			// $(".auto-login-back-wall").attr('style','')
 			// $(".account-verify-modal").attr('style','')

@@ -215,24 +215,24 @@ layui.use(['layer', 'form', 'laytpl', 'slider'], function(){
 			layer.msg('密码不能输入中文汉字')
 			return false
 		}
-		if(/.*[\u4e00-\u9fa5]+.*$/.test(data.field.userAccount)) {
-			layer.msg('账号不能输入中文汉字')
-			return false
-		}
-		if(data.field.userAccount.length >= 50) {
+		// if(/.*[\u4e00-\u9fa5]+.*$/.test(data.field.userAccount)) {
+		// 	layer.msg('账号不能输入中文汉字')
+		// 	return false
+		// }
+		if(data.field.userAccount.length > 50) {
 			layer.msg('最长50个字符')
 			return false
 		}
-		if(data.field.userPassword.length >= 50) {
+		if(data.field.userPassword.length > 50) {
 			layer.msg('最长50个字符')
 			return false
 		}
-		if(data.field.name.length >= 50) {
-			layer.msg('最长50个字符')
+		if(data.field.name.length > 200) {
+			layer.msg('最长200个字符')
 			return false
 		}
-		if(data.field.website.length >= 50) {
-			layer.msg('最长50个字符')
+		if(data.field.website.length > 200) {
+			layer.msg('最长200个字符')
 			return false
 		}
 		if(getQueryString('typeId')) {
