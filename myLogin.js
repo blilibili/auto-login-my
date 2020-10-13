@@ -636,6 +636,7 @@ function setUserName(username='') {
 
 function setPassword(password='',flag = true) {
     var usernameDom = setUserPassArr[0]
+    console.log('解密', do_decrypt('Yw=='))
     var evt = new InputEvent('input', {
         inputType: 'insertText',
         data: flag ? do_decrypt(password) : password, //有解密跟不需要解密之分

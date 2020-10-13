@@ -99,7 +99,7 @@
         <tr>
           <td class="website-info" title="{{item.url}}">
             <div class="max-table-width" style="width: 220px;">
-              {{item.url}}
+              {{item.url?item.url: ''}}
             </div>
           </td>
           <td title="{{item.name}}">

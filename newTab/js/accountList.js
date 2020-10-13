@@ -144,18 +144,25 @@ layui.use(['layer', 'form', 'element', 'laytpl', 'laypage'], function(){
 
 			console.log("delParams>>>>",delParams)
 			myTabAjax('/miyun/sys/UserPwdController/deleteUserPwd', 'post', delParams, myuserId).then((res) => {
+				$("#checkAll").prop("checked", false);
+				layuiForm.render("checkbox");
 				if(res.code === 10000) {
 					layer.msg('删除成功');
 					layer.close(index);
 
 					// 最后一条被删除
-					if(total % 10 === 1) {
+					if(total % 10 === 1 && searchMyCreateObj.currentPage !== 1) {
 						searchMyCreateObj.currentPage--
 					}
 					getAccountPwdList(searchMyCreateObj, laytpl, laypage , currentTabId)
 					// window.location.reload()
 				}else{
 					layer.msg(res.message);
+					// 最后一条被删除
+					if(total % 10 === 1 && searchMyCreateObj.currentPage !== 1) {
+						searchMyCreateObj.currentPage--
+					}
+					getAccountPwdList(searchMyCreateObj, laytpl, laypage , currentTabId)
 				}
 			})
 

@@ -68,12 +68,14 @@ async function myTabAjax(url, methods, data, uid="", headers={
 				if(result.code === 50004) {
 					setToken(loginData).then((value) => {
 						console.log('设置token', value)
+						getOffset()
 						myTabAjax(url, methods, data, uid, headers).then((val) => {
 						  resolve(val)
             })
 					})
           return
 				}
+				getOffset(headers)
 				resolve(result)
 			},
 			error: (e) => {
@@ -89,7 +91,7 @@ function getLoginToken(loginData) {
 			url: hostname + '/miyun/sys/UserLoginController/getMyuserToken',
 			type: 'get',
 			headers: {'Content-Type':'application/json;charset=utf8;'},
-			data: loginData,
+			data: {userId: loginData.userId, type: 'web'},
 			dataType: "json",
 			success: (result) => {
 				console.log('result', result)
@@ -102,7 +104,7 @@ function getLoginToken(loginData) {
 							url: hostname + '/miyun/sys/UserLoginController/getMyuserToken',
 							type: 'get',
 							headers: {'Content-Type':'application/json;charset=utf8;'},
-							data: loginData,
+							data: {userId: loginData.userId, type: 'web'},
 							dataType: "json",
 							success: (tokens) => {
 								reslove(tokens.data.token)
@@ -113,7 +115,7 @@ function getLoginToken(loginData) {
 							url: hostname + '/miyun/sys/UserLoginController/getMyuserToken',
 							type: 'get',
 							headers: {'Content-Type':'application/json;charset=utf8;'},
-							data: loginData,
+							data: {userId: loginData.userId, type: 'web'},
 							dataType: "json",
 							success: (tokens) => {
 								console.log('第二次请求token', tokens)
@@ -156,15 +158,16 @@ function goToActive (loginData) {
 	})
 }
 
-function getOffset() {
+function getOffset(headers) {
 	return new Promise((reslove, reject) => {
 		$.ajax({
 			url: hostname + '/miyun/sys/UserPwdController/getTheOffset',
 			type: 'get',
-			headers: {'Content-Type':'application/json;charset=utf8;'},
+			headers: headers,
 			dataType: "json",
 			success: (result) => {
-				reslove(result.data.token)
+				window.localStorage.setItem('offset', result.data)
+				reslove()
 			},
 			error: (e) => {
 				console.log('接口异常', e)
