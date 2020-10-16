@@ -249,6 +249,10 @@ function getAccountPwdList (searchObj, laytpl, layPage ,type) {
 			total = res.data.total
 			console.log('res.data', res.data)
 			if(type === 1){
+				// 判断异常渲染红点
+				if(res.data.userStatus === 1) {
+					$('.red-point').show()
+				}
 				renderMyCrateData(laytpl, res.data.records)
 			}else{
 				renderTrData(laytpl, res.data.records)

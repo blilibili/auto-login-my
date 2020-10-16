@@ -24,6 +24,7 @@
 }
 
 .search-button{
+    position: relative;
     margin-top: 20px;
     margin-left: 30px;
 }
@@ -110,4 +111,19 @@
     flex-shrink: 0;
     margin-right: 10px;
     border-radius: 25px;
+}
+
+.red-point{
+    position: absolute;
+    display: inline-block;
+    padding: 0 3px;
+    font-size: 12px;
+    text-align: center;
+    background-color: #FF5722;
+    color: #fff;
+    border-radius: 50px;
+    height: 6px;
+    z-index: 100;
+    top: -2px;
+    right: -2px;
 }

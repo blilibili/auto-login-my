@@ -117,6 +117,10 @@ function keyUsernameClick() {
         console.log('返回', res)
         layui.use(['laytpl'], function() {
             createBackWall()
+            console.log('数据列表', res.data)
+            if(!res.data.records) {
+                res.data = null
+            }
             var data = { //数据
                 list: res.data === null?[]: res.data.records
             }
