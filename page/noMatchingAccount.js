@@ -206,3 +206,14 @@ const theSameAccount = `
 	更新成功！
 </div>
 `
+
+
+const isAgainCheckDom = `
+  <div>
+    <div class="is-again-check-modal-title">验证</div>
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,{{d.qrCode}}" class="scan-image" alt="">
+    </div>
+    <div style="color: #999999;font-size: 14px;text-align: center;">点击刷新二维码</div>
+  </div>
+`

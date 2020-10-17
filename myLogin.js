@@ -6,11 +6,13 @@
 //
 //     }
 // });
+var loginSocket
 var globalTypeId
 var globalTerName = ''
 var currentPage = 1
 var pageSize = 5
 var clientHeight = 0
+var kCode
 var globalData = {
     userid:'',
     myName: '',
@@ -143,7 +145,7 @@ function keyUsernameClick() {
                 $('.account-list-use').each((key,val)=>{
                     clientHeight = parseInt(clientHeight, 10) + parseInt($(val)[0].clientHeight, 10)
                     $(val).on('click',function(item){
-                        clickPwdListRowEvent.call(this, modalDom, res)
+                        clickPwdListRowEvent.call(this, modalDom, res, laytpl)
                     })
                 })
 
@@ -171,7 +173,49 @@ function addClickShareRecord(data) {
     })
 }
 
-function clickPwdListRowEvent(modalDom, res) {
+function createScanLoginSocket(scanDom, modalDom, accountObj) {
+    loginSocket = new WebSocket('wss://appcc.pispower.com/connection/wait?key=8' + kCode)
+
+    loginSocket.onmessage = (msg) => {
+        let scanReturn = JSON.parse(msg.data)
+        console.log('scanReturn', scanReturn)
+        if(scanReturn.action === 'login') {
+            // 判断是否是同一个人
+            let serveUserId = `${scanReturn.data.im_user_name}@${scanReturn.data.chatserverId}`
+            let localUserId = window.localStorage.getItem('userid')
+
+            if(serveUserId === localUserId) {
+                alert('验证通过')
+                // 设置账号密码
+                setUserName(accountObj.userAccount)
+                // 1 自己的  0 分享的
+                if(accountObj.isSorC) {
+                    setPassword(accountObj.userPassword)
+                } else {
+                    setPassword(accountObj.sharedPwd)
+                }
+
+                // 设置记录的数据
+                globalData.shareinfoId = accountObj.shareinfoId?accountObj.shareinfoId: ''
+                globalData.myName = accountObj.name
+                globalData.myUrl = accountObj.url
+                globalData.myuserName = accountObj.userAccount
+                globalTerName = accountObj.name
+
+                $(findLoginButton()[0]).addClass('active')
+
+                $(modalDom).remove()
+                $(scanDom).remove()
+                $('.auto-login-back-wall').remove()
+            } else {
+                alert('不是本人扫码，验证未通过')
+                $(scanDom).remove()
+            }
+        }
+    }
+}
+
+function clickPwdListRowEvent(modalDom, res, laytpl) {
     let keyId = this.getAttribute('data-typeId')
     console.log("typeId:",keyId)
     globalTypeId = parseInt(keyId, 10)
@@ -181,25 +225,41 @@ function clickPwdListRowEvent(modalDom, res) {
 
     // 需要二次验证
     if(accountObj.isAgainCheck) {
-        // const modalDom = createModal(500, 500, 'is-again-check-modal')
+        console.log('二次验证')
+        const scanDom = createModal(400, 212, 'is-again-check-modal')
+        myTabAjax('/miyun/sys/UserLoginController/getQRCode?width=140&height=140', 'post', {}).then((res) => {
+            var getTpl = isAgainCheckDom
+            // 扫码登陆的k值
+            kCode = res.data.k
 
+            // 开启监听
+            createScanLoginSocket(scanDom, modalDom, accountObj)
+            laytpl(getTpl).render({qrCode: res.data.QRCode}, function(html){
+                $(scanDom).append(html)
+            })
+        })
+    } else {
+        // 设置账号密码
+        setUserName(accountObj.userAccount)
+        // 1 自己的  0 分享的
+        if(accountObj.isSorC) {
+            setPassword(accountObj.userPassword)
+        } else {
+            setPassword(accountObj.sharedPwd)
+        }
+
+        // 设置记录的数据
+        globalData.shareinfoId = accountObj.shareinfoId?accountObj.shareinfoId: ''
+        globalData.myName = accountObj.name
+        globalData.myUrl = accountObj.url
+        globalData.myuserName = accountObj.userAccount
+        globalTerName = accountObj.name
+
+        $(findLoginButton()[0]).addClass('active')
+
+        $(modalDom).remove()
+        $('.auto-login-back-wall').remove()
     }
-
-    // 设置账号密码
-    setUserName(accountObj.userAccount)
-    setPassword(accountObj.sharedPwd)
-
-    // 设置记录的数据
-    globalData.shareinfoId = accountObj.shareinfoId?accountObj.shareinfoId: ''
-    globalData.myName = accountObj.name
-    globalData.myUrl = accountObj.url
-    globalData.myuserName = accountObj.userAccount
-    globalTerName = accountObj.name
-
-    $(findLoginButton()[0]).addClass('active')
-
-    $(modalDom).remove()
-    $('.auto-login-back-wall').remove()
 }
 
 function renderMorePwdList(nextPage, modalDom) {
@@ -640,7 +700,7 @@ function setUserName(username='') {
 
 function setPassword(password='',flag = true) {
     var usernameDom = setUserPassArr[0]
-    console.log('解密', do_decrypt('Yw=='))
+    // console.log('解密', do_decrypt('Yw=='))
     var evt = new InputEvent('input', {
         inputType: 'insertText',
         data: flag ? do_decrypt(password) : password, //有解密跟不需要解密之分
@@ -648,7 +708,9 @@ function setPassword(password='',flag = true) {
         isComposing: false
     });
     usernameDom.value = flag ? do_decrypt(password) : password
+    console.log('usernameDom', usernameDom.value)
     usernameDom.dispatchEvent(evt);
+
 }
 
 const setUserAccountArr = []
