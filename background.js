@@ -24,7 +24,7 @@ chrome.tabs.onCreated.addListener(function(tab) {
             msg:'hello'
         },function(res) {
             console.log("res:",res)
-            if(res === null) {
+            if(res === null || res === undefined) {
                 console.log('未登录云中云, 获取的数据', res)
             }
             // 清空token

@@ -65,7 +65,7 @@ async function myTabAjax(url, methods, data, uid="", headers={
 			success: (result) => {
 				console.log('结果结果', result)
 				// 登录失效
-				if(result.code === 50004) {
+				if(result.code === 50004 || result.code === 50003) {
 					setToken(loginData).then((value) => {
 						console.log('设置token', value)
 						getOffset()
