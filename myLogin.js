@@ -115,8 +115,6 @@ function keyUsernameClick() {
     }
 
     myTabAjax('/miyun/sys/UserPwdController/getAccountPwdList', 'get', searchObj, globalData.userid).then((res) => {
-
-        console.log('返回', res)
         layui.use(['laytpl'], function() {
             createBackWall()
             console.log('数据列表', res.data)
@@ -184,8 +182,13 @@ function createScanLoginSocket(scanDom, modalDom, accountObj) {
             let serveUserId = `${scanReturn.data.im_user_name}@${scanReturn.data.chatserverId}`
             let localUserId = window.localStorage.getItem('userid')
 
+            // 扫码成功回调
             if(serveUserId === localUserId) {
-                alert('验证通过')
+                loginSocket.send(JSON.stringify({
+                    action: "login_fb",
+                    success: true,
+                    message: '认证成功'
+                }))
                 // 设置账号密码
                 setUserName(accountObj.userAccount)
                 // 1 自己的  0 分享的
@@ -208,8 +211,15 @@ function createScanLoginSocket(scanDom, modalDom, accountObj) {
                 $(scanDom).remove()
                 $('.auto-login-back-wall').remove()
             } else {
+                loginSocket.send(JSON.stringify({
+                    action: "login_fb",
+                    success: false,
+                    message: '认证失败'
+                }))
                 alert('不是本人扫码，验证未通过')
+                $(modalDom).remove()
                 $(scanDom).remove()
+                $('.auto-login-back-wall').remove()
             }
         }
     }
@@ -224,9 +234,10 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
     })[0]
 
     // 需要二次验证
-    if(accountObj.isAgainCheck) {
-        console.log('二次验证')
+    if(accountObj.isAgainCheck === 1) {
         const scanDom = createModal(400, 212, 'is-again-check-modal')
+        $('.auto-login-back-wall').css('zIndex', 10001)
+        $('.is-again-check-modal').css('zIndex', 10002)
         myTabAjax('/miyun/sys/UserLoginController/getQRCode?width=140&height=140', 'post', {}).then((res) => {
             var getTpl = isAgainCheckDom
             // 扫码登陆的k值
@@ -236,6 +247,17 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
             createScanLoginSocket(scanDom, modalDom, accountObj)
             laytpl(getTpl).render({qrCode: res.data.QRCode}, function(html){
                 $(scanDom).append(html)
+                $('.is-again-check-close').on('click', function() {
+                    $('.auto-login-back-wall').css('zIndex', 10000)
+                    $(scanDom).remove()
+                })
+                $('.refresh-scan').on('click', function() {
+                    myTabAjax('/miyun/sys/UserLoginController/getQRCode?width=140&height=140', 'post', {}).then((result) => {
+                        console.log('更新二维码', $('#scan-image'))
+                        $('#scan-image').attr('src', '#')
+                        $('#scan-image').attr('src', `data:image/png;base64,${result.data.QRCode}`)
+                    })
+                })
             })
         })
     } else {

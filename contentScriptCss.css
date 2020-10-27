@@ -47,6 +47,7 @@
 .is-again-check-modal-title{
     padding: 10px;
     border-bottom: 1px solid #DDDDDD;
+    position: relative;
 }
 .scan-image{
     width: 140px;
@@ -398,4 +399,10 @@
      height: 18px!important;
      line-height: unset!important;
     margin-right: 20px;
+}
+.is-again-check-close{
+    position: absolute;
+    right: 7px;
+    top: 9px;
+    cursor: pointer;
 }

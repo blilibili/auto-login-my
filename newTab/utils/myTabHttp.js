@@ -1,4 +1,4 @@
-const hostname = 'http://116.85.11.146:9021'
+const hostname = 'https://cloudpass.onecloud.cn'
 
 // 获取浏览器中存储的token
 function getChromeToken() {

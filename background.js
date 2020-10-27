@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 chrome.tabs.onCreated.addListener(function(tab) {
+    chrome.storage.local.clear()
     chrome.management.getAll(callback=>{
         console.log("callback:",callback)
         let id = ""

@@ -155,7 +155,7 @@ const verifyModal = `
           <div class="layui-tab-item" style="text-align: center;">
             <div class="xh-pass-input">
               <!-- <span style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;">X</span> -->
-              <img src="http://122.51.89.68:81/close.png" style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;" alt="">
+              <img src="{{chrome.extension.getURL('img/close.png')}}" style="width: 18px;height: 18px;position: absolute;top: 7px;left: 10px;" alt="">
               <input type="text" style="width: 100%;">
             </div>
 
@@ -172,7 +172,7 @@ const noSameAccount = `
 <div class="no-same-account">
 	<div class="no-same-account-title">
 		<div>要保存密码到密云吗？</div>
-		<img src="http://122.51.89.68:81/close.png" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
+		<img src="{{chrome.extension.getURL('img/close.png')}}" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
 	</div>
 	<div class="no-same-account-body">
 		<div style="font-size: 12px;width: 48px;flex-shrink: 0;">账号：</div>
@@ -195,7 +195,7 @@ const noSameAccount = `
 const theSameAccount = `
 <div class="the-same-account" >
 	<div class="the-same-account-close">
-		<img src="http://122.51.89.68:81/close.png" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
+		<img src="{{chrome.extension.getURL('img/close.png')}}" class="no-same-account-close" alt="" style="width: 19px;height: 19px;">
 	</div>
 	<div class="the-same-account-title">密云中存在相同的账号密码，是否要更新？</div>
 	<div class="the-same-account-btns">
@@ -210,10 +210,18 @@ const theSameAccount = `
 
 const isAgainCheckDom = `
   <div>
-    <div class="is-again-check-modal-title">验证</div>
-    <div style="text-align: center;">
-        <img src="data:image/png;base64,{{d.qrCode}}" class="scan-image" alt="">
+    <div class="is-again-check-modal-title">
+        <span>验证</span>
+        <img 
+            src="{{chrome.extension.getURL('img/close.png')}}" 
+            class="is-again-check-close"
+             alt="" 
+             style="width: 19px;height: 19px;"
+         >
     </div>
-    <div style="color: #999999;font-size: 14px;text-align: center;">点击刷新二维码</div>
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,{{d.qrCode}}" id="scan-image" class="scan-image" alt="">
+    </div>
+    <div class="refresh-scan" style="color: #999999;font-size: 14px;text-align: center;cursor: pointer;">点击刷新二维码</div>
   </div>
 `

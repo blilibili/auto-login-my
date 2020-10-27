@@ -1,9 +1,12 @@
 {
   "manifest_version": 2,  // 解析插件的内核模块版本号
-  "version": "1.0.0",  // 版本号
+  "version": "1.1.0",  // 版本号
   "name": "密云自动登录",  // 插件名
   "description": "密云自动登录",
-
+  "icons": {
+    "48": "img/miyun.png",
+    "128": "img/miyun@2x.png"
+  },
   //要加载的资源,如果你的html里需要引入js的话,请务必写上
   "browser_action": {
     "default_title": "密云自动登录"

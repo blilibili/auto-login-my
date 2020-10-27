@@ -116,14 +116,14 @@
 .red-point{
     position: absolute;
     display: inline-block;
-    padding: 0 3px;
+    padding: 0 5px;
     font-size: 12px;
     text-align: center;
     background-color: #FF5722;
     color: #fff;
     border-radius: 50px;
-    height: 6px;
+    height: 10px;
     z-index: 100;
-    top: -2px;
+    top: -5px;
     right: -2px;
 }
