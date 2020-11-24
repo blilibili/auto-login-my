@@ -128,8 +128,7 @@ function keyUsernameClick() {
             var data = { //数据
                 list: res.data === null?[]: res.data.records
             }
-            console.log('data', data)
-
+            
             // $('.share-result-td').append(shareListHtml)
             var laytpl = layui.laytpl;
             var getTpl = noMatchingAccount
@@ -238,6 +237,7 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
     })[0]
 
     // 需要二次验证
+    console.log('accountObj', accountObj)
     if(accountObj.isAgainCheck === 1) {
         const scanDom = createModal(400, 212, 'is-again-check-modal')
         $('.auto-login-back-wall').css('zIndex', 10001)
@@ -270,7 +270,7 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
         // 1 自己的  0 分享的
         if(accountObj.isSorC) {
             setPassword(accountObj.userPassword)
-        } else {
+        } else if(accountObj.isSorC == 2) {
             setPassword(accountObj.sharedPwd)
         }
 
