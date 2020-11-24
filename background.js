@@ -2,13 +2,14 @@
  * Created by liyigang on 1/5/2020.
  */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log(request, sender, sendResponse)
     if(request.type === 'REQUEST_USERS_ALL'){
         console.log('我是content-script,收到来自popup的消息：' + request.title);
         sendResponse('我是content-script, 已收到你的预览全部图片的消息');
     }
 });
 
+chrome.storage.local.clear()
+window.localStorage.clear()
 chrome.tabs.onCreated.addListener(function(tab) {
     chrome.storage.local.clear()
     chrome.management.getAll(callback=>{
@@ -25,7 +26,9 @@ chrome.tabs.onCreated.addListener(function(tab) {
         },function(res) {
             console.log("res:",res)
             if(res === null || res === undefined) {
+                alert('请先登陆云中云管家')
                 console.log('未登录云中云, 获取的数据', res)
+                return
             }
             // 清空token
             chrome.storage.local.remove('token')
@@ -85,8 +88,25 @@ chrome.tabs.onCreated.addListener(function(tab) {
 
 // 点击插件图标事件
 chrome.browserAction.onClicked.addListener(function(Tab) {
-    console.log('点击事件')
-    window.open('newTab/accountList.html')
+    chrome.management.getAll(callback=>{
+        console.log("callback:",callback)
+        let id = ""
+        callback.forEach(item=> {
+            if(item.name == "云中云管家") {
+                id = item.id
+            }
+        })
+        chrome.runtime.sendMessage(id,{
+            type:"msgFrom",
+            msg:'hello'
+        },function(res) {
+            if(res === null || res === undefined) {
+                alert('请先登陆云中云管家,并关闭此标签页重新打开')
+            }else{
+                window.open('newTab/accountList.html')
+            }
+        })
+    })
 });
 
 function getToken(data) {

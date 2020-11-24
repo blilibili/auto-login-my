@@ -1,4 +1,6 @@
-const hostname = 'https://cloudpass.onecloud.cn'
+// const hostname = 'https://cloudpass.onecloud.cn' // 小环境
+const hostname = 'https://cloudpass.pispower.com'   // 大环境
+
 
 // 获取浏览器中存储的token
 function getChromeToken() {

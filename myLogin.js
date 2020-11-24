@@ -89,7 +89,6 @@ function findLoginButton() {
         }
     }
 
-    console.log(simLoginButton)
     return simLoginButton
 }
 
@@ -101,6 +100,11 @@ function createBackWall() {
 }
 
 function keyUsernameClick() {
+    chrome.storage.local.get(['userid'],function(result) {
+        if(!result.userid) {
+            return
+        }
+    })
     const modalDom = createModal(380, 282)
     currentPage = 1
 
@@ -754,6 +758,10 @@ function loginCommonMethods() {
 
     chrome.storage.local.get(['userid', 'userName', 'accountId', 'token'],function(result) {
         console.log("云中云获取用户信息:",result)
+        if(!result.userid) {
+            alert('请先登陆云中云管家')
+            return
+        }
         globalData.userid = result.userid
         globalData.userName = result.userName
         window.localStorage.setItem('userid', result.userid)
@@ -789,7 +797,6 @@ function loginCommonMethods() {
     }
 
     var username = setUserAccountArr[0]
-    console.log('username', username)
     keyDomFunc(username, keyUsernameClick)
 
     var password = setUserPassArr[0]
