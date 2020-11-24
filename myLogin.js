@@ -196,9 +196,9 @@ function createScanLoginSocket(scanDom, modalDom, accountObj) {
                 // 设置账号密码
                 setUserName(accountObj.userAccount)
                 // 1 自己的  0 分享的
-                if(accountObj.isSorC) {
+                if(accountObj.isSorC == 1) {
                     setPassword(accountObj.userPassword)
-                } else {
+                } else if(accountObj.isSorC == 2) {
                     setPassword(accountObj.sharedPwd)
                 }
 

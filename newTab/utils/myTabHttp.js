@@ -1,5 +1,6 @@
 // const hostname = 'https://cloudpass.onecloud.cn' // 小环境
-const hostname = 'https://cloudpass.pispower.com'   // 大环境
+// const hostname = 'https://cloudpass.pispower.com'   // 大环境
+const hostname = 'http://116.85.11.146:9022'
 
 
 // 获取浏览器中存储的token
