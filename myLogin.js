@@ -128,7 +128,7 @@ function keyUsernameClick() {
             var data = { //数据
                 list: res.data === null?[]: res.data.records
             }
-            
+
             // $('.share-result-td').append(shareListHtml)
             var laytpl = layui.laytpl;
             var getTpl = noMatchingAccount
@@ -238,7 +238,7 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
 
     // 需要二次验证
     console.log('accountObj', accountObj)
-    if(accountObj.isAgainCheck === 1) {
+    if(accountObj && accountObj.isAgainCheck === 1) {
         const scanDom = createModal(400, 212, 'is-again-check-modal')
         $('.auto-login-back-wall').css('zIndex', 10001)
         $('.is-again-check-modal').css('zIndex', 10002)
@@ -257,7 +257,6 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
                 })
                 $('.refresh-scan').on('click', function() {
                     myTabAjax('/miyun/sys/UserLoginController/getQRCode?width=140&height=140', 'post', {}).then((result) => {
-                        console.log('更新二维码', $('#scan-image'))
                         $('#scan-image').attr('src', '#')
                         $('#scan-image').attr('src', `data:image/png;base64,${result.data.QRCode}`)
                     })
@@ -268,7 +267,7 @@ function clickPwdListRowEvent(modalDom, res, laytpl) {
         // 设置账号密码
         setUserName(accountObj.userAccount)
         // 1 自己的  0 分享的
-        if(accountObj.isSorC) {
+        if(accountObj.isSorC == 1) {
             setPassword(accountObj.userPassword)
         } else if(accountObj.isSorC == 2) {
             setPassword(accountObj.sharedPwd)
@@ -726,7 +725,6 @@ function setUserName(username='') {
 
 function setPassword(password='',flag = true) {
     var usernameDom = setUserPassArr[0]
-    // console.log('解密', do_decrypt('Yw=='))
     var evt = new InputEvent('input', {
         inputType: 'insertText',
         data: flag ? do_decrypt(password) : password, //有解密跟不需要解密之分
@@ -734,7 +732,6 @@ function setPassword(password='',flag = true) {
         isComposing: false
     });
     usernameDom.value = flag ? do_decrypt(password) : password
-    console.log('usernameDom', usernameDom.value)
     usernameDom.dispatchEvent(evt);
 
 }
