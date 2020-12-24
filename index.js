@@ -1,25 +1,30 @@
-
+/**
+ * 文件名：index.js
+ * 作者：liyigang
+ * 创建时间：2020/1/5
+ * 版权声明：无
+ */
 $('.selection-row').map(function(key, val) {
-    $(this).on('mouseover', function(){
-        $(this).addClass('selection-row-actived').siblings().removeClass('selection-row-actived')
-    })
+  $(this).on('mouseover', function(){
+    $(this).addClass('selection-row-actived').siblings().removeClass('selection-row-actived')
+  })
 })
 
 $('.sync-record').on('click' , function() {
-    window.open('./newTab/usingInfo.html')
+  window.open('./newTab/usingInfo.html')
 })
 
 $('.miyun-row').on('click', function() {
-    window.open('./newTab/addNewAccount.html')
+  window.open('./newTab/addNewAccount.html')
 })
 
 $('.download-record').on('click', function() {
-    window.open('./newTab/accountList.html')
+  window.open('./newTab/accountList.html')
 })
 
 $('.bookmarks').on('click', function() {
-    console.log("我的书签")
-    window.open('chrome://bookmarks')
+  console.log("我的书签")
+  window.open('chrome://bookmarks')
 })
 // function find(dom) {
 //     return document.querySelector(dom)

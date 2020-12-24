@@ -1,3 +1,9 @@
+/**
+ * 文件名：noMatchingAccount.js
+ * 作者：liyigang
+ * 创建时间：2020/1/5
+ * 版权声明：无
+ */
 // 密码列表
 const noMatchingAccount = `<div class="auto-login-start-click-account">
 <!--	<div style="padding: 25px;text-align: center;font-size: 24px;">抱歉，没有匹配账号密码</div>-->
@@ -211,7 +217,7 @@ const theSameAccount = `
 const isAgainCheckDom = `
   <div>
     <div class="is-again-check-modal-title">
-        <span>验证</span>
+      <span>验证</span>
         <img 
             src="{{chrome.extension.getURL('img/close.png')}}" 
             class="is-again-check-close"
@@ -220,7 +226,7 @@ const isAgainCheckDom = `
          >
     </div>
     <div style="text-align: center;">
-        <img src="data:image/png;base64,{{d.qrCode}}" id="scan-image" class="scan-image" alt="">
+      <img src="data:image/png;base64,{{d.qrCode}}" id="scan-image" class="scan-image" alt="">
     </div>
     <div class="refresh-scan" style="color: #999999;font-size: 14px;text-align: center;cursor: pointer;">点击刷新二维码</div>
   </div>
